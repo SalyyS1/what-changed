@@ -33,7 +33,7 @@ No account, cloud service, telemetry, or runtime network client is required. His
 
 ## Documentation
 
-The [temporary wiki index](docs/wiki-public-preview.md) links the product, workflow, architecture, privacy, security, troubleshooting, contribution, and release pages. The [ROADMAP](ROADMAP.md) records the accepted product direction and known deferrals.
+The [temporary wiki index](docs/wiki-public-preview.md) links the product, workflow, architecture, privacy, security, troubleshooting, contribution, and release pages. A simple static [web wiki](https://salyys1.github.io/what-changed/) is deployed from `wiki-site/` when GitHub Pages is enabled. The [ROADMAP](ROADMAP.md) records the accepted product direction and known deferrals.
 
 ## License
 

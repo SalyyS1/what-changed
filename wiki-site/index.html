@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="What Changed public preview documentation." />
+    <title>What Changed — Wiki</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="What Changed wiki home">
+        <span class="brand-mark" aria-hidden="true">WC</span>
+        <span>What Changed</span>
+      </a>
+      <a class="source-link" href="https://github.com/SalyyS1/what-changed">View source on GitHub</a>
+    </header>
+
+    <div class="layout" id="top">
+      <aside class="sidebar" aria-label="Wiki navigation">
+        <p class="eyebrow">PUBLIC PREVIEW</p>
+        <h1>Wiki</h1>
+        <label class="search-label" for="search">Search this wiki</label>
+        <input id="search" class="search" type="search" placeholder="Try “privacy”" autocomplete="off" />
+        <nav id="nav" class="nav-list"></nav>
+        <p class="sidebar-note">Source preview. Release publication is still gated.</p>
+      </aside>
+
+      <main class="content" tabindex="-1">
+        <section class="hero" aria-labelledby="hero-title">
+          <p class="eyebrow">LOCAL WINDOWS TROUBLESHOOTING</p>
+          <h2 id="hero-title">It worked before. What changed?</h2>
+          <p class="hero-copy">What Changed keeps a local, plain-language history of machine changes and helps you inspect the evidence around a failure.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#first-investigation">Start an investigation</a>
+            <a class="button button-secondary" href="https://github.com/SalyyS1/what-changed#readme">Read the README</a>
+          </div>
+        </section>
+
+        <div id="pages" class="pages"></div>
+
+        <footer class="footer">
+          <p>MIT project license. Third-party components keep their own licenses.</p>
+          <a href="https://github.com/SalyyS1/what-changed">What Changed on GitHub</a>
+        </footer>
+      </main>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

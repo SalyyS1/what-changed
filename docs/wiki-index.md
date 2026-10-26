@@ -5,6 +5,7 @@
 This directory is the temporary, offline-readable wiki for the public source preview.
 
 - [Public preview wiki](wiki-public-preview.md)
+- [Web wiki](../wiki-site/index.html) — the static, no-gradient reading view; deployed with GitHub Pages.
 - [Roadmap](../ROADMAP.md)
 - [Getting started](getting-started.md)
 - [First investigation](first-investigation.md)

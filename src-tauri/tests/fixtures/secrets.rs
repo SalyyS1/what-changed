@@ -120,4 +120,3 @@ pub const SECRETS: &[Secret] = &[
         kind: "high_entropy",
     },
 ];
-
