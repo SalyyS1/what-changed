@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 160" role="img" aria-labelledby="title">
+  <title id="title">What Changed horizontal lockup</title>
+  <use href="logo-wordmark.svg#title"/>
+  <rect width="160" height="160" rx="36" fill="#0B0E14"/>
+  <rect x="32" y="45" width="66" height="19" rx="9.5" fill="#3A4459"/>
+  <rect x="62" y="96" width="66" height="19" rx="9.5" fill="#4FA3FF"/>
+  <rect x="78" y="64" width="10" height="32" rx="5" fill="#E6E9EF"/>
+  <text x="194" y="101" fill="#E6E9EF" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="600">What Changed</text>
+</svg>

@@ -1,0 +1,4 @@
+# Hand-written Docker Engine protocol fixture ending mid-stream; not a live capture.
+{"Type":"container","Action":"start","Actor":{"ID":"111111111111aaaaaaaa","Attributes":{"name":"wc-db","image":"postgres:16"}},"time":1725000100,"timeNano":0}
+{"Type":"container","Action":"die","Actor":{"ID":"444444444444bbbbbbbb","Attributes":{"name":"wc-api","image":"wc-api:dev","exitCode":"1"}},"time":1725000101,"timeNano":0}
+{"Type":"container","Action":"start","Actor":{"ID":"truncated"

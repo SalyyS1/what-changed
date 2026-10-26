@@ -1,0 +1,34 @@
+# Normalize to LF in the repository; check out LF on every platform.
+# The toolchain (Rust, Bun, Vite) is LF-native and Windows tooling accepts LF.
+* text=auto eol=lf
+
+# Windows-only scripts must keep CRLF or cmd.exe/PowerShell can misparse them.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary assets — never diffed, never line-ending converted.
+*.png binary
+*.ico binary
+*.icns binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.exe binary
+*.dll binary
+*.db binary
+*.glb binary
+*.gltf binary
+
+# Lockfiles: keep diffs but do not review them as source.
+bun.lock linguist-generated=true
+bun.lockb binary
+Cargo.lock linguist-generated=true
+
+# Generated TypeScript bindings from Rust types (parity-gated, not hand-edited).
+src/lib/tauri/bindings.ts linguist-generated=true

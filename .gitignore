@@ -1,0 +1,73 @@
+# Dependencies
+node_modules/
+.bun/
+
+# Build output
+dist/
+dist-ssr/
+dist-installer/
+src-tauri/target/
+.cargo-target/
+.perf-temp/
+src-tauri/gen/schemas/
+
+# Secrets and credentials — never tracked
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.key
+*.pem
+*.jks
+*.keystore
+secrets.json
+
+# Local databases (the event history is user data, never committed)
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Logs and diagnostics bundles (may contain host paths)
+logs/
+*.log
+diagnostics-*.json
+
+# Local overrides
+*.local
+.vite/
+
+# Local tool caches (machine-specific, contains absolute paths)
+.claude-terminal
+.claude/
+
+# Test and coverage artifacts
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# Editor and OS noise
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+ehthumbs.db
+.DS_Store
+
+# Generated brand rasters (icon-source.svg is the tracked source of truth)
+assets/brand/icon-*.png
+
+# Verification screenshots: evidence for the report that names them, not
+# repository content. They are machine- and DPI-specific and cost megabytes.
+plans/reports/captures/
+
+# Local QA scratch output (fixtures, exports, probes)
+.qa/

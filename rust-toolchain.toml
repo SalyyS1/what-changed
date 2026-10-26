@@ -1,0 +1,9 @@
+# Pinned so every machine and every CI run compiles with the exact toolchain the
+# project was verified against. The version is the one actually installed and
+# measured here (rustc 1.98.0, 88d9e12ae, 2026-08-18) — never a guessed number.
+# Bumping it is a deliberate change: re-run `bun run verify` and record the
+# result in docs/DECISIONS.md.
+[toolchain]
+channel = "1.98.0"
+targets = ["x86_64-pc-windows-msvc"]
+components = ["rustfmt", "clippy"]

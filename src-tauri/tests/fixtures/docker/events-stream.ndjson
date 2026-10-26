@@ -1,0 +1,12 @@
+# Hand-written Docker Engine protocol fixture; not captured from a live daemon.
+{"Type":"container","Action":"create","Actor":{"ID":"111111111111aaaaaaaa","Attributes":{"name":"wc-db","image":"postgres:16","com.docker.compose.project":"what-changed"}},"time":1725000000,"timeNano":1725000000123000000}
+{"Type":"container","Action":"start","Actor":{"ID":"111111111111aaaaaaaa","Attributes":{"name":"wc-db","image":"postgres:16","com.docker.compose.project":"what-changed","host_ip":"127.0.0.1","host_port":"5432","container_port":"5432","protocol":"tcp"}},"time":1725000001,"timeNano":0}
+{"Type":"container","Action":"stop","Actor":{"ID":"111111111111aaaaaaaa","Attributes":{"name":"wc-db","image":"postgres:16","com.docker.compose.project":"what-changed"}},"time":1725000002,"timeNano":0}
+{"Type":"container","Action":"die","Actor":{"ID":"111111111111aaaaaaaa","Attributes":{"name":"wc-db","image":"postgres:16","com.docker.compose.project":"what-changed","exitCode":"137"}},"time":1725000003,"timeNano":0}
+{"Type":"container","Action":"destroy","Actor":{"ID":"111111111111aaaaaaaa","Attributes":{"name":"wc-db","image":"postgres:16","com.docker.compose.project":"what-changed"}},"time":1725000004,"timeNano":0}
+{"Type":"image","Action":"pull","Actor":{"ID":"sha256:222222222222","Attributes":{"name":"postgres:16"}},"time":1725000005,"timeNano":0}
+{"Type":"image","Action":"delete","Actor":{"ID":"sha256:222222222222","Attributes":{"name":"postgres:16"}},"time":1725000006,"timeNano":0}
+{"Type":"volume","Action":"create","Actor":{"ID":"wc-data","Attributes":{"name":"wc-data"}},"time":1725000007,"timeNano":0}
+{"Type":"volume","Action":"destroy","Actor":{"ID":"wc-data","Attributes":{"name":"wc-data"}},"time":1725000008,"timeNano":0}
+{"Type":"network","Action":"create","Actor":{"ID":"333333333333","Attributes":{"name":"wc-default"}},"time":1725000009,"timeNano":0}
+{"Type":"network","Action":"destroy","Actor":{"ID":"333333333333","Attributes":{"name":"wc-default"}},"time":1725000010,"timeNano":0}

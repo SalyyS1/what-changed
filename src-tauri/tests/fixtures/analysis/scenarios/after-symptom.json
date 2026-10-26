@@ -1,0 +1,1 @@
+{"name":"after-symptom","problem":"network offline","symptom_time_ms":10000000,"expected_top_three":[71],"excluded_ids":[70],"events":[{"id":70,"kind":"proxy_changed","at":10000001},{"id":71,"kind":"dns_changed","at":9900000}],"relationships":[]}

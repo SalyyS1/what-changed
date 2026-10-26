@@ -1,0 +1,4 @@
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System><Provider Name="Service Control Manager"/><EventID Qualifiers="49152">7031</EventID><Level>2</Level><TimeCreated SystemTime="2026-09-20T01:04:00.0000000Z"/><Channel>System</Channel><Computer>SANITIZED-PC</Computer></System>
+  <EventData><Data Name="param1">Sample Service</Data><Data Name="param2">1</Data><Data Name="param5">Restart the service</Data></EventData>
+</Event>

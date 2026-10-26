@@ -1,0 +1,124 @@
+@import 'tailwindcss';
+@import './tokens.css';
+@import './typography.css';
+@import './motion.css';
+
+/*
+ * Tailwind's utility names are generated from these. Each one aliases a token
+ * variable rather than restating a value, so a theme switch (which swaps the
+ * variables on <html>) repaints every utility without a rebuild.
+ */
+@theme {
+  /*
+   * Tailwind derives every spacing utility from this one value. The document
+   * font-size is 13.5px, so leaving it at the rem default would put `p-4` at
+   * 13.5px instead of the 16px the token scale documents. Pinned in px so
+   * the 4px base holds regardless of the type size.
+   */
+  --spacing: 4px;
+
+  --color-background: var(--background);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-active: var(--border-active);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-scrim: var(--overlay-scrim);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --font-ui: var(--font-ui);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+
+  --text-xs: var(--text-xs);
+  --text-sm: var(--text-sm);
+  --text-base: var(--text-base);
+  --text-md: var(--text-md);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
+  --text-2xl: var(--text-2xl);
+}
+
+/*
+ * Custom window chrome (`decorations: false`) means the document itself is the
+ * window frame: it must never scroll or select as if it were a web page.
+ */
+@layer base {
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background-color: var(--background);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Text is selectable only where content is meant to be copied. */
+  body {
+    user-select: none;
+    cursor: default;
+  }
+
+  /* The mount point is the window; the shell sizes itself from it. */
+  #app {
+    height: 100%;
+  }
+
+  [data-tauri-drag-region] {
+    cursor: default;
+  }
+
+  /* One focus treatment everywhere; components never override it. */
+  :focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  /* Scrollbars that belong to the surface they sit on. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-active) transparent;
+  }
+}
+
+@layer utilities {
+  .selectable {
+    user-select: text;
+    cursor: text;
+  }
+  .font-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .text-caps {
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "Version": "27.2.0",
+  "ApiVersion": "1.47",
+  "MinAPIVersion": "1.24",
+  "Os": "windows",
+  "Arch": "amd64"
+}

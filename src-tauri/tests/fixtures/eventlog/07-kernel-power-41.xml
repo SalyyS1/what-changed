@@ -1,0 +1,4 @@
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System><Provider Name="Microsoft-Windows-Kernel-Power"/><EventID>41</EventID><Level>1</Level><TimeCreated SystemTime="2026-09-20T01:06:00.0000000Z"/><Channel>System</Channel><Computer>SANITIZED-PC</Computer></System>
+  <EventData><Data Name="BugcheckCode">0</Data><Data Name="SleepInProgress">0</Data></EventData>
+</Event>

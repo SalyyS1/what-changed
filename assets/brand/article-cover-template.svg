@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-labelledby="title desc">
+  <title id="title">What Changed article cover template</title>
+  <desc id="desc">Source-labelled, 16:9 article cover template using the Delta Bridge mark. Placeholder headline must be replaced before publication.</desc>
+  <rect width="1280" height="720" fill="#F7F9FA"/>
+  <rect width="1280" height="12" fill="#0B0E14"/>
+  <g transform="translate(64 62) scale(0.3125)">
+    <rect width="256" height="256" rx="56" fill="#0B0E14"/>
+    <rect x="52" y="73" width="106" height="30" rx="15" fill="#3A4459"/>
+    <rect x="98" y="153" width="106" height="30" rx="15" fill="#4FA3FF"/>
+    <rect x="120" y="103" width="15" height="50" rx="7.5" fill="#E6E9EF"/>
+  </g>
+  <text x="164" y="112" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="31" font-weight="700">What Changed</text>
+  <rect x="64" y="204" width="48" height="5" rx="2.5" fill="#4FA3FF"/>
+  <text x="64" y="252" fill="#3A4459" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="2">ARTICLE COVER TEMPLATE</text>
+  <text x="64" y="358" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="66" font-weight="700">Article headline</text>
+  <text x="67" y="415" fill="#3A4459" font-family="Segoe UI, Arial, sans-serif" font-size="23">Replace with an approved title before publishing.</text>
+  <rect x="835" y="159" width="359" height="359" rx="76" fill="#0B0E14"/>
+  <!-- Large abstract repeat of the canonical mark; no product screenshot is implied. -->
+  <g transform="translate(886 209) scale(1.00390625)">
+    <rect x="52" y="73" width="106" height="30" rx="15" fill="#3A4459"/>
+    <rect x="98" y="153" width="106" height="30" rx="15" fill="#4FA3FF"/>
+    <rect x="120" y="103" width="15" height="50" rx="7.5" fill="#E6E9EF"/>
+  </g>
+  <rect x="64" y="545" width="1130" height="1" fill="#CFD6E1"/>
+  <text x="64" y="584" fill="#6F7C90" font-family="Segoe UI, Arial, sans-serif" font-size="18">Brand source: assets/brand/icon-source.svg</text>
+  <rect y="627" width="1280" height="93" fill="#0B0E14"/>
+  <text x="64" y="682" fill="#E6E9EF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="1">DRAFT TEMPLATE · REPLACE PLACEHOLDER TEXT BEFORE PUBLICATION</text>
+</svg>

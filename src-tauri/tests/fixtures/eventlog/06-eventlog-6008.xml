@@ -1,0 +1,4 @@
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System><Provider Name="EventLog"/><EventID Qualifiers="32768">6008</EventID><Level>2</Level><TimeCreated SystemTime="2026-09-20T01:05:00.0000000Z"/><Channel>System</Channel><Computer>SANITIZED-PC</Computer></System>
+  <EventData><Data Name="param1">12:00:00 AM</Data><Data Name="param2">9/20/2026</Data></EventData>
+</Event>

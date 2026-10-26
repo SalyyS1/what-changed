@@ -1,0 +1,34 @@
+/*
+ * Type scale.
+ *
+ * No font file is shipped: the faces available locally are not
+ * redistributable and a network fetch would break both the CSP and the
+ * offline rule (docs/DECISIONS.md, D-16). The product targets Windows 10/11
+ * only, where Segoe UI Variable and Cascadia Mono are present, so the system
+ * faces come first and the chain ends in the generic families. Nothing here
+ * can trigger a request.
+ */
+
+:root {
+  --font-ui:
+    'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display:
+    'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+  --font-mono:
+    'Cascadia Mono', 'Cascadia Code', Consolas, ui-monospace, monospace;
+
+  --text-xs: 11px;
+  --text-sm: 12.5px;
+  --text-base: 13.5px;
+  --text-md: 15px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-2xl: 28px;
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.45;
+  --leading-relaxed: 1.6;
+
+  --tracking-wide: 0.02em;
+  --tracking-caps: 0.06em;
+}

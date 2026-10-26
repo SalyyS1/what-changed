@@ -1,0 +1,1 @@
+{"name":"proxy-vs-restart","problem":"internet offline after proxy change","symptom_time_ms":10000000,"expected_top_three":[20,21],"events":[{"id":20,"kind":"proxy_changed","at":9400000},{"id":21,"kind":"service_restarted","at":9800000}],"relationships":["adapter:proxy->service:network"]}
