@@ -4,7 +4,8 @@ import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
-import { gzipSync } from 'node:zlib';
+import { gzipSync, gunzipSync } from 'node:zlib';
+import { execFileSync } from 'node:child_process';
 import { downloadVerifiedArtifact, expandReviewedRuntimeArchive } from './fetch-reviewed-runtime-artifact.mjs';
 import { prepareRunnerSourceMaterials } from './prepare-runner-source-materials.mjs';
 
@@ -121,9 +122,47 @@ test('source archive listing failure blocks the source receipt', async (t) => {
   await mkdir(join(root, 'release'));
   await writeFile(join(root, 'release/runner-browser-source.json'), JSON.stringify({ schemaVersion: 1,
     sourceMaterials: [{ ...record, name: 'source.tar.gz', requiredMembers: ['source/file.txt'] }] }));
-  await assert.rejects(prepareRunnerSourceMaterials({ root, fetchImpl: async () => response([data]) }), /archive listing failed/);
+  await assert.rejects(prepareRunnerSourceMaterials({ root, fetchImpl: async () => response([data]) }), /archive listing failed for source\.tar\.gz/);
   await absent(join(root, 'preview-artifacts/runtime-sources/source-materials-receipt.json'));
 });
+
+for (const format of ['tar.xz', 'tar.gz', 'zip']) test(`Python source inspection preserves every Unicode/PAX ${format} member`, async (t) => {
+  const { root } = await fixture(t);
+  const requiredMembers = ['source/LICENSE', 'source/日本語-𐐀.txt', 'source/final-config.gn'];
+  const bytes = unicodeSourceBytes(format, requiredMembers);
+  await mkdir(join(root, 'release'));
+  await writeFile(join(root, 'release/runner-browser-source.json'), JSON.stringify({ schemaVersion: 1, sourceMaterials: [{ ...record,
+    name: `source.${format}`, bytes: bytes.length, sha256: digest(bytes), requiredMembers }] }));
+  const result = await prepareRunnerSourceMaterials({ root, fetchImpl: async () => response([bytes]) });
+  const material = JSON.parse(await readFile(join(result.output, 'source-materials-receipt.json'))).sourceMaterials[0];
+  assert.equal(material.archiveEntryCount, 3);
+  assert.deepEqual(material.matchedMembers, requiredMembers);
+});
+for (const format of ['tar.xz', 'tar.gz', 'zip']) test(`corrupt ${format} metadata blocks the source packet after a matching download hash`, async (t) => {
+  const { root } = await fixture(t);
+  const original = unicodeSourceBytes(format, ['source/file.txt']);
+  const bytes = original.subarray(0, Math.floor(original.length / 2));
+  await mkdir(join(root, 'release'));
+  await writeFile(join(root, 'release/runner-browser-source.json'), JSON.stringify({ schemaVersion: 1, sourceMaterials: [{ ...record,
+    name: `source.${format}`, bytes: bytes.length, sha256: digest(bytes), requiredMembers: ['source/file.txt'] }] }));
+  await assert.rejects(prepareRunnerSourceMaterials({ root, fetchImpl: async () => response([bytes]) }), new RegExp(`archive listing failed for source\\.${format.replaceAll('.', '\\.')}`));
+  await absent(join(root, 'preview-artifacts/runtime-sources/source-materials-receipt.json'));
+});
+test('a corrupt later tar header cannot be hidden by finding every required member earlier', async (t) => {
+  const { root } = await fixture(t);
+  const tar = gunzipSync(unicodeSourceBytes('tar.gz', ['source/file.txt', 'source/final.txt']));
+  tar[1024] ^= 1; // Invalidate the second header checksum after one valid file.
+  const bytes = gzipSync(tar);
+  await mkdir(join(root, 'release'));
+  await writeFile(join(root, 'release/runner-browser-source.json'), JSON.stringify({ schemaVersion: 1, sourceMaterials: [{ ...record,
+    name: 'source.tar.gz', bytes: bytes.length, sha256: digest(bytes), requiredMembers: ['source/file.txt'] }] }));
+  await assert.rejects(prepareRunnerSourceMaterials({ root, fetchImpl: async () => response([bytes]) }), /archive listing failed for source\.tar\.gz.*bad checksum/s);
+  await absent(join(root, 'preview-artifacts/runtime-sources/source-materials-receipt.json'));
+});
+function unicodeSourceBytes(format, members) {
+  const program = `import io,json,sys,tarfile,zipfile\nformat,names=json.loads(sys.argv[1])\noutput=io.BytesIO()\nif format=='zip':\n with zipfile.ZipFile(output,'w') as archive:\n  for name in names: archive.writestr(name,b'source')\nelse:\n with tarfile.open(fileobj=output,mode='w:'+('xz' if format=='tar.xz' else 'gz'),format=tarfile.PAX_FORMAT) as archive:\n  for name in names:\n   info=tarfile.TarInfo(name); info.size=6; archive.addfile(info,io.BytesIO(b'source'))\nsys.stdout.buffer.write(output.getvalue())`;
+  return execFileSync(process.platform === 'win32' ? 'python' : 'python3', ['-I', '-c', program, JSON.stringify([format, members])], { windowsHide: true, maxBuffer: 1024 * 1024 });
+}
 
 function sourceTarBytes() {
   const header = Buffer.alloc(512), bytes = Buffer.from('safe');

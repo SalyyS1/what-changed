@@ -7,6 +7,7 @@ import { downloadVerifiedArtifact, validateReviewedArtifact } from './fetch-revi
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const RESERVED = ['runner-browser-source.json', 'SHA256SUMS.txt', 'source-materials-receipt.json'];
+const INSPECTOR = fileURLToPath(new URL('./inspect-source-archive.py', import.meta.url));
 
 function validateRequiredMembers(record) {
   if (!/\.(?:tar\.xz|tar\.gz|zip)$/i.test(record.name)) throw new Error('Browser source material has an unsupported archive format');
@@ -21,45 +22,38 @@ function validateRequiredMembers(record) {
 
 function inspectSourceArchive(archive, requiredMembers) {
   return new Promise((accept, reject) => {
-    const child = spawn(process.platform === 'win32' ? 'tar.exe' : 'tar', ['-tf', archive], { windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
-    const required = new Set(requiredMembers), matched = new Set();
-    let pending = '', stderr = '', archiveEntryCount = 0, failure;
+    const payload = Buffer.from(JSON.stringify(requiredMembers));
+    if (payload.length > 1024 * 1024) { reject(new Error(`Source archive ${basename(archive)} required-member metadata exceeds 1 MiB`)); return; }
+    const child = spawn(process.platform === 'win32' ? 'python' : 'python3', ['-I', INSPECTOR, archive], { windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
+    let stdout = '', stderr = '', failure;
     const fail = (error) => { failure ??= error; child.kill(); };
-    const readLine = (line) => {
-      if (line.length > 32768) throw new Error('Source archive member exceeds the supported path length');
-      if (!line) return;
-      archiveEntryCount += 1;
-      const member = line.replace(/\r$/, '').replace(/^(?:\.\/)+/, '').replace(/\/$/, '');
-      if (required.has(member)) matched.add(member);
-    };
     child.stdout.setEncoding('utf8');
     child.stderr.setEncoding('utf8');
     child.stdout.on('data', (chunk) => {
       if (failure) return;
-      try {
-        pending += chunk;
-        let boundary;
-        while ((boundary = pending.indexOf('\n')) !== -1) {
-          readLine(pending.slice(0, boundary));
-          pending = pending.slice(boundary + 1);
-        }
-        if (pending.length > 32768) throw new Error('Source archive member exceeds the supported path length');
-      } catch (error) { fail(error); }
+      if (stdout.length + chunk.length > 1024 * 1024) { fail(new Error('Source inspection result exceeds 1 MiB')); return; }
+      stdout += chunk;
     });
     child.stderr.on('data', (chunk) => { stderr = (stderr + chunk).slice(-8192); });
     child.stdout.on('error', fail);
     child.stderr.on('error', fail);
+    child.stdin.on('error', (error) => { failure ??= error; });
     child.once('error', (error) => { failure ??= error; });
     child.once('close', (code, signal) => {
       try {
-        if (failure) throw failure;
-        if (code !== 0) throw new Error(`Source archive listing failed (${signal ?? code}): ${stderr.trim()}`);
-        if (pending) readLine(pending);
-        const missing = requiredMembers.filter((member) => !matched.has(member));
+        if (failure) throw new Error(`Source archive ${basename(archive)} inspection failed: ${failure.message}`);
+        if (code !== 0) throw new Error(`Source archive listing failed for ${basename(archive)} (${signal ?? code}): ${stderr.trim()}`);
+        const result = JSON.parse(stdout);
+        if (!Number.isSafeInteger(result.archiveEntryCount) || result.archiveEntryCount < 1
+          || !Array.isArray(result.matchedMembers) || result.matchedMembers.length !== requiredMembers.length) {
+          throw new Error(`Source archive ${basename(archive)} inspection returned invalid metadata`);
+        }
+        const missing = requiredMembers.filter((member) => !result.matchedMembers.includes(member));
         if (missing.length) throw new Error(`Source archive is missing required members: ${missing.slice(0, 8).join(', ')}`);
-        accept({ archiveEntryCount, matchedMembers: requiredMembers.filter((member) => matched.has(member)) });
+        accept(result);
       } catch (error) { reject(error); }
     });
+    child.stdin.end(payload);
   });
 }
 

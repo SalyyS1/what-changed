@@ -146,6 +146,11 @@ if (-not $SkipInstaller) {
     Invoke-Gate "NSIS install/uninstall behavior surface" {
         node scripts/check-nsis-script.mjs $nsisScript
     }
+    if ($IncludePreviewRunner) {
+        Invoke-Gate "packaged runtime notice resource parity" {
+            node scripts/verify-nsis-notice-copy.mjs $nsisScript release/RUNNER_THIRD_PARTY_NOTICES.txt RUNNER_THIRD_PARTY_NOTICES.txt
+        }
+    }
     $cargoVersion = Select-String -LiteralPath (Join-Path $root "src-tauri/Cargo.toml") -Pattern '^version\s*=\s*"([^"]+)"' |
         Select-Object -First 1
     if (-not $cargoVersion) { throw "release audit: Cargo.toml version is missing" }
@@ -171,12 +176,16 @@ if (-not $SkipInstaller) {
     Write-Host "[release] published installer: $destination"
 
     Invoke-Gate "installer artifact verification" {
+        # The packaged browser has its own 1536 MiB distribution budget; core
+        # installers retain the existing 25 MiB limit.
+        $installerBudgetMb = if ($IncludePreviewRunner) { 1536 } else { 25 }
         & powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-installer.ps1 `
             -RawInstaller $raw.FullName `
             -PublishedInstaller $published.FullName `
             -ChecksumsFile $checksumFile `
             -NoticesFile $notices.FullName `
-            -NsisScript $nsisScript
+            -NsisScript $nsisScript `
+            -MaximumSizeMb $installerBudgetMb
     }
 
     $releaseBinary = Resolve-RequiredFile (Join-Path $targetDir "release/WhatChanged.exe") "release binary"

@@ -32,6 +32,11 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '24.12.0'
+      - name: Verify source archive auditor Python
+        shell: pwsh
+        run: |
+          python -I -c "import sys; print(sys.version); assert sys.version_info[:3] == (3, 12, 10), 'Source auditor requires Python 3.12.10'"
+          exit $LASTEXITCODE
       - name: Install exact Rust toolchain
         shell: pwsh
         run: |
@@ -59,6 +64,8 @@ jobs:
           exit $LASTEXITCODE
       - name: Focused frontend integration
         run: bun run test src/lib/stores/preview-runner.test.ts src/lib/stores/preview-revocations.test.ts src/app/App.test.ts src/features/verification-runner/verification-runner-panel.test.ts src/features/acceptance/run-review.test.ts --pool=threads --maxWorkers=1
+      - name: Prepare matching browser sources before redistribution
+        run: node scripts/prepare-runner-source-materials.mjs
       - name: Native authority and generated contract
         shell: pwsh
         run: |
@@ -89,8 +96,6 @@ jobs:
           exit $LASTEXITCODE
       - name: Compile runner-enabled desktop before installer review
         run: bun run tauri build --no-bundle --config src-tauri/tauri.runner.conf.json
-      - name: Prepare matching browser sources before redistribution
-        run: node scripts/prepare-runner-source-materials.mjs
       - name: Require runtime notice approval before redistribution
         run: bun run check:runner-notices
       - name: Bundle unsigned runner-enabled installer

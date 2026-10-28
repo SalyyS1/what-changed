@@ -19,6 +19,8 @@ The browser replacement is pinned ungoogled Chromium with its complete embedded
 credits. Matching browser/library sources and patch/build scripts must accompany
 the installer in the same downloadable artifact; source preparation is another
 mandatory upload gate. See [source delivery and relinking](runner-source-build.md).
+Source archive auditing uses Python 3.12.10 in the hosted build, with streaming
+tar metadata and no source extraction. This is a build tool, not a bundled runtime.
 The Microsoft SDK `d3dcompiler_47.dll` side-copy is excluded; Windows 10/11 x64
 must provide `%SystemRoot%\System32\D3DCompiler_47.dll`.
 
