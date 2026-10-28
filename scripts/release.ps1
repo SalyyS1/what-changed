@@ -115,6 +115,9 @@ if ($IncludePreviewRunner) {
     Invoke-Gate "runner exact byte inventory and source parity" { bun run check:runner-bundle }
     if (-not $SkipInstaller) {
         Invoke-Gate "reviewed runtime/browser license delta" { bun run check:runner-notices }
+        Invoke-Gate "matching browser sources and archive members" {
+            node scripts/prepare-runner-source-materials.mjs
+        }
     }
     Invoke-Gate "static landing and wiki build" { bun run site:build }
     Invoke-Gate "rendered site and download manifest" { bun run check:site }
@@ -186,6 +189,23 @@ if (-not $SkipInstaller) {
             -NoticesFile $notices.FullName `
             -NsisScript $nsisScript `
             -MaximumSizeMb $installerBudgetMb
+    }
+
+    if ($IncludePreviewRunner) {
+        Invoke-Gate "combined runner installer and source packet" {
+            $packetRoot = Resolve-RequiredDirectory (Join-Path $root 'preview-artifacts') 'combined runner packet'
+            [void](Resolve-RequiredFile (Join-Path $packetRoot.FullName 'runtime-sources/source-materials-receipt.json') 'verified corresponding-source receipt')
+            Copy-Item -LiteralPath $published.FullName -Destination (Join-Path $packetRoot.FullName 'WhatChanged-Setup-x64.exe')
+            Copy-Item -LiteralPath $notices.FullName -Destination (Join-Path $packetRoot.FullName 'THIRD_PARTY_NOTICES.txt')
+            Copy-Item -LiteralPath (Join-Path $root 'release/RUNNER_THIRD_PARTY_NOTICES.txt') -Destination (Join-Path $packetRoot.FullName 'RUNNER_THIRD_PARTY_NOTICES.txt')
+            Copy-Item -LiteralPath (Join-Path $root 'docs/runner-source-build.md') -Destination (Join-Path $packetRoot.FullName 'RUNNER-SOURCE-BUILD.md')
+            $packetChecksums = Join-Path $packetRoot.FullName 'SHA256SUMS.txt'
+            Get-ChildItem -LiteralPath $packetRoot.FullName -File -Recurse | Where-Object { $_.FullName -ne $packetChecksums } | ForEach-Object {
+                $relativePacketPath = $_.FullName.Substring($packetRoot.FullName.Length + 1).Replace('\', '/')
+                '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $relativePacketPath
+            } | Set-Content -LiteralPath $packetChecksums -Encoding utf8
+            Write-Host "[release] distribute the complete installer/source packet together: $($packetRoot.FullName)"
+        }
     }
 
     $releaseBinary = Resolve-RequiredFile (Join-Path $targetDir "release/WhatChanged.exe") "release binary"

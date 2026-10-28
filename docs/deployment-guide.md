@@ -129,6 +129,13 @@ To build a local preview-enabled candidate, use
 `powershell -File scripts/release.ps1 -AllowDirty -IncludePreviewRunner` after
 preparing the runtime and reviewing its new license obligations. The Tauri
 `tauri.runner.conf.json` overlay includes the resources; default builds omit them.
+The local runner installer route also prepares all corresponding sources before
+building and writes the combined download packet under `preview-artifacts/`.
+Allow roughly 2 GB additional disk for those sources; use the hosted route when
+local space is insufficient. Distribute that complete packet together. A previous
+`preview-artifacts/runtime-sources` packet must be preserved or moved before a
+fresh run; preparation rejects existing output. The core installer retains its
+25 MiB budget; the browser-enabled QA route uses the runtime's 1536 MiB ceiling.
 The core graph gate is also named `bun run core:no-network`; the legacy alias
 remains. It proves neither disabled browser behavior nor authorized confinement.
 
