@@ -15,6 +15,13 @@ or uploading the installer. Native compilation can finish while review is pendin
 the pre-bundle gate still blocks the installer. It does not use PATH or download
 browsers at app startup.
 
+The browser replacement is pinned ungoogled Chromium with its complete embedded
+credits. Matching browser/library sources and patch/build scripts must accompany
+the installer in the same downloadable artifact; source preparation is another
+mandatory upload gate. See [source delivery and relinking](runner-source-build.md).
+The Microsoft SDK `d3dcompiler_47.dll` side-copy is excluded; Windows 10/11 x64
+must provide `%SystemRoot%\System32\D3DCompiler_47.dll`.
+
 This is a development candidate, not public v1. Clean Windows, installed upgrade,
 network confinement, accessibility, performance, four-hour soak and real-owner
 repeat-use acceptance remain open. Automatic updates have no configured signed feed.

@@ -104,8 +104,12 @@ The local static site source is [wiki-site](../wiki-site/README.md). Run
 base path on port 5184. Downloads remain unavailable until an exact G2/G3-bound
 manifest exists. The workflow builds a preview artifact and does not deploy.
 
-`bun run runner:package` prepares `runner/bundle` from the previously verified
-local spike runtime; it does not download anything. The script validates source
+For a fresh build, `node scripts/hydrate-preview-runtime.mjs` downloads the pinned
+Node executable and hash-verified ungoogled Chromium archive, safely extracts it
+and copies only frozen inventory entries. It requires an absent `runner/bundle`.
+`bun run runner:package` refreshes an already verified `runner/bundle` by default;
+an explicit `-SourceBundle` can select another matching seed. It does not download
+anything. The script validates source
 hashes and writes a fresh byte inventory including current runner code.
 If packaging is interrupted, preserve its printed `runner/bundle-stage-<id>` directory
 and resume with `powershell -File scripts/package-preview-runner.ps1 -ResumeStage bundle-stage-<id>`.
@@ -117,6 +121,9 @@ source recipes/protocol/policy independently of browser packaging.
 `bun run check:runner-notices` requires a fresh exact-bundle license review and
 the packaged `release/RUNNER_THIRD_PARTY_NOTICES.txt` payload. Its review record
 is currently pending; the older desktop notice approval does not cover this delta.
+The hosted artifact must also include all matching browser sources and build/relink
+materials. [Source delivery](runner-source-build.md) owns that required layout;
+`node scripts/prepare-runner-source-materials.mjs` verifies and stages it.
 
 To build a local preview-enabled candidate, use
 `powershell -File scripts/release.ps1 -AllowDirty -IncludePreviewRunner` after

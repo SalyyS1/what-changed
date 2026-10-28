@@ -4,7 +4,7 @@ import { lstat, readFile, readdir, realpath } from 'node:fs/promises';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const runnerVersions = Object.freeze({ nodeVersion: 'v24.12.0', playwrightVersion: '1.62.1', chromiumRevision: '1234', browserExecutable: 'browsers/chromium-1234/chrome-win64/chrome.exe', checksumSource: 'https://nodejs.org/dist/v24.12.0/SHASUMS256.txt' });
+export const runnerVersions = Object.freeze({ nodeVersion: 'v24.12.0', playwrightVersion: '1.62.1', chromiumRevision: '156.0.8078.47-1.1', browserExecutable: 'browsers/chromium-156.0.8078.47-1.1/chrome.exe', checksumSource: 'https://nodejs.org/dist/v24.12.0/SHASUMS256.txt' });
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 async function sha256(path) { const hash = createHash('sha256'); for await (const bytes of createReadStream(path)) hash.update(bytes); return hash.digest('hex'); }
 

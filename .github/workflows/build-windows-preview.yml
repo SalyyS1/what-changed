@@ -51,6 +51,8 @@ jobs:
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           node --test scripts/check-runner-bundle.test.mjs scripts/check-owner-release.test.mjs scripts/verify-preview-notice-continuity.test.mjs
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node --test scripts/fetch-reviewed-runtime-artifact.test.mjs
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
           bun run runner:test
           exit $LASTEXITCODE
       - name: Focused frontend integration
@@ -70,6 +72,12 @@ jobs:
           exit $LASTEXITCODE
       - name: Prepare exact reviewed runtime bytes
         run: node scripts/hydrate-preview-runtime.mjs
+      - name: Verify actual packaged inventory through native loader
+        shell: pwsh
+        run: |
+          $env:OWNVERO_TEST_BUNDLE = Join-Path $PWD 'runner/bundle'
+          cargo test --locked --manifest-path src-tauri/Cargo.toml --lib preview_runner::bundle::tests::packaged_inventory_matches_native_loader -- --exact --ignored
+          exit $LASTEXITCODE
       - name: Prepare reviewed desktop notices
         shell: pwsh
         run: |
@@ -79,6 +87,8 @@ jobs:
           exit $LASTEXITCODE
       - name: Compile runner-enabled desktop before installer review
         run: bun run tauri build --no-bundle --config src-tauri/tauri.runner.conf.json
+      - name: Prepare matching browser sources before redistribution
+        run: node scripts/prepare-runner-source-materials.mjs
       - name: Require runtime notice approval before redistribution
         run: bun run check:runner-notices
       - name: Bundle unsigned runner-enabled installer
@@ -92,13 +102,16 @@ jobs:
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           node scripts/check-nsis-script.mjs src-tauri/target/release/nsis/x64/installer.nsi
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          New-Item -ItemType Directory -Path preview-artifacts | Out-Null
+          New-Item -ItemType Directory -Path preview-artifacts -Force | Out-Null
           Copy-Item 'src-tauri/target/release/bundle/nsis/*-setup.exe' preview-artifacts
           Copy-Item dist-installer/THIRD_PARTY_NOTICES.txt preview-artifacts
           Copy-Item release/RUNNER_THIRD_PARTY_NOTICES.txt preview-artifacts
           Copy-Item docs/development-preview.md preview-artifacts/PREVIEW-NOTES.md
-          $checksums = Get-ChildItem preview-artifacts -File | ForEach-Object {
-            '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $_.Name
+          Copy-Item docs/runner-source-build.md preview-artifacts/RUNNER-SOURCE-BUILD.md
+          $artifactRoot = [IO.Path]::GetFullPath('preview-artifacts')
+          $checksums = Get-ChildItem preview-artifacts -File -Recurse | ForEach-Object {
+            $relativeName = [IO.Path]::GetRelativePath($artifactRoot, $_.FullName).Replace('\', '/')
+            '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $relativeName
           }
           $checksums | Set-Content preview-artifacts/SHA256SUMS.txt -Encoding utf8NoBOM
           @{ sourceCommit = '${{ github.sha }}'; runId = '${{ github.run_id }}'; unsigned = $true; packagedPreviewRunner = $true; fullAcceptance = $false } | ConvertTo-Json | Set-Content preview-artifacts/build-evidence.json -Encoding utf8NoBOM
@@ -108,4 +121,5 @@ jobs:
           name: what-changed-owner-workspace-preview-${{ github.run_number }}
           path: preview-artifacts/
           if-no-files-found: error
+          compression-level: 0
           retention-days: 14

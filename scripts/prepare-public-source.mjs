@@ -13,7 +13,7 @@ const secretPatterns = [/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/, /\b
 const reviewedSyntheticSources = new Map([
   ['src-tauri/tests/fixtures/secrets.rs', '01a9e9243ac13aae5c1ecbf705c29fdf6591168ef3852aa46d54dc88755659d6'],
 ]);
-const publicReviewReports = new Set(['plans/reports/research-261028-1638-browser-redistribution.md']);
+const publicReviewReports = new Set(['plans/reports/research-261028-1638-browser-redistribution.md', 'plans/reports/research-261028-1703-redistributable-chromium.md']);
 
 // Public source uses a fresh clone's history. Local QA and repository objects are
 // never candidates, and files already published but absent locally are preserved.
@@ -50,6 +50,9 @@ export function preparePublicSource(destination) {
           .replaceAll('C:\\Users\\project-maintainer', 'C:\\Users\\<user>')
           .replaceAll('C:/Users/project-maintainer', 'C:/Users/<user>')
           .replaceAll('C:\\\\Users\\\\project-maintainer', 'C:\\\\Users\\\\<user>');
+      }
+      if (publicReviewReports.has(name)) {
+        content = content.replace(/\[([^\]]+)\]\((?:\.\.\/)+\.qa\/[^)]+\)/g, '$1 (local QA evidence; not published)');
       }
       if (name === 'release/runner-runtime-inventory.json' || name === 'release/RUNNER_THIRD_PARTY_NOTICES.txt' || name.startsWith('legal/third-party/')) {
         copyFileSync(source, target);

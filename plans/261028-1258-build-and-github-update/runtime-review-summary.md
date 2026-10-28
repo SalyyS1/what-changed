@@ -1,54 +1,69 @@
-# Runtime review packet for the requested complete preview
+# Chromium runner: exact review packet
 
-Status: exact packet prepared; current browser redistribution is not authorized
-by the reviewed public terms. No runtime approval or release inferred.
+Status: approved by the owner for installer QA with the mandatory hosted source
+gate. This replaces the rejected Chrome for Testing candidate. Exact approval is
+recorded in [the user decision](../../release/runner-notice-approval.json).
 
-## Exact scope
+## Frozen scope
 
-- Node v24.12.0, Playwright 1.62.1, browser revision 1234 / Chrome for Testing 151.0.7922.34.
-- Runtime: 433 files / 550836112 bytes. Inventory SHA256
-  `ec77cefc82ae2b433b188391c36452a4302c049f6778228e53869527b3c66b1b`.
-- [Proposed record](proposed-runtime-review.json), [source hashes](runtime-sources.json).
-- [Full notices](../../release/RUNNER_THIRD_PARTY_NOTICES.txt).
-- Terms were extracted from the exact packaged browser with HTTP(S) requests blocked.
-  Full collapsed credit texts were captured, not only visible component headings.
+- Node v24.12.0, Playwright 1.62.1, ungoogled Chromium Windows x64 156.0.8078.47-1.1.
+- Packaged runtime: **197 files / 543,579,634 bytes**.
+- Inventory SHA256: `cc3bb9c020ec053b11df341d925f3f25e26a6dc9f0cfbdb5ab1d1cf3d3ec5554`.
+- Full notice payload: 5,548,380 bytes; SHA256
+  `8ad9c7c28d00641f26af587959a1020e60749fd017a3d60945f4efcb53010d9a`.
+- [Proposed exact record](proposed-runtime-review.json), SHA256
+  `e5b6cbd534eb7db8ebd39056a5a8bac72b7e56895cfe46d5ab5a6304741e69fb`.
+- [Notice source hashes](runtime-sources.json),
+  [complete notices](../../release/RUNNER_THIRD_PARTY_NOTICES.txt),
+  [browser/source descriptor](../../release/runner-browser-source.json).
 
-## Retained terms
+## Terms and delivery duties
 
-Node's complete release license includes its bundled dependency terms. Playwright's
-Apache license, NOTICE and all three packaged sidecar license files are retained.
-Chrome's complete embedded credit texts and executable terms are retained.
+Retain Node's full embedded dependency license; Playwright's Apache LICENSE,
+NOTICE and all packaged sidecars; Chromium's full 497 credit/license blocks plus
+Chromium and both ungoogled projects' root licenses. The 497 cross-platform credit
+entries are retained conservatively; that count is not an execution inventory.
 
-The packaged browser identifies itself as Google Chrome for Testing. Its executable
-terms refer to Google's terms and AVC restrictions; it is not classified here as
-solely BSD Chromium. The Chromium source license alone does not establish permission
-to redistribute this exact executable. The owner requested verification of the
-current browser before considering another package.
+Chromium's statically linked FFmpeg includes LGPL-2.1-or-later code. Deliver the
+**seven exact source archives (2,046,353,087 bytes)**, platform/core patches and
+build/relink instructions in the **same Actions download as the installer**, with
+identical access and retention. Whole-archive hashes and required members must
+pass before upload. Do not distribute the installer alone or keep it available
+without matching source material. This route does not create a three-year written
+source offer. Permit library modifications and reverse engineering for debugging
+those modifications as the applicable licenses require.
 
-The [official-source check](../reports/research-261028-1638-browser-redistribution.md)
-found that CfT uses Chrome executable terms and that Google's public software
-terms prohibit distribution. No separate applicable grant was supplied or found.
-Owner acceptance of notices cannot grant Google's rights. Bundling this browser
-for distribution remains blocked; a separately applicable grant or a different
-browser artifact with verified redistribution rights is needed.
+[Source/relink instructions](../../docs/runner-source-build.md) describe the
+public toolchain, exact input pins, patch order and tarball rebuild. They do not
+promise a byte-identical upstream optimized binary. Build tools may need public
+downloads; browser end users do not download a runtime at startup.
 
-Sources: [Node release license](https://raw.githubusercontent.com/nodejs/node/v24.12.0/LICENSE),
-[Playwright source](https://github.com/microsoft/playwright/tree/v1.62.1),
-[Chrome executable terms](https://www.google.com/chrome/terms/),
-[Google terms](https://policies.google.com/terms).
+The Microsoft SDK `d3dcompiler_47.dll` side-copy is **excluded** from the runtime;
+the package does not distribute it. Windows 10/11 x64 must provide its inbox
+`%SystemRoot%\System32\D3DCompiler_47.dll`. Chromium's source defines this OS
+fallback. Windows 11 checks observed the GPU process loading that system DLL;
+clean Windows 10/11 acceptance remains open. No additional SDK EULA is claimed
+accepted. The browser's other component terms, including DXC, are retained.
 
-## Decision boundary
+## Evidence and limits
 
-The existing `check-runner-notices` script requires a named human review bound to
-this exact inventory and full notice payload. The prior approval covers desktop
-dependencies only. Creating source/build infrastructure is authorized; recording
-that the owner reviewed new terms cannot be inferred from a cleanup/build request.
+- Actual browser: eight runner actions/nine assertions, role isolation,
+  authorized screenshot, close and cancellation passed.
+- Browser-without-SDK-side-copy: same checks passed; system GPU DLL path observed.
+- Exact local 197-file inventory validated; native loader check passed.
+- Artifact acquisition/extraction/source packet tests: 33/33 passed on Windows.
+- Inventory/release/continuity tests: 12/12; runner source tests: 15/15.
+- Four small supplemental source archives and required members were checked locally.
+- The 2 GB Chromium source archive is **not yet downloaded/verified here**. The
+  hosted gate will validate all seven source packets before any installer upload.
+- [Research and provenance](../reports/research-261028-1703-redistributable-chromium.md),
+  [artifact QA](../reports/qa-261028-1703-chromium-artifact.md).
 
-If applicable redistribution rights are established, exact human notice review
-would permit installer QA with that runtime and retained notices.
-Public publication still requires an artifact-specific decision after a successful
-build, with unsigned status and unverified acceptance boundaries disclosed.
+Approval of this packet authorizes recording the owner as reviewer and performing
+installer QA with these exact inputs, **conditional on the hosted source gate**.
+It does not approve public v1, public branding, a GitHub Release, download CTA,
+network confinement, clean Windows acceptance, performance, soak or real-user
+repeat-use claims. The source build preview remains unsigned.
 
-Unresolved questions: separate permission for the current executable or owner
-decision to select a browser with verified redistribution rights; exact notice
-review after that decision.
+Unresolved: hosted source/member receipt;
+installer build/inspection; artifact-specific publication and acceptance.

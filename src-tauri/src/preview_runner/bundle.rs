@@ -38,6 +38,19 @@ impl Bundle {
         Self::open_root(root)
     }
     fn open_root(root: PathBuf) -> AppResult<Self> {
+        #[cfg(windows)]
+        {
+            let system_root = std::env::var_os("SystemRoot")
+                .ok_or_else(|| invalid("The Windows system compiler is unavailable"))?;
+            if !PathBuf::from(system_root)
+                .join("System32/D3DCompiler_47.dll")
+                .is_file()
+            {
+                return Err(invalid(
+                    "Preview requires Windows 10/11 with its system D3DCompiler_47.dll component",
+                ));
+            }
+        }
         let _directory=crate::platform::managed_file_lock::pin_directory(&root).map_err(|_|invalid("Packaged runner is unavailable. Prepare its bundle before building this candidate."))?;
         let mut manifest =
             crate::platform::managed_file_lock::for_read(&root.join("bundle-inventory.json"))
@@ -60,8 +73,8 @@ impl Bundle {
             || inventory.checksum_source != "https://nodejs.org/dist/v24.12.0/SHASUMS256.txt"
             || inventory.node_version != "v24.12.0"
             || inventory.playwright_version != "1.62.1"
-            || inventory.chromium_revision != "1234"
-            || inventory.browser_executable != "browsers/chromium-1234/chrome-win64/chrome.exe"
+            || inventory.chromium_revision != "156.0.8078.47-1.1"
+            || inventory.browser_executable != "browsers/chromium-156.0.8078.47-1.1/chrome.exe"
             || inventory.files.len() > 10000
         {
             return Err(invalid(
@@ -147,7 +160,7 @@ impl Bundle {
             "src/session-authority.mjs",
             "playwright-core/index.mjs",
             "playwright-core/package.json",
-            "browsers/chromium-1234/chrome-win64/chrome.exe",
+            "browsers/chromium-156.0.8078.47-1.1/chrome.exe",
         ] {
             if !seen.contains(required) {
                 return Err(invalid("Runner inventory is incomplete"));

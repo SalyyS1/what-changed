@@ -29,7 +29,7 @@ try{
   const policy=makePolicy(origins,request.consent.routes,{remoteEnabled:false});
   const bundleRoot=process.env.OWNVERO_BUNDLE_ROOT;if(!bundleRoot)throw new Error('Missing packaged runtime');
   const inventory=JSON.parse(await readFile(join(bundleRoot,'bundle-inventory.json'),'utf8'));
-  if(inventory.playwrightVersion!=='1.62.1' || inventory.chromiumRevision!=='1234' || inventory.browserExecutable!=='browsers/chromium-1234/chrome-win64/chrome.exe')throw new Error('Unsupported browser inventory');
+  if(inventory.playwrightVersion!=='1.62.1' || inventory.chromiumRevision!=='156.0.8078.47-1.1' || inventory.browserExecutable!=='browsers/chromium-156.0.8078.47-1.1/chrome.exe')throw new Error('Unsupported browser inventory');
   const timer=setTimeout(()=>abort.abort(),600000);let violation=false;
   try{
     session=await openSession({bundleRoot,browserExecutable:inventory.browserExecutable,policy,roles:[...roles],signal:abort.signal,onBlocked:()=>{violation=true}});

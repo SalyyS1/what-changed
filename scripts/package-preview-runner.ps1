@@ -1,7 +1,7 @@
 <# Builds local runtime resources from a previously verified spike; no downloads. #>
 [CmdletBinding()]
 param(
-  [string]$SourceBundle = '.qa/ownvero-runtime-spike/bundle',
+  [string]$SourceBundle = 'runner/bundle',
   [string]$ResumeStage
 )
 $ErrorActionPreference = 'Stop'
@@ -31,14 +31,14 @@ foreach ($path in @($source, $outputRoot)) {
 }
 Assert-RegularTree $source
 $inventory = Get-Content -LiteralPath (Join-Path $source 'bundle-inventory.json') -Raw | ConvertFrom-Json
-if ($inventory.nodeVersion -ne 'v24.12.0' -or $inventory.playwrightVersion -ne '1.62.1' -or $inventory.chromiumRevision -ne '1234' -or $inventory.checksumSource -ne 'https://nodejs.org/dist/v24.12.0/SHASUMS256.txt') { throw 'Spike runtime differs from reviewed versions or checksum source' }
+if ($inventory.nodeVersion -ne 'v24.12.0' -or $inventory.playwrightVersion -ne '1.62.1' -or $inventory.chromiumRevision -ne '156.0.8078.47-1.1' -or $inventory.browserExecutable -ne 'browsers/chromium-156.0.8078.47-1.1/chrome.exe' -or $inventory.checksumSource -ne 'https://nodejs.org/dist/v24.12.0/SHASUMS256.txt') { throw 'Source runtime differs from reviewed versions or checksum source' }
 Write-Host "Preparing runner stage: $stage"
 $runtimeEntries = @{}
 foreach ($entry in $inventory.files) {
   if ($entry.path -match '(^|/)\.\.?(/|$)|\\|:' -or [IO.Path]::IsPathRooted($entry.path)) { throw 'Unsafe source inventory path' }
   $file = Get-Item -LiteralPath (Join-Path $source $entry.path)
   if ($file.PSIsContainer -or $file.Length -ne $entry.bytes -or (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant() -ne $entry.sha256) { throw 'Spike bytes changed' }
-  if ($entry.path -eq 'node.exe' -or $entry.path.StartsWith('playwright-core/') -or $entry.path.StartsWith('browsers/chromium-1234/')) { $runtimeEntries[$entry.path] = $entry }
+  if ($entry.path -eq 'node.exe' -or $entry.path.StartsWith('playwright-core/') -or $entry.path.StartsWith('browsers/chromium-156.0.8078.47-1.1/')) { $runtimeEntries[$entry.path] = $entry }
 }
 if (-not $ResumeStage) {
   New-Item -ItemType Directory -Path $stage | Out-Null
