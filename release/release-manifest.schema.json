@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ownvero immutable approved release",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "status", "reason"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "status": { "const": "unavailable" },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 600 }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "status", "product", "version", "channel", "sourceCommit", "builtAt", "approvedAt", "platform", "architecture", "assetUrl", "bytes", "sha256", "signingStatus", "notesUrl", "noticesUrl", "docsVersion", "minOS"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "status": { "const": "approved" },
+        "product": { "const": "Ownvero" },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-zA-Z0-9.-]+)?$" },
+        "channel": { "enum": ["preview", "stable"] },
+        "sourceCommit": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+        "builtAt": { "type": "string", "format": "date-time" },
+        "approvedAt": { "type": "string", "format": "date-time" },
+        "platform": { "const": "windows" },
+        "architecture": { "const": "x86_64" },
+        "assetUrl": { "type": "string", "pattern": "^https://github\\.com/SalyyS1/what-changed/releases/download/v[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-zA-Z0-9.-]+)?/[A-Za-z0-9_.-]+\\.exe$" },
+        "bytes": { "type": "integer", "minimum": 1, "maximum": 2147483648 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "signingStatus": { "enum": ["unsigned", "signed"] },
+        "notesUrl": { "type": "string", "format": "uri" },
+        "noticesUrl": { "type": "string", "format": "uri" },
+        "docsVersion": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "minOS": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "runnerVersion": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "browserRevision": { "type": "string", "minLength": 1, "maxLength": 80 }
+      },
+      "dependentRequired": { "runnerVersion": ["browserRevision"], "browserRevision": ["runnerVersion"] }
+    }
+  ]
+}

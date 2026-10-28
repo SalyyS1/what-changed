@@ -89,12 +89,27 @@ fn relative(path: &Path) -> String {
 /// module, with comment lines dropped so a rule quoted in a comment does
 /// not trip the rule.
 fn production_code(text: &str) -> String {
+    // An inner attribute gates the complete out-of-line module, exactly as
+    // rustc does. Filenames alone do not establish this boundary.
+    if text.trim_start().starts_with("#![cfg(test)]") {
+        return String::new();
+    }
     let cut = text.find("#[cfg(test)]").unwrap_or(text.len());
     text[..cut]
         .lines()
         .filter(|line| !line.trim_start().starts_with("//"))
         .collect::<Vec<_>>()
         .join("\n")
+}
+
+#[test]
+fn whole_file_test_gate_does_not_hide_ordinary_production_files() {
+    assert!(production_code("#![cfg(test)]\nfn fixture(){ value.unwrap(); }").is_empty());
+    assert!(
+        production_code("// #![cfg(test)]\nfn real(){ value.unwrap(); }")
+            .contains("value.unwrap()")
+    );
+    assert!(production_code("fn real(){}\n#[cfg(test)]\nmod tests{}").contains("fn real()"));
 }
 
 #[test]
@@ -135,7 +150,11 @@ fn sql_lives_only_under_storage() {
         let rel = relative(&file);
         // The typed error wraps the driver's error; that is the one place
         // outside storage that may name it.
-        if rel.starts_with("src/storage/") || rel == "src/error.rs" {
+        if rel.starts_with("src/storage/")
+            || rel == "src/owner_workspace/storage.rs"
+            || rel.starts_with("src/owner_workspace/storage/")
+            || rel == "src/error.rs"
+        {
             continue;
         }
         let code = production_code(&fs::read_to_string(&file).unwrap());
@@ -282,7 +301,10 @@ fn tables_named_in_rust(code: &str) -> BTreeSet<String> {
 /// Table names created by any migration.
 fn tables_created_by_migrations() -> BTreeSet<String> {
     let mut names = BTreeSet::new();
-    for entry in fs::read_dir(crate_root().join("migrations")).unwrap() {
+    for entry in ["migrations", "src/owner_workspace/storage/migrations"]
+        .into_iter()
+        .flat_map(|directory| fs::read_dir(crate_root().join(directory)).unwrap())
+    {
         let path = entry.unwrap().path();
         let sql = fs::read_to_string(&path).unwrap();
         for keyword in ["CREATE TABLE ", "CREATE VIRTUAL TABLE "] {

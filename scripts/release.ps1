@@ -13,7 +13,8 @@
 param(
     [switch]$AllowDirty,
     [switch]$SkipInstaller,
-    [switch]$SkipPerf
+    [switch]$SkipPerf,
+    [switch]$IncludePreviewRunner
 )
 
 $ErrorActionPreference = "Stop"
@@ -86,7 +87,7 @@ try {
         $treeOutput | Set-Content -LiteralPath $treeFile -Encoding utf8
     }
     $env:WHAT_CHANGED_CARGO_TREE_FILE = $treeFile
-    Invoke-Gate "target-resolved no-network graph" { node scripts/check-no-network.mjs }
+    Invoke-Gate "core-only target-resolved no-network graph" { node scripts/check-no-network.mjs }
 } finally {
     Remove-Item -LiteralPath $treeFile -Force -ErrorAction SilentlyContinue
     Remove-Item Env:WHAT_CHANGED_CARGO_TREE_FILE -ErrorAction SilentlyContinue
@@ -109,6 +110,17 @@ if (-not $SkipInstaller) {
 Invoke-Gate "documentation links" { bun run check:docs }
 Invoke-Gate "brand assets" { bun run check:brand }
 Invoke-Gate "launch copy claims" { bun run check:launch }
+if ($IncludePreviewRunner) {
+    Invoke-Gate "runner source policy, recipes and protocol" { bun run runner:test }
+    Invoke-Gate "runner exact byte inventory and source parity" { bun run check:runner-bundle }
+    if (-not $SkipInstaller) {
+        Invoke-Gate "reviewed runtime/browser license delta" { bun run check:runner-notices }
+    }
+    Invoke-Gate "static landing and wiki build" { bun run site:build }
+    Invoke-Gate "rendered site and download manifest" { bun run check:site }
+    Invoke-Gate "static site tests" { bun run site:test }
+    Write-Host '[release] Runner build: core graph does not prove child-process network confinement. Native/clean-Windows/egress/soak/license-delta/pilot evidence and G2/G3 remain required by check:owner-release.' -ForegroundColor Yellow
+}
 
 if (-not $SkipPerf) {
     Invoke-Gate "Phase 20 performance matrix (10k/100k/1M)" {
@@ -120,7 +132,12 @@ if (-not $SkipPerf) {
 
 if (-not $SkipInstaller) {
     $installerBuildStartedAt = Get-Date
-    Invoke-Gate "Tauri installer build" { bun run tauri build }
+    Invoke-Gate "Tauri installer build" {
+        if ($IncludePreviewRunner) {
+            bun run tauri build --config src-tauri/tauri.runner.conf.json
+        }
+        else { bun run tauri build }
+    }
     Invoke-Gate "bundled notice input parity" {
         node scripts/generate-third-party-notices.mjs --check
     }

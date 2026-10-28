@@ -384,12 +384,16 @@ impl WriterHandle {
     }
 }
 
+pub(super) fn writer_reentrant_error() -> AppError {
+    AppError::InvalidInput {
+        what: "database writer job",
+        reason: "a writer-thread job cannot wait on the same writer".to_owned(),
+    }
+}
+
 fn reject_writer_thread_wait(writer_thread_id: ThreadId) -> AppResult<()> {
     if std::thread::current().id() == writer_thread_id {
-        return Err(AppError::InvalidInput {
-            what: "database writer job",
-            reason: "a writer-thread job cannot wait on the same writer".to_owned(),
-        });
+        return Err(writer_reentrant_error());
     }
     Ok(())
 }

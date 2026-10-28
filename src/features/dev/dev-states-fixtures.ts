@@ -59,6 +59,8 @@ const diagnosticsFixture: DiagnosticsDto = {
   current_working_set_bytes: 0,
   peak_working_set_bytes: 0,
   log_bytes: 0,
+  owner_store: { status: 'ready' },
+  owner_workspace_bytes: 0,
   collectors: [
     collector('process', 'Programs', 'running', true, 'cheap'),
     collector('listeners', 'Listening ports', 'idle', true, 'cheap'),
@@ -87,7 +89,10 @@ const diagnosticsFixture: DiagnosticsDto = {
 export type HarnessState = 'loading' | 'empty' | 'error' | 'ready' | 'large';
 export const harnessStates: readonly HarnessState[] = ['loading', 'empty', 'error', 'ready', 'large'];
 
-export type HarnessRoute = Exclude<RouteId, 'dev-states' | 'dev-perf' | 'dev-system-map-perf'>;
+// Owner workspace screens own their own synthetic fixtures and save/load
+// lifecycle; the legacy states harness must never mount them or expose its
+// synthetic event data as production owner memory.
+export type HarnessRoute = Exclude<RouteId, 'dev-states' | 'dev-perf' | 'dev-system-map-perf' | 'owner-apps' | 'owner-app' | 'owner-change'>;
 
 const readyData: Record<HarnessRoute, unknown> = {
   home: {

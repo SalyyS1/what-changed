@@ -1,0 +1,77 @@
+[
+  {
+    "viewport": "375x812",
+    "screenshot": "D:\\Project\\.WhatChage\\plans\\reports\\owner-map-render\\375x812.png",
+    "outline": [
+      "main#app \"Synthetic booking evidence · isolated QA\" @ x0 y0 375x812",
+      "  div.mx-auto.max-w-6xl \"Synthetic booking evidence · isolated @ x0 y0 375x2521",
+      "    p.mb-4.rounded-md \"Synthetic booking evidence · isolated QA\" @ x16 y16 343x62",
+      "    section.min-w-0.space-y-4 \"Capability and evidence workbench @ x16 y94 343x2411",
+      "      div \"Capability and evidence workbench Explor\" @ x33 y111 309x59",
+      "      section.space-y-3 \"1. Intent 1 saved request 2. Preserve 1 \" @ x33 y186 309x545",
+      "      div.flex.flex-wrap \"2D 3D List Reset view Fit selected + −\" @ x33 y747 309x100",
+      "      div.grid.gap-3 \"Evidence attempt Synthetic owner label ·\" @ x33 y863 309x212",
+      "      p.rounded-md.bg-surface-2 \"This attempt: 0 passed · 0 failed @ x33 y1091 309x113",
+      "      fieldset.flex.flex-wrap \"Visible layers Owner intent Scenari @ x33 y1221 309x59",
+      "      p.mb-2.text-xs \"Capability → requires → confirmed rule →\" @ x33 y1295 309x44",
+      "      div.mb-2.flex \"Left Right Up Down\" @ x33 y1347 309x44",
+      "      div.relative.h-100 \"Capability Confirmed rule Scenario Obser @ x33 y1399 309x400",
+      "      p.text-xs.text-text-secondary \"Legend: text names every stat @ x33 y1815 309x59",
+      "      div.grid.min-w-0 \"4 matching nodes. Arrows, Home, End, Pag\" @ x33 y1890 309x452",
+      "      details.text-xs.text-text-secondary \"Coverage and relationsh @ x33 y2358 309x44",
+      "      details.rounded-md.border \"Before / after evidence review\" @ x33 y2418 309x70"
+    ],
+    "findings": [
+      {
+        "severity": "error",
+        "type": "runtime-error",
+        "target": "",
+        "message": "Failed to load resource: the server responded with a status of 404 (Not Found) (http://localhost:5183/favicon.ico)"
+      },
+      {
+        "severity": "warn",
+        "type": "small-touch-target",
+        "target": "",
+        "message": "9 controls smaller than 44px; e.g. button.min-h-11.rounded-md \"+\"; button.min-h-11.rounded-md \"−\"; input; input"
+      }
+    ],
+    "height": 812
+  },
+  {
+    "viewport": "768x1024",
+    "screenshot": "D:\\Project\\.WhatChage\\plans\\reports\\owner-map-render\\768x1024.png",
+    "outline": [
+      "main#app \"Synthetic booking evidence · isolated QA\" @ x0 y0 768x1024",
+      "  div.mx-auto.max-w-6xl \"Synthetic booking evidence · isolated @ x0 y0 768x1751",
+      "    p.mb-4.rounded-md \"Synthetic booking evidence · isolated QA\" @ x16 y16 736x44",
+      "    section.min-w-0.space-y-4 \"Capability and evidence workbench @ x16 y76 736x1659",
+      "      section.space-y-3 \"1. Intent 1 saved request 2. Preserve 1 \" @ x33 y150 702x158",
+      "      div.grid.gap-3 \"Evidence attempt Synthetic owner label ·\" @ x33 y384 702x63",
+      "      p.rounded-md.bg-surface-2 \"This attempt: 0 passed · 0 failed @ x33 y463 702x60",
+      "      fieldset.flex.flex-wrap \"Visible layers Owner intent Scenari @ x33 y538 702x59",
+      "      div.relative.h-100 \"Capability Confirmed rule Scenario Obser @ x33 y702 702x400",
+      "      div.grid.min-w-0 \"4 matching nodes. Arrows, Home, End, Pag\" @ x33 y1164 702x408",
+      "      details.rounded-md.border \"Before / after evidence review\" @ x33 y1648 702x70"
+    ],
+    "findings": [],
+    "height": 1024
+  },
+  {
+    "viewport": "1440x900",
+    "screenshot": "D:\\Project\\.WhatChage\\plans\\reports\\owner-map-render\\1440x900.png",
+    "outline": [
+      "main#app \"Synthetic booking evidence · isolated QA\" @ x0 y0 1440x900",
+      "  div.mx-auto.max-w-6xl \"Synthetic booking evidence · isolated @ x234 y0 972x1600",
+      "    section.min-w-0.space-y-4 \"Capability and evidence workbench @ x250 y76 940x1508",
+      "      section.space-y-3 \"1. Intent 1 saved request 2. Preserve 1 \" @ x267 y150 906x158",
+      "      div.grid.gap-3 \"Evidence attempt Synthetic owner label ·\" @ x267 y384 906x63",
+      "      p.rounded-md.bg-surface-2 \"This attempt: 0 passed · 0 failed @ x267 y463 906x60",
+      "      fieldset.flex.flex-wrap \"Visible layers Owner intent Scenari @ x267 y538 906x59",
+      "      div.relative.h-100 \"Capability Confirmed rule Scenario Obser @ x267 y688 906x400",
+      "      div.grid.min-w-0 \"4 matching nodes. Arrows, Home, End, Pag\" @ x267 y1149 906x272",
+      "      details.rounded-md.border \"Before / after evidence review\" @ x267 y1497 906x70"
+    ],
+    "findings": [],
+    "height": 900
+  }
+]

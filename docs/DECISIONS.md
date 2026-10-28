@@ -32,7 +32,7 @@ D-08 through D-17; anything new takes the next free integer.
 
 **Date:** 2026-09-03
 **Decision:** Build against **MSVC 14.50.35717**, from the Visual Studio Build
-Tools install at `<MSVC-install>`. Do not use the VS 2017 install.
+Tools install at `D:\Work\c++`. Do not use the VS 2017 install.
 
 **Why:** `vswhere -products * -requires
 Microsoft.VisualStudio.Component.VC.Tools.x86.x64` reports exactly two installs
@@ -40,7 +40,7 @@ on this machine:
 
 | Install path | Newest toolset | Verdict |
 |---|---|---|
-| `<MSVC-install>` | 14.50.35717 | chosen — current toolset, has `VC\Auxiliary\Build\vcvars64.bat` |
+| `D:\Work\c++` | 14.50.35717 | chosen — current toolset, has `VC\Auxiliary\Build\vcvars64.bat` |
 | `C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools` | 14.16.27023 | rejected — 2017-era toolset, predates the C++17/20 runtime surface current crates assume |
 
 The plan anticipated toolsets 14.44 and 14.50; 14.44 is not present, and the
@@ -822,3 +822,26 @@ one machine and one session; the 3-day lifetime and 1 GiB cap are proposed defau
 **Consequence if reversed:** an uncapped history on a busy developer machine grows by hundreds of megabytes a
 day, slowing every query and risking the 1M-event budgets; deleting by size without the importance guard
 could discard the evidence an investigation depends on.
+
+
+## D-27 — Separate owner memory and per-session preview authority
+
+**Status:** approved design; implementation in progress (2026-10-27).
+
+Windows desktop remains primary with a static public landing/wiki. Owner app UUIDs
+are separate from legacy path-derived troubleshooting projects. A separate
+`owner-workspace.sqlite` preserves confirmed rules and request history without
+changing the legacy event migration ledger. AppState coordinates both lifecycles;
+a durable purge journal handles interrupted full deletion before store startup.
+Backup/restore must validate and switch one complete generation; no mixed-store
+transaction or unverified native upgrade is implied.
+
+The user approved a packaged Node/Playwright/Chromium runner only with explicit
+origin/effect permissions for each preview session. Saving a target configuration
+does not grant execution permission. Offline workspace work may proceed now;
+clean-Windows packaging and enforceable network policy remain gates before runner
+integration. The current app has no integrated runner.
+
+[Owner architecture](ownvero/architecture.md) owns durable boundaries; the
+[implementation plan](../plans/261027-0817-ownvero-owner-workspace-web-wiki/plan.md)
+owns progress and evidence. Public identity and exact release approvals remain pending.

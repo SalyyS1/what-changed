@@ -65,6 +65,10 @@ bun run toolchain      # report the resolved toolchain and warn on hazards
 and the correct response to a red `verify` is to fix the code — never to remove a
 step from the script to make it green.
 
+Frontend tests use one worker by default to bound memory and worker startup
+cost on Windows. Override deliberately with `bun run test --maxWorkers=2` when
+the machine has enough resources; the same tests and assertions run in either mode.
+
 A red `check:bindings` has one correct fix: `bun run gen:bindings`, then commit
 the regenerated file. It means a Rust type changed and the committed
 TypeScript no longer matches it, which is the whole point of the gate.

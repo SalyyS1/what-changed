@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "source": "user_message",
+  "actor": "user",
+  "recordedAt": "2026-10-27T15:28:00.495Z",
+  "questionItemId": "[\"request_user_input_async\",\"call_1bb8e07296864a2391d3b070e27caea1\",0]",
+  "question": "Plan Ownvero yêu cầu xác nhận G0/G1 trước khi đổi kiến trúc. Mình đề xuất giữ app Windows lưu dữ liệu tại máy + landing/wiki tĩnh; thêm runner opt-in chạy Node/Chromium đóng gói, chỉ truy cập preview và origin bạn cấp quyền cho từng phiên. Dữ liệu mới gồm yêu cầu, kết quả test, ảnh bằng chứng; profile trình duyệt tạm có thể chứa đăng nhập/cache và việc xóa không bảo đảm secure erase. Bạn có đồng ý phạm vi này để mình triển khai không?",
+  "answer": "Đồng ý G0/G1 theo đề xuất",
+  "approvals": {
+    "G0": "19ba00166569dcbad30696ef0957d84cf46cd9418c27fb6890100b50ee465223",
+    "G1": "19ba00166569dcbad30696ef0957d84cf46cd9418c27fb6890100b50ee465223"
+  },
+  "limitation": "Recorded conversation evidence, not a human digital signature; G2/G3 remain pending."
+}

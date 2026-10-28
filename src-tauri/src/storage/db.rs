@@ -143,8 +143,20 @@ pub struct Db {
     lifecycle: Mutex<()>,
     closed: AtomicBool,
     shared: Shared,
+    /// Application purge closes this gate before draining queued work. The
+    /// epoch rejects a deferred operation captured before a replacement.
+    admission: RwLock<WriteAdmission>,
     #[cfg(test)]
     lifecycle_probe: Mutex<Option<LifecycleProbe>>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct WriteEpoch(u64);
+
+#[derive(Debug, Default)]
+struct WriteAdmission {
+    epoch: u64,
+    closed: bool,
 }
 
 #[cfg(test)]
@@ -187,6 +199,7 @@ impl Db {
             lifecycle: Mutex::new(()),
             closed: AtomicBool::new(false),
             shared,
+            admission: RwLock::new(WriteAdmission::default()),
             #[cfg(test)]
             lifecycle_probe: Mutex::new(None),
         })
@@ -200,6 +213,12 @@ impl Db {
     /// Where the files are.
     pub fn paths(&self) -> &DbPaths {
         &self.paths
+    }
+
+    /// Whether terminal close has started. Callers that need every connection
+    /// drained must also wait for the initiating `close` call to return.
+    pub fn is_closed(&self) -> bool {
+        self.closed.load(Ordering::Acquire)
     }
 
     /// The current state. A write that ran into corruption after open is
@@ -329,9 +348,63 @@ impl Db {
         self.with_writer(|writer| writer.run(job))
     }
 
+    /// Capture before preparing deferred work; retaining only an Arc<Db> does
+    /// not grant permission to write that old work into a later generation.
+    pub fn capture_write_epoch(&self) -> AppResult<WriteEpoch> {
+        if super::writer::on_writer_thread() {
+            return Err(lifecycle_reentrant_error());
+        }
+        let admission = self.admission.read().unwrap_or_else(|p| p.into_inner());
+        if admission.closed {
+            return Err(admission_closed_error());
+        }
+        Ok(WriteEpoch(admission.epoch))
+    }
+
+    pub fn write_at_epoch<T, F>(&self, epoch: WriteEpoch, job: F) -> AppResult<T>
+    where
+        T: Send + 'static,
+        F: FnOnce(&Connection) -> AppResult<T> + Send + 'static,
+    {
+        self.with_writer_at(Some(epoch), |writer| writer.run(job))
+    }
+
+    /// Close new writes and wait for admitted jobs to finish before file work.
+    /// Async collector tickets are drained by the final queue flush as well.
+    pub fn close_write_admission(&self, epoch: u64) -> AppResult<()> {
+        if super::writer::on_writer_thread() {
+            return Err(lifecycle_reentrant_error());
+        }
+        {
+            let mut admission = self.admission.write().unwrap_or_else(|p| p.into_inner());
+            if epoch < admission.epoch {
+                return Err(admission_closed_error());
+            }
+            admission.closed = true;
+            admission.epoch = epoch;
+        }
+        // A corrupt database has no writer, but still must remain fenced.
+        if self.state().is_ready() {
+            self.flush()?;
+        }
+        Ok(())
+    }
+
+    pub fn reopen_write_admission(&self, epoch: u64) -> AppResult<()> {
+        if super::writer::on_writer_thread() {
+            return Err(lifecycle_reentrant_error());
+        }
+        let mut admission = self.admission.write().unwrap_or_else(|p| p.into_inner());
+        if admission.epoch != epoch || self.closed.load(Ordering::Acquire) {
+            return Err(admission_closed_error());
+        }
+        admission.closed = false;
+        Ok(())
+    }
+
     /// Wait until every queued write has been committed.
     pub fn flush(&self) -> AppResult<()> {
-        self.with_writer(WriterHandle::flush)
+        self.with_writer_unchecked(WriterHandle::flush)
     }
 
     /// Run a query on a read-only connection.
@@ -375,6 +448,10 @@ impl Db {
     ) -> AppResult<RecoveryOutcome> {
         if super::writer::on_writer_thread() {
             return Err(lifecycle_reentrant_error());
+        }
+        let admission = self.admission.read().unwrap_or_else(|p| p.into_inner());
+        if admission.closed {
+            return Err(admission_closed_error());
         }
         if self.closed.load(Ordering::Acquire) {
             return Err(closed_state().not_ready());
@@ -548,6 +625,33 @@ impl Db {
     }
 
     fn with_writer<T>(&self, f: impl FnOnce(&WriterHandle) -> AppResult<T>) -> AppResult<T> {
+        self.with_writer_at(None, f)
+    }
+
+    fn with_writer_at<T>(
+        &self,
+        epoch: Option<WriteEpoch>,
+        f: impl FnOnce(&WriterHandle) -> AppResult<T>,
+    ) -> AppResult<T> {
+        // Reject before locking: a writer callback must never wait behind a
+        // purge which itself is waiting for that callback's reply.
+        if super::writer::on_writer_thread() {
+            return Err(super::writer::writer_reentrant_error());
+        }
+        let admission = self.admission.read().unwrap_or_else(|p| p.into_inner());
+        if admission.closed || epoch.is_some_and(|value| value.0 != admission.epoch) {
+            return Err(admission_closed_error());
+        }
+        self.with_writer_unchecked(f)
+    }
+
+    fn with_writer_unchecked<T>(
+        &self,
+        f: impl FnOnce(&WriterHandle) -> AppResult<T>,
+    ) -> AppResult<T> {
+        if super::writer::on_writer_thread() {
+            return Err(super::writer::writer_reentrant_error());
+        }
         if self.closed.load(Ordering::Acquire) {
             return Err(closed_state().not_ready());
         }
@@ -603,6 +707,13 @@ impl Db {
     }
 }
 
+fn admission_closed_error() -> AppError {
+    DbError::NotReady {
+        state: "database mutation admission is closed or its generation expired".to_owned(),
+    }
+    .into()
+}
+
 fn closed_state() -> DbState {
     DbState::Corrupt {
         reason: "closed".to_owned(),
@@ -620,7 +731,7 @@ fn lifecycle_busy_error() -> AppError {
 fn lifecycle_reentrant_error() -> AppError {
     DbError::Recovery {
         action: "start a database lifecycle operation",
-        reason: "a writer-thread callback cannot run database lifecycle operations".to_owned(),
+        reason: "a writer-thread callback cannot wait on the same writer or run database lifecycle operations".to_owned(),
     }
     .into()
 }
@@ -738,13 +849,13 @@ mod tests {
         )
     }
 
-    fn baseline_only_commit(marker: &str) -> AtomicCollectorCommit {
+    fn baseline_only_commit(marker: &str, captured_at: i64) -> AtomicCollectorCommit {
         let baseline = Sanitizer::new()
             .sanitize(Baseline {
                 collector_id: "process".to_owned(),
                 entity_kind: "shutdown-test".to_owned(),
                 snapshot: json!({ "marker": marker }),
-                captured_at: 1,
+                captured_at,
                 truncated: false,
             })
             .0;
@@ -764,6 +875,7 @@ mod tests {
     fn a_fresh_open_is_ready_at_the_latest_schema() {
         let dir = crate::testing::temp_dir("db-open");
         let db = Db::open_in(&dir).unwrap();
+        assert!(!db.is_closed());
         assert_eq!(
             db.state(),
             DbState::Ready {
@@ -776,8 +888,99 @@ mod tests {
             "WAL mode leaves its log beside the file"
         );
         db.close();
+        assert!(db.is_closed());
         assert!(!db.state().is_ready());
         assert!(db.flush().is_err());
+    }
+
+    #[test]
+    fn write_admission_reopens_only_at_its_current_epoch() {
+        let db = Db::open_in(&crate::testing::temp_dir("db-write-epoch")).unwrap();
+        let old = db.capture_write_epoch().unwrap();
+        db.close_write_admission(4).unwrap();
+        assert!(db.capture_write_epoch().is_err());
+        assert!(db.write(|_| Ok(())).is_err());
+        db.flush().unwrap();
+        assert!(db.reopen_write_admission(3).is_err());
+        db.reopen_write_admission(4).unwrap();
+        assert!(db.write_at_epoch(old, |_| Ok(())).is_err());
+        let fresh = db.capture_write_epoch().unwrap();
+        db.write_at_epoch(fresh, |_| Ok(())).unwrap();
+        assert!(db.close_write_admission(3).is_err());
+        db.close();
+        assert!(db.reopen_write_admission(4).is_err());
+    }
+
+    #[test]
+    fn closing_admission_drains_already_admitted_async_collector_tickets() {
+        let db = Arc::new(Db::open_in(&crate::testing::temp_dir("db-admission-drain")).unwrap());
+        let blocked = Arc::clone(&db);
+        let (entered_tx, entered_rx) = sync_channel(1);
+        let (release_tx, release_rx) = sync_channel(1);
+        let writer = std::thread::spawn(move || {
+            blocked.write(move |_| {
+                entered_tx.send(()).unwrap();
+                release_rx.recv().unwrap();
+                Ok(())
+            })
+        });
+        entered_rx.recv().unwrap();
+        let ticket = db
+            .submit_collector(baseline_only_commit("admitted", 1))
+            .unwrap();
+        let closing = Arc::clone(&db);
+        let (closed_tx, closed_rx) = sync_channel(1);
+        let closer = std::thread::spawn(move || {
+            closing.close_write_admission(1).unwrap();
+            closed_tx.send(()).unwrap();
+        });
+        let early = closed_rx.recv_timeout(Duration::from_millis(10)).is_ok();
+        release_tx.send(()).unwrap();
+        writer.join().unwrap().unwrap();
+        if !early {
+            closed_rx.recv_timeout(Duration::from_secs(5)).unwrap();
+        }
+        closer.join().unwrap();
+        assert!(
+            !early,
+            "admission closed before the admitted writer drained"
+        );
+        assert!(ticket.wait().unwrap().event_ids.is_empty());
+        assert!(db
+            .submit_collector(baseline_only_commit("late", 2))
+            .is_err());
+        let admitted = db
+            .read(|conn| super::super::baseline_repository::load(conn, "process", "shutdown-test"))
+            .unwrap()
+            .unwrap();
+        assert_eq!(admitted.snapshot, json!({ "marker": "admitted" }));
+        assert_eq!(admitted.captured_at, 1);
+        db.reopen_write_admission(1).unwrap();
+        db.submit_collector(baseline_only_commit("fresh", 2))
+            .unwrap()
+            .wait()
+            .expect("a newer baseline is writable after admission reopens");
+        let fresh = db
+            .read(|conn| super::super::baseline_repository::load(conn, "process", "shutdown-test"))
+            .unwrap()
+            .unwrap();
+        assert_eq!(fresh.snapshot, json!({ "marker": "fresh" }));
+        assert_eq!(fresh.captured_at, 2);
+    }
+
+    #[test]
+    fn writer_callbacks_cannot_reenter_admission_or_flush_locks() {
+        let db =
+            Arc::new(Db::open_in(&crate::testing::temp_dir("db-admission-reentrant")).unwrap());
+        let nested = Arc::clone(&db);
+        db.write(move |_| {
+            assert!(nested.capture_write_epoch().is_err());
+            assert!(nested.close_write_admission(1).is_err());
+            assert!(nested.reopen_write_admission(0).is_err());
+            assert!(nested.flush().is_err());
+            Ok(())
+        })
+        .unwrap();
     }
 
     #[test]
@@ -790,16 +993,29 @@ mod tests {
     #[test]
     fn a_writer_job_cannot_wait_reentrantly_on_the_same_writer() {
         let db = Arc::new(Db::open_in(&crate::testing::temp_dir("db-reentrant-writer")).unwrap());
+        let epoch = db.capture_write_epoch().unwrap();
         let nested = Arc::clone(&db);
 
-        let message = db
+        let errors = db
             .write(move |_| {
-                let error = nested.write(|_| Ok(())).unwrap_err();
-                Ok(error.to_string())
+                Ok([
+                    nested.write(|_| Ok(())).unwrap_err(),
+                    nested.write_at_epoch(epoch, |_| Ok(())).unwrap_err(),
+                    nested.flush().unwrap_err(),
+                ])
             })
             .unwrap();
 
-        assert!(message.contains("cannot wait on the same writer"));
+        for error in errors {
+            assert!(error.to_string().contains("cannot wait on the same writer"));
+            assert!(matches!(
+                error,
+                AppError::InvalidInput {
+                    what: "database writer job",
+                    ..
+                }
+            ));
+        }
     }
 
     #[test]
@@ -844,7 +1060,7 @@ mod tests {
         entered_rx.recv().unwrap();
 
         let ticket = db
-            .submit_collector(baseline_only_commit("pending"))
+            .submit_collector(baseline_only_commit("pending", 1))
             .unwrap();
         let closing_db = Arc::clone(&db);
         let (closed_tx, closed_rx) = sync_channel(1);

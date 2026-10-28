@@ -2,10 +2,29 @@
 
 ## Scope
 
-What Changed observes a Windows machine and stores a change history on that machine. It has no server, no
-account, no remote surface, and no privileged component. That shape removes most of the categories a normal
-threat model spends its time on, and concentrates the remaining risk in three places: what the application
-reads, what it writes, and what the frontend can ask it to do.
+What Changed observes a Windows machine and stores a change history on that machine. It has no product
+server, account or privileged component. The owner workspace additionally permits explicit local preview
+sessions in a separate packaged browser. Relevant boundaries include what the application reads and writes,
+what the frontend can request, and the browser's separately granted effects and process lifecycle.
+
+## Approved owner-workspace boundary
+
+The [owner architecture](docs/ownvero/architecture.md) extends the local product with
+app intent, immutable confirmed rules, request drafts and reviewed brief export.
+Inputs are bounded and scoped to app UUIDs; configuration does not contact a target.
+Imported or manually described evidence must never become an automated current pass.
+
+Packaged Node/Chromium execution is approved only for explicit preview sessions.
+Development source integrates that runner; the existing installer does not prove it.
+Local process/recipe checks do not prove a clean Windows install or network confinement.
+The user moved those acceptance checks after feature implementation. Remote targets
+remain unavailable. Request interception alone is not a network boundary, and the
+temporary browser profile is not a personal profile.
+
+The existing core network dependency gate remains effective. New runtime policies
+must name the separate runner boundary rather than weakening the recorder gate.
+No remote preview receives the desktop IPC bridge. Public name/assets and release
+publication remain separate approvals.
 
 ## Assets worth protecting
 
@@ -52,20 +71,22 @@ Not "read-only by policy" — the handles the application asks for cannot do any
 | Filesystem | Read, only inside folders the user explicitly added, only to parse a small file |
 | Event log | Subscribe on four named channels with id filters |
 
-The one write outside its own data directory is the autostart entry: a single value under the current
-user's own Run key, when the user turns the toggle on.
+The recorder's autostart control writes a single value under the current user's Run key.
+Owner exports write to a path chosen in the native Save dialog. Permitted preview recipes can
+change synthetic test data at the exact approved routes; they do not modify project source files.
 
 ## Attack surface
 
 | Surface | Threat | Mitigation |
 |---|---|---|
 | Watched folder paths | Path traversal, junction or symlink redirection into a system directory or another user's profile | Canonicalise; require a directory; reject reparse points and junctions; blocklist the Windows directory, both Program Files trees, the Microsoft ProgramData tree, other profiles, and the app's own data directory; cap root count and depth |
-| The frontend | A compromised or malicious page script driving the backend | Closed 33-command allowlist, no dynamic dispatch, no eval, no SQL/shell/path passthrough; every command re-validates its input even for values Rust just sent |
+| The frontend | A compromised or malicious page script driving the backend | Closed generated command allowlist, no dynamic dispatch, no eval, no SQL/shell/path passthrough; every command re-validates its input even for values Rust just sent |
 | IPC flooding | A script hammering a command to fill the log or the database | The UI error-reporting command is rate-limited and its payload is scrubbed before it reaches the log |
 | Config file content | A crafted `.env`, JSON, or XML file reaching the UI as markup | Values are redacted before storage, the UI renders everything as text nodes, and `{@html}` is banned codebase-wide by a test |
 | Docker labels and container names | Attacker-controlled strings from a pulled image | Same path: sanitized, stored as text, rendered as text |
 | A shadowing PATH entry | A hostile `node.exe` earlier in PATH gets executed by version probing | Only tools the user's own shell would already run; the resolved absolute path is stored in the event, so a shadowing entry becomes *visible* rather than silent |
-| Process spawning | Arbitrary execution | Allowlist of 15 exact filenames, absolute resolved paths, no shell, one fixed argument, no window, short timeout, truncated output; timer-driven only — no IPC command can trigger a spawn |
+| Collector process spawning | Arbitrary execution | Allowlist of 15 exact filenames, absolute resolved paths, no shell, one fixed argument, no window, short timeout, truncated output; timer-driven collector admission |
+| Preview process spawning | Unreviewed execution or orphaned children | Frozen per-session consent, inventoried packaged runtime, suspended creation followed by native Job ownership, nonce-bound results, no shell/PATH fallback; native lifecycle acceptance remains open |
 | The diagnostics export | A user pastes their history into a public issue | Built from an explicit field allowlist of counts and versions; contains no event content, no paths, no entity names; asserted by a test that greps for fixture values |
 | Log files | Secrets reaching disk through a debug line | Every log byte passes the same scrubber as events, at the writer, so an unscrubbed line is not reachable |
 

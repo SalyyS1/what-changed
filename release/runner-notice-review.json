@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "status": "pending",
+  "nodeVersion": "v24.12.0",
+  "playwrightVersion": "1.62.1",
+  "chromiumRevision": "1234",
+  "browserExecutable": "browsers/chromium-1234/chrome-win64/chrome.exe",
+  "checksumSource": "https://nodejs.org/dist/v24.12.0/SHASUMS256.txt",
+  "obligationsReviewed": false,
+  "note": "The older third-party approval covers the desktop dependency packet only. Collect official Node license, matched browser notices and transitive runtime obligations, bind the complete notice payload and exact bundle inventory to a fresh owner review. No approval inferred."
+}

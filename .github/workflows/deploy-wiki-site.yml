@@ -1,37 +1,44 @@
-name: Deploy wiki site
+name: Preview static wiki (publication disabled)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'wiki-site/**'
-      - '.github/workflows/deploy-wiki-site.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: ownvero-site-preview
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  preview:
+    if: github.repository == 'SalyyS1/what-changed' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-      - name: Upload site
-        uses: actions/upload-pages-artifact@v3
+      - name: Checkout source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          path: wiki-site
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Install pinned source-preview tools
+        run: npm install --prefix "$RUNNER_TEMP/site-tools" --ignore-scripts --no-package-lock vite@8.2.2 three@0.185.1
+      - name: Link preview dependencies
+        run: ln -s "$RUNNER_TEMP/site-tools/node_modules" node_modules
+      - name: Build allowlisted static output
+        run: node wiki-site/build.mjs
+      - name: Check output and unavailable download boundary
+        run: |
+          node scripts/check-site.mjs
+          node scripts/check-download-manifest.mjs
+          node --test wiki-site/tests/content.test.mjs wiki-site/tests/download.test.mjs
+      - name: Upload local-review artifact only
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ownvero-local-site-preview
+          path: wiki-site/dist
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7

@@ -56,7 +56,7 @@ Keep root authorities (`README.md`, `PRODUCT.md`, `ARCHITECTURE.md`, `COLLECTORS
 - [ ] All screenshots are current, accessible, versioned and clearly synthetic where applicable.
 - [ ] Security/privacy/collector limitations exactly match tests and the release audit.
 - [ ] Canonical MIT `LICENSE` exists and package/installer/README agree; third-party obligations are audited.
-- [ ] Hosted wiki, if later created, is identified as a projection rather than authority.
+- [x] Hosted wiki, if later created, is identified as a projection rather than authority.
 
 ## Risk Assessment
 
@@ -89,3 +89,14 @@ None. MIT was selected by the user on 2026-09-10.
 - `node --test scripts/check-docs.test.mjs` passes 3/3 fixture cases, including missing authority, orphan and broken-link failures. The wiki index now links Product, Analysis, brand, performance, release checklist and support policy directly.
 - A root/docs source scan found no separate maintained version or dependency table; the one historical installer version reference in `docs/PERFORMANCE.md` is a measurement, not a second version authority.
 - This closes navigation reachability only; it does not claim an installed-app walkthrough, current screenshots or reviewed third-party obligations.
+
+## Hosted projection evidence (2026-10-27)
+
+The authorized public wiki identifies itself as a source preview with release
+publication still gated and links to canonical repository documents. The local
+wiki index and deployment guide explicitly identify the hosted site as a
+projection. Read-only verification confirmed live site assets and their source
+correspondence; see [hosted verification](../reports/qa-261027-hosted-wiki-verification.md).
+This closes only the hosted-projection criterion. Installed documentation use,
+screenshot provenance, limitations reconciliation and complete third-party
+artifact obligations remain open; public v1 remains NO-GO.

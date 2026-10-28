@@ -506,20 +506,49 @@ mod tests {
             if running {
                 assert!(slot.start_queued(11).is_some());
             }
-            let (sender, receiver) = std::sync::mpsc::sync_channel(1);
-            let waiter = std::thread::spawn(move || {
-                sender
-                    .send(flight.wait(&entry(), Duration::from_secs(30)))
-                    .unwrap();
-            });
-            let began = Instant::now();
+            let (ready_tx, ready_rx) = std::sync::mpsc::sync_channel(2);
+            let waiters: Vec<_> = (0..2)
+                .map(|_| {
+                    let flight = Arc::clone(&flight);
+                    let ready = ready_tx.clone();
+                    std::thread::spawn(move || {
+                        let mut state = lock(&flight.state);
+                        // Readiness is published under the same mutex as
+                        // finish, so shutdown cannot overtake entering wait.
+                        ready.send(()).unwrap();
+                        loop {
+                            let (next, wake) = flight
+                                .changed
+                                .wait_timeout(state, Duration::from_secs(30))
+                                .unwrap();
+                            state = next;
+                            assert!(
+                                !wake.timed_out(),
+                                "shutdown must notify every capture waiter"
+                            );
+                            if matches!(*state, FlightState::Finished { .. }) {
+                                break;
+                            }
+                        }
+                        drop(state);
+                        flight.wait(&entry(), Duration::ZERO)
+                    })
+                })
+                .collect();
+            drop(ready_tx);
+            ready_rx.recv().unwrap();
+            ready_rx.recv().unwrap();
             slot.fail_active(12, "collector runtime stopped".to_owned());
-            let result = receiver
-                .recv_timeout(Duration::from_millis(100))
-                .expect("capture waiter is released by shutdown");
-            waiter.join().unwrap();
+
+            // The failure is available synchronously, with no remaining
+            // capture budget; OS scheduling is not part of this invariant.
+            let result = flight.wait(&entry(), Duration::ZERO);
             assert_eq!(result.status, CollectorCaptureStatus::Failed);
-            assert!(began.elapsed() < Duration::from_millis(100));
+            assert_eq!(result.completed_at, Some(12));
+            assert_eq!(result.error.as_deref(), Some("collector runtime stopped"));
+            for waiter in waiters {
+                assert_eq!(waiter.join().unwrap(), result);
+            }
         }
     }
 

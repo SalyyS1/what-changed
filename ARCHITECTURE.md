@@ -2,14 +2,35 @@
 
 ## Shape
 
-One process. A Tauri 2 application whose backend is a Rust binary (`WhatChanged.exe`) and whose
-frontend is a Svelte 5 single-page application rendered by the system WebView2 runtime. No service, no
-scheduled task, no helper process, no second runtime, no elevation. When the window is closed the same
-process keeps running with only a tray icon; quitting the tray is the only exit.
+The recorder is a Tauri 2 application whose backend is a Rust binary (`WhatChanged.exe`) and whose
+frontend is a Svelte 5 single-page application rendered by the system WebView2 runtime. No service,
+scheduled task or elevation is required. When the window is closed the same process keeps running
+with a tray icon; quitting the tray exits it. An explicitly authorized preview session additionally
+owns packaged Node/Chromium child processes, as described below.
 
 The window is created with native decorations off, so the titlebar is application-drawn. `withGlobalTauri`
 is off, so the frontend has no ambient bridge object: every backend call goes through a generated,
 typed wrapper. A Content Security Policy is set from the first commit, not added later.
+
+## Owner workspace transition
+
+The current recorder runtime described above remains offline. The approved
+[owner workspace architecture](docs/ownvero/architecture.md) adds a separate
+`owner-workspace.sqlite` under the same application root, immutable rule/scenario
+revisions, local request drafts and reviewed briefs. App UUIDs are independent of
+legacy project IDs; an optional project link neither enables collection nor owns source files.
+
+AppState owns both stores. Full privacy deletion uses a durable cross-store purge
+journal; startup handles pending deletion before opening or migrating either store.
+There is no cross-database transaction claim. Store integrity errors preserve the
+affected files. The plan tracks remaining backup/restore, corruption-isolation and
+installed-upgrade proof. These contracts are not a release certification.
+
+Development source integrates the opt-in packaged Node/Chromium runner. Its process,
+origin permissions and artifact lifecycle are specified in the owner architecture;
+the existing installer does not include or prove it. Clean-Windows and network-boundary
+acceptance follow feature implementation under the user's revised sequence.
+The recorder and offline workspace do not contact a preview when configuration is saved.
 
 ## Data flow
 

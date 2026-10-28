@@ -7,6 +7,7 @@
 //! collection *policy* stays testable on any host and the collection
 //! *mechanism* stays in one audited place.
 
+pub mod managed_file_lock;
 pub mod memory;
 pub mod safe_file;
 pub mod traits;

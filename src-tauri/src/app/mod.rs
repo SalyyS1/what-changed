@@ -7,6 +7,8 @@
 //! `domain/` or `analysis/`; a rule about *what happens when the user closes
 //! the window* belongs here.
 
+pub mod data_lifecycle;
+pub mod data_restore;
 pub mod event_bus;
 pub mod lifecycle;
 pub mod monitoring;
@@ -17,6 +19,7 @@ pub mod tray;
 pub mod validate;
 pub mod window;
 
+pub use data_lifecycle::DataLifecycle;
 pub use event_bus::EventBus;
 pub use monitoring::Monitoring;
 pub use paths::AppPaths;

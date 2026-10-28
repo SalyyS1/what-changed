@@ -57,6 +57,7 @@ pub(crate) fn simulate_event_for_state(state: &AppState, kind: &str) -> CommandR
 #[cfg(any(test, debug_assertions, feature = "devtools"))]
 #[tauri::command]
 pub async fn simulate_event(state: State<'_, AppState>, kind: String) -> CommandResult<i64> {
+    let _admission = state.data_lifecycle.admit()?;
     simulate_event_for_state(&state, &kind)
 }
 
@@ -68,6 +69,7 @@ pub async fn seed_synthetic(
     profile: String,
     relations: bool,
 ) -> CommandResult<u64> {
+    let _admission = state.data_lifecycle.admit()?;
     validate::text("profile", &profile, 16)?;
     if !load_developer_mode(&state)? {
         return Err(crate::error::AppError::InvalidInput {

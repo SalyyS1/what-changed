@@ -60,6 +60,7 @@ pub async fn update_settings(
     state: State<'_, AppState>,
     update: SettingsUpdateDto,
 ) -> CommandResult<SettingsDto> {
+    let _admission = state.data_lifecycle.admit()?;
     Ok(state.update_collector_settings(update)?)
 }
 
@@ -82,6 +83,7 @@ pub async fn add_watched_location(
     path: String,
     max_depth: Option<u8>,
 ) -> CommandResult<WatchedLocationDto> {
+    let _admission = state.data_lifecycle.admit()?;
     let canonical = validate::watched_folder(&path, &state.paths.data)?;
     let max_depth = validate::watch_depth(max_depth.unwrap_or(validate::MAX_WATCH_DEPTH))?;
     let shown = validate::display_path(&canonical);
@@ -110,6 +112,7 @@ pub async fn remove_watched_location(
     state: State<'_, AppState>,
     location_id: i64,
 ) -> CommandResult<()> {
+    let _admission = state.data_lifecycle.admit()?;
     validate::in_range("folder id", location_id, 1, i64::MAX)?;
     state
         .collectors
@@ -168,6 +171,7 @@ pub fn list_projects(state: State<'_, AppState>) -> CommandResult<Vec<ProjectDto
 /// Register a project root. Same path rules as a watched folder.
 #[tauri::command]
 pub fn add_project(state: State<'_, AppState>, path: String) -> CommandResult<ProjectDto> {
+    let _admission = state.data_lifecycle.admit()?;
     let canonical = validate::watched_folder(&path, &state.paths.data)?;
     let shown = validate::display_path(&canonical);
     let name = canonical
@@ -186,6 +190,7 @@ pub fn add_project(state: State<'_, AppState>, path: String) -> CommandResult<Pr
 /// Unregister a project root.
 #[tauri::command]
 pub fn remove_project(state: State<'_, AppState>, project_id: String) -> CommandResult<()> {
+    let _admission = state.data_lifecycle.admit()?;
     let project_id = validate::text("project", &project_id, validate::MAX_TEXT)?;
     if !ids::is_valid_entity_id_for(&project_id, EntityType::Project) {
         return Err(AppError::InvalidInput {
@@ -211,6 +216,7 @@ pub async fn mark_project_working(
     state: State<'_, AppState>,
     project_id: String,
 ) -> CommandResult<ProjectDto> {
+    let admission = state.data_lifecycle.admit()?;
     let project_id = validate::text("project", &project_id, validate::MAX_TEXT)?;
     if !ids::is_valid_entity_id_for(&project_id, EntityType::Project) {
         return Err(AppError::InvalidInput {
@@ -239,6 +245,7 @@ pub async fn mark_project_working(
     let reason = Some(format!("Workspace baseline: {}", project.name));
     let project_id_for_write = project_id.clone();
     let baseline = tauri::async_runtime::spawn_blocking(move || {
+        let _admission = admission;
         let checkpoint = create_manual_with_progress(
             app,
             checkpoint_service,
@@ -272,6 +279,7 @@ pub fn clear_project_baseline(
     state: State<'_, AppState>,
     project_id: String,
 ) -> CommandResult<ProjectDto> {
+    let _admission = state.data_lifecycle.admit()?;
     let project_id = validate::text("project", &project_id, validate::MAX_TEXT)?;
     if !ids::is_valid_entity_id_for(&project_id, EntityType::Project) {
         return Err(AppError::InvalidInput {

@@ -60,6 +60,9 @@ pub struct StorageUsage {
     pub database_bytes: u64,
     /// Size of the write-ahead log.
     pub wal_bytes: u64,
+    /// Separate owner SQLite files and owned migration copies; None when the
+    /// IPC layer has not measured them or their inventory cannot be inspected.
+    pub owner_workspace_bytes: Option<u64>,
     /// Rows per table, by name.
     pub table_rows: Vec<(String, u64)>,
 }
@@ -396,6 +399,7 @@ pub fn storage_usage(conn: &Connection, paths: &DbPaths) -> AppResult<StorageUsa
     Ok(StorageUsage {
         database_bytes,
         wal_bytes,
+        owner_workspace_bytes: None,
         table_rows,
     })
 }

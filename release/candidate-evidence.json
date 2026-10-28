@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "13d60df4c98fd50532c3d4a338fd6eb7be6c0db8",
+  "artifacts": [],
+  "verification": [],
+  "state": "unfrozen-development-source",
+  "note": "No current installer or complete candidate evidence. Fill exact artifact and source-bound evidence references after verification; do not infer approval from source tests."
+}

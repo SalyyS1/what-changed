@@ -51,6 +51,8 @@ pub async fn get_diagnostics(
         peak_working_set_bytes: crate::platform::memory::peak_working_set_bytes(),
         log_bytes: directory_bytes(&state.paths.logs),
         collectors: collectors::collector_rows(&state)?,
+        owner_store: state.owner_store.state(),
+        owner_workspace_bytes: state.owner_store.owned_file_bytes(),
     })
 }
 
@@ -85,6 +87,7 @@ pub async fn export_diagnostics(
     app: AppHandle,
     state: State<'_, AppState>,
 ) -> CommandResult<String> {
+    let _admission = state.data_lifecycle.admit()?;
     let destination = app
         .dialog()
         .file()

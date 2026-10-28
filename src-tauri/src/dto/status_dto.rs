@@ -129,6 +129,10 @@ pub struct DiagnosticsDto {
     pub peak_working_set_bytes: u64,
     /// Total bytes in retained redaction-filtered log files.
     pub log_bytes: u64,
+    /// Independent owner-memory health. Its failure does not reset event history.
+    pub owner_store: crate::owner_workspace::OwnerStoreState,
+    /// Owned owner-store files; absent when the inventory cannot be read.
+    pub owner_workspace_bytes: Option<u64>,
 }
 
 /// The answer to "check for updates". Shape owned by phase 21.

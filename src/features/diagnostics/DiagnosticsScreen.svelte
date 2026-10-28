@@ -131,6 +131,7 @@
             <div><dt class="text-caps text-text-muted">WebView runtime</dt><dd class="m-0 mt-1 text-text-primary font-tabular">{snap.os_version}</dd></div>
             <div><dt class="text-caps text-text-muted">Database</dt><dd class="m-0 mt-1"><Badge tone={dbStatus.tone} dot>{dbStatus.label}</Badge></dd></div>
             <div><dt class="text-caps text-text-muted">Database size</dt><dd class="m-0 mt-1 text-text-primary font-tabular">{storageSize(snap.database_bytes)}</dd></div>
+            <div><dt class="text-caps text-text-muted">App memory</dt><dd class="m-0 mt-1 text-text-primary">{snap.owner_store.status.replaceAll('_', ' ')} · {snap.owner_workspace_bytes === null ? 'size unavailable' : storageSize(snap.owner_workspace_bytes)}</dd></div>
             <div><dt class="text-caps text-text-muted">Migration</dt><dd class="m-0 mt-1 text-text-primary font-tabular">{snap.schema_version}</dd></div>
             <div><dt class="text-caps text-text-muted">Rows rejected before queue</dt><dd class="m-0 mt-1 font-tabular {warningTone(snap.dropped_writes)}">{count(snap.dropped_writes)}</dd></div>
             <div><dt class="text-caps text-text-muted">Rows lost after commit</dt><dd class="m-0 mt-1 font-tabular {dangerTone(snap.failed_commit_rows)}">{count(snap.failed_commit_rows)}</dd></div>

@@ -16,6 +16,7 @@ pub mod checkpoint_window_plan_capture;
 mod collector_commit;
 pub mod config_snapshot_repository;
 pub mod connection;
+pub mod data_generation;
 pub mod db;
 pub mod entity_repository;
 pub mod event_repository;

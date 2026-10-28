@@ -6,8 +6,10 @@
 //! to be restarted to be diagnosed is a change recorder you cannot diagnose.
 
 use std::fs;
+#[cfg(debug_assertions)]
 use std::io;
 use std::path::Path;
+use std::sync::Arc;
 
 use tracing_appender::non_blocking::WorkerGuard;
 use tracing_subscriber::filter::EnvFilter;
@@ -16,6 +18,8 @@ use tracing_subscriber::reload;
 use tracing_subscriber::util::SubscriberInitExt;
 use tracing_subscriber::Registry;
 
+use super::log_epoch::{self, EpochMakeWriter, EpochSink, LogEpoch};
+#[cfg(debug_assertions)]
 use super::redacting_writer::RedactingMakeWriter;
 use crate::error::{AppError, AppResult};
 
@@ -29,6 +33,8 @@ const LOG_FILE_PREFIX: &str = "what-changed";
 /// reported on a Friday, and small enough that logs never become the biggest
 /// thing on disk.
 const KEPT_FILES: usize = 7;
+/// Bound queued complete lines without blocking application threads on disk.
+const QUEUED_LOG_LINES: usize = 1024;
 
 /// Handle for changing verbosity after startup.
 pub struct LogControl {
@@ -86,12 +92,15 @@ pub fn init(log_dir: &Path) -> AppResult<LogControl> {
         .map_err(|error| AppError::Logging {
             reason: error.to_string(),
         })?;
-    let (file, guard) = tracing_appender::non_blocking(appender);
+    let epoch = Arc::new(LogEpoch::default());
+    let (file, guard) = tracing_appender::non_blocking::NonBlockingBuilder::default()
+        .buffered_lines_limit(QUEUED_LOG_LINES)
+        .finish(EpochSink::new(appender, Arc::clone(&epoch)));
 
     let file_layer = tracing_subscriber::fmt::layer()
         .with_ansi(false)
         .with_target(true)
-        .with_writer(RedactingMakeWriter::new(WriteAdapter(file)));
+        .with_writer(EpochMakeWriter::new(file, Arc::clone(&epoch)));
 
     let registry = Registry::default().with(filter).with(file_layer);
 
@@ -107,6 +116,7 @@ pub fn init(log_dir: &Path) -> AppResult<LogControl> {
     registry.try_init().map_err(|error| AppError::Logging {
         reason: error.to_string(),
     })?;
+    log_epoch::register(epoch)?;
 
     Ok(LogControl {
         handle,
@@ -117,8 +127,10 @@ pub fn init(log_dir: &Path) -> AppResult<LogControl> {
 /// Adapts a writer that is only `Write` by value into the shared-sink shape the
 /// redacting writer holds. Nothing here changes the bytes.
 #[derive(Debug)]
+#[cfg(debug_assertions)]
 struct WriteAdapter<W: io::Write>(W);
 
+#[cfg(debug_assertions)]
 impl<W: io::Write> io::Write for WriteAdapter<W> {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
         self.0.write(buf)

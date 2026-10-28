@@ -8,6 +8,45 @@
  * `bun run check:bindings` fails the build when this file disagrees with the
  * Rust types, so a renamed field breaks the build rather than the interface.
  */
+export type OwnerExportSelectionInput = { include_target_details: boolean, };
+export type OwnerBundlePreviewDto = { app_id: string, digest: string, bytes: number, markdown: string, rules: Array<OwnerRuleRevisionDto>, omissions: Array<string>, limitations: Array<string>, };
+export type OwnerImportPreviewDto = { review_id: string, digest: string, app_name: string, proposed_app_id: string, rules: Array<OwnerRuleRevisionDto>, markdown: string, conflicts: Array<string>, limitations: Array<string>, };
+export type ApplyOwnerImportInput = { operation_id: string, review_id: string, digest: string, name: string, confirmed_by: string, confirmed_rules: Array<RuleRefDto>, };
+export type OwnerImportResultDto = { app: OwnerAppDto, source_digest: string, limitations: Array<string>, };
+export type StartOwnerManualRunInput = { operation_id: string, id: string, app_id: string, change_id: string, expected_change_version: number, candidate_id: string, scenarios: Array<ScenarioRefDto>, retry_of: string | null, };
+export type OwnerManualManifestDto = { schema_version: number, change: OwnerChangeDraftDto, candidate: OwnerCandidateRevisionDto, environment: OwnerEnvironmentRevisionDto, rules: Array<OwnerRuleRevisionDto>, scenarios: Array<ScenarioRevisionDto>, fixture_schema_digest: string, semantics_version: string, };
+export type OwnerManualRunDto = { id: string, app_id: string, change_id: string, version: number, method: VerificationMethod, lifecycle: RunLifecycle, retry_of: string | null, manifest: OwnerManualManifestDto, manifest_digest: string, started_at: number, ended_at: number | null,
+/**
+ * Absent on older/manual/imported runs. Only the native supervisor writes it.
+ */
+execution: OwnerExecutionSummaryDto | null, };
+export type OwnerExecutionSummaryDto = { runner_semantics: string, scope_digest: string, identity: string, revision: string | null, };
+export type RunnerRouteDto = { origin: string, method: string, path: string, };
+export type PreparePreviewRunInput = { run: StartOwnerManualRunInput, routes: Array<RunnerRouteDto>, fixture: { [key in string]: string }, mode: string, capture_screenshots: boolean, };
+export type PreviewRunPlanDto = { consent_id: string, manifest: OwnerManualManifestDto, manifest_digest: string, scope_digest: string, roles: Array<string>, routes: Array<RunnerRouteDto>, effects: Array<string>, limitations: Array<string>, capture_screenshots: boolean, };
+export type PreviewRecipeFileDto = { path: string, content: string, media_type: string, };
+export type PreviewRecipeExportDto = { app_id: string, digest: string, files: Array<PreviewRecipeFileDto>, limitations: Array<string>, };
+export type PreviewCaptureDto = { id: string, role: string, data_url: string, retained: boolean, expires_at: number, };
+export type GrantPreviewRunInput = { consent_id: string, scope_digest: string, authorized_test_environment: boolean, isolated_test_data: boolean, acknowledge_temporary_auth: boolean, };
+export type PreviewRunnerEventDto = { sequence: number, kind: string, message: string, scenario_id: string | null, assertion_id: string | null, status: ResultStatus | null, locator: LocatorDto | null, };
+export type PreviewRunnerStatusDto = { app_id: string, run_id: string, lifecycle: string, roles: Array<string>, can_continue: boolean, mode: string, events: Array<PreviewRunnerEventDto>, error: string | null, capture_screenshots: boolean, captures: Array<PreviewCaptureDto>, };
+export type ManualStepObservationDto = { step_id: string, observed: string, };
+export type ManualAssertionObservationInput = { assertion_id: string, status: ResultStatus, observed: string, limitation: string | null, };
+export type RecordOwnerManualResultInput = { operation_id: string, id: string, app_id: string, run_id: string, expected_run_version: number, scenario_id: string, scenario_revision: number, observer: string, observed_at: number, observed_steps: Array<ManualStepObservationDto>, assertions: Array<ManualAssertionObservationInput>, limitation: string | null, };
+export type OwnerManualResultDto = { id: string, app_id: string, run_id: string, scenario_id: string, scenario_revision: number, method: VerificationMethod, status: ResultStatus, observer: string, observed_at: number, observed_steps: Array<ManualStepObservationDto>, assertions: Array<AssertionOutcomeDto>, limitation: string | null, recorded_at: number, };
+export type FinishOwnerManualRunInput = { operation_id: string, app_id: string, run_id: string, expected_run_version: number, lifecycle: RunLifecycle, };
+export type RecordOwnerEvidenceDecisionInput = { operation_id: string, id: string, app_id: string, change_id: string, expected_change_version: number, run_id: string, expected_run_version: number, decision: DecisionKind, reason: string, acknowledged_unresolved: Array<ScenarioRefDto>, acknowledge_unknown_build: boolean, };
+export type OwnerEvidenceDecisionDto = { id: string, app_id: string, change_id: string, change_version: number, run_id: string, run_version: number, candidate_id: string, manifest_digest: string, decision: DecisionKind, reason: string, acknowledged_unresolved: Array<ScenarioRefDto>, acknowledged_unknown_build: boolean, evidence_freshness: EvidenceFreshness,
+/**
+ * Recomputed on read; evidence_freshness records the decision-time value.
+ */
+current_freshness: EvidenceFreshness, recorded_at: number, };
+export type OwnerEvidenceCountsDto = { passed: number, failed: number, blocked: number, not_run: number, };
+export type OwnerScenarioEvidenceDto = { scenario: ScenarioRevisionDto, status: ResultStatus, result: OwnerManualResultDto | null, };
+export type OwnerEvidenceReviewDto = { run: OwnerManualRunDto, freshness: EvidenceFreshness, freshness_reasons: Array<string>, status: ResultStatus, counts: OwnerEvidenceCountsDto, scenarios: Array<OwnerScenarioEvidenceDto>, decisions: Array<OwnerEvidenceDecisionDto>, unresolved_scenarios: Array<ScenarioRefDto>, can_accept: boolean, can_accept_with_exceptions: boolean, decision_blockers: Array<string>, limitations: Array<string>, };
+export type SaveProjectDecisionInput = { operation_id: string, id: string, app_id: string, expected_revision: number, capability_id: string | null, change_id: string | null, text: string, rationale: string, provenance: RuleProvenance, recorded_by: string, };
+export type ProjectDecisionRevisionDto = { id: string, app_id: string, revision: number, capability_id: string | null, change_id: string | null, text: string, rationale: string, provenance: RuleProvenance, recorded_by: string, supersedes: number | null, recorded_at: number, };
+export type ProjectMemoryFilterInput = { capability_id: string | null, change_id: string | null, page: OwnerPageInput, };
 
 // ---- Domain vocabularies ----
 
@@ -408,6 +447,11 @@ database_bytes: number,
  */
 wal_bytes: number,
 /**
+ * Separate owner SQLite files and owned migration copies; None when the
+ * IPC layer has not measured them or their inventory cannot be inspected.
+ */
+owner_workspace_bytes: number | null,
+/**
  * Rows per table, by name.
  */
 table_rows: Array<[string, number]>, };
@@ -720,7 +764,15 @@ peak_working_set_bytes: number,
 /**
  * Total bytes in retained redaction-filtered log files.
  */
-log_bytes: number, };
+log_bytes: number,
+/**
+ * Independent owner-memory health. Its failure does not reset event history.
+ */
+owner_store: OwnerStoreState,
+/**
+ * Owned owner-store files; absent when the inventory cannot be read.
+ */
+owner_workspace_bytes: number | null, };
 export type UpdateCheckDto = {
 /**
  * Whether a signed updater is configured for this build.
@@ -936,7 +988,13 @@ export type SystemMapData = { nodes: Array<SystemMapNode>, edges: Array<SystemMa
 dropped_edges: number, kind_availability: Array<EntityKindAvailability>, focused_recent_events: Array<SystemMapRecentEvent>, };
 export type OnboardingStateDto = { completed: boolean, can_skip: boolean, };
 export type PrivacyCategoryCountDto = { category: string, count: number, };
-export type PrivacySummaryDto = { categories: Array<PrivacyCategoryCountDto>, checkpoints: number, checkpoint_items: number, investigations: number, watched_folders: number, config_baselines: number, database_bytes: number, wal_bytes: number, oldest_record_at: number | null, log_bytes: number, data_path: string, database_path: string, retention: RetentionPolicy, };
+export type PrivacySummaryDto = { categories: Array<PrivacyCategoryCountDto>, checkpoints: number, checkpoint_items: number, investigations: number, watched_folders: number, config_baselines: number, database_bytes: number, wal_bytes: number, oldest_record_at: number | null, log_bytes: number, data_path: string, database_path: string, retention: RetentionPolicy,
+/**
+ * The separate owner-workspace store is included without exposing its
+ * filesystem path. A failed owner store must not make healthy history
+ * look empty or vice versa.
+ */
+owner_store: OwnerStoreState, owner_workspace_bytes: number | null, };
 export type PurgeReportDto = { events_deleted: number, checkpoints_deleted: number, investigations_deleted: number, baselines_deleted: number, watched_folders_deleted: number, };
 export type QuietHours = {
 /**
@@ -952,6 +1010,56 @@ start_hour: number,
  * window when it is below `start_hour`.
  */
 end_hour: number, };
+
+// ---- Offline owner workspace ----
+
+export type RuleProvenance = "owner" | "template" | "imported_untrusted" | "external_ai";
+export type EnvironmentKind = "test" | "local";
+export type CandidateSource = "owner_label" | "git_commit" | "deploy_build_id" | "revision_marker";
+export type CandidateTrust = "self_reported" | "source_only" | "environment_reported";
+export type ChangeState = "draft" | "ready_for_review" | "deferred";
+export type VerificationMethod = "automated" | "owner_manual" | "imported_untrusted";
+export type RunLifecycle = "queued" | "running" | "completed" | "cancelled" | "interrupted";
+export type ResultStatus = "passed" | "failed" | "blocked" | "not_run";
+export type EvidenceFreshness = "current" | "stale" | "unknown";
+export type DecisionKind = "pending" | "accepted" | "accepted_with_exceptions" | "rejected" | "deferred";
+export type RuleRefDto = { rule_id: string, revision: number, };
+export type ScenarioRefDto = { scenario_id: string, revision: number, };
+export type OriginDto = { scheme: string, host: string, port: number, };
+export type FrozenManifestDto = { candidate_id: string, environment_id: string, environment_revision: number, rules: Array<RuleRefDto>, scenarios: Array<ScenarioRefDto>, fixture_schema_digest: string, runner_semantics: string, };
+export type AssertionOutcomeDto = { assertion_id: string, status: ResultStatus, expected: string, observed: string, limitation: string | null, };
+export type LocatorDto = { "kind": "role", role: string, name: string, } | { "kind": "label", text: string, } | { "kind": "test_id", value: string, };
+export type RecipeActionDto = { "kind": "navigate", path: string, } | { "kind": "fill", locator: LocatorDto, fixture_field: string, } | { "kind": "click", locator: LocatorDto, } | { "kind": "read_back", adapter_id: string, } | { "kind": "deny_other_role", adapter_id: string, } | { "kind": "cleanup", locator: LocatorDto, };
+export type RecipeAssertionDto = { "kind": "visible", locator: LocatorDto, } | { "kind": "text_equals", locator: LocatorDto, expected: string, } | { "kind": "field_equals", field: string, fixture_field: string, } | { "kind": "denied", allowed_statuses: Array<number>, absent_fields: Array<string>, };
+export type RecipeStepDto = { id: string, action: RecipeActionDto, assertions: Array<NamedAssertionDto>, };
+export type NamedAssertionDto = { id: string, expected_behavior: string, assertion: RecipeAssertionDto, };
+export type ReadBackAdapterDto = { id: string, origin: OriginDto, path_template: string, role_ref: string, allowed_fields: Array<string>, effect: AdapterEffect, };
+export type AdapterEffect = "read_only" | "read_denied";
+export type ScenarioRecipeDto = { schema_version: number, role_refs: Array<string>, fixture_refs: Array<string>, steps: Array<RecipeStepDto>, adapters: Array<ReadBackAdapterDto>, };
+export type SaveOwnerAppInput = { operation_id: string, id: string, expected_version: number, name: string, description: string, legacy_project_id: string | null, archived: boolean, };
+export type OwnerAppDto = { id: string, name: string, description: string, legacy_project_id: string | null, current_candidate_id: string | null, version: number, archived_at: number | null, created_at: number, updated_at: number, };
+export type SaveOwnerCapabilityInput = { operation_id: string, id: string, app_id: string, expected_version: number, label: string, description: string, sort_order: number, archived: boolean, };
+export type OwnerCapabilityDto = { id: string, app_id: string, label: string, description: string, sort_order: number, version: number, archived_at: number | null, };
+export type ConfirmOwnerRuleInput = { operation_id: string, rule_id: string, app_id: string, capability_id: string, expected_version: number, expected_behavior: string, provenance: RuleProvenance, confirmed_by: string, };
+export type OwnerRuleRevisionDto = { rule_id: string, app_id: string, capability_id: string, revision: number, expected_behavior: string, provenance: RuleProvenance, confirmed_by: string, confirmed_at: number, supersedes: number | null, };
+export type SaveOwnerChangeInput = { operation_id: string, id: string, app_id: string, expected_version: number, intent: string, example: string, scope: string, preserved_rules: Array<RuleRefDto>, candidate_id: string | null, state: ChangeState, };
+export type OwnerChangeDraftDto = { id: string, app_id: string, version: number, intent: string, example: string, scope: string, preserved_rules: Array<RuleRefDto>, candidate_id: string | null, state: ChangeState, updated_at: number, };
+export type SaveOwnerEnvironmentInput = { operation_id: string, id: string, app_id: string, expected_version: number, label: string, preview_url: string, origins: Array<OriginDto>, kind: EnvironmentKind, revoked: boolean, };
+export type OwnerEnvironmentRevisionDto = { id: string, app_id: string, revision: number, label: string, preview_url: string, origins: Array<OriginDto>, kind: EnvironmentKind, revoked: boolean, created_at: number, };
+export type SaveOwnerCandidateInput = { operation_id: string, id: string, app_id: string, environment_id: string, environment_revision: number, identity: string, source: CandidateSource, trust: CandidateTrust, observed_at: number, };
+export type OwnerCandidateRevisionDto = { id: string, app_id: string, environment_id: string, environment_revision: number, identity: string, source: CandidateSource, trust: CandidateTrust, observed_at: number, };
+export type SelectOwnerCandidateInput = { operation_id: string, app_id: string, expected_version: number, candidate_id: string, };
+export type OwnerPageInput = { after: string | null, limit: number, };
+export type OwnerChangeReviewDto = { app: OwnerAppDto, change: OwnerChangeDraftDto, preserved_rules: Array<OwnerRuleRevisionDto>, candidate: OwnerCandidateRevisionDto | null, environment: OwnerEnvironmentRevisionDto | null, };
+export type ConfirmOwnerScenarioInput = { operation_id: string, id: string, app_id: string, capability_id: string, expected_version: number, title: string, expected_behavior: string, confirmed_by: string, method: VerificationMethod, recipe: ScenarioRecipeDto, rules: Array<RuleRefDto>, };
+export type ScenarioRevisionDto = { id: string, app_id: string, capability_id: string, revision: number, title: string, expected_behavior: string, confirmed_by: string, method: VerificationMethod, recipe: ScenarioRecipeDto, rules: Array<RuleRefDto>, confirmed_at: number, };
+export type VerificationRunDto = { id: string, app_id: string, manifest: FrozenManifestDto, lifecycle: RunLifecycle, started_at: number, ended_at: number | null, };
+export type ScenarioResultDto = { id: string, app_id: string, run_id: string, scenario_id: string, scenario_revision: number, method: VerificationMethod, status: ResultStatus, assertions: Array<AssertionOutcomeDto>, observer: string | null, observed_at: number, observed_steps: Array<string>, limitation: string | null, recorded_at: number, };
+export type OwnerDecisionDto = { id: string, app_id: string, change_id: string, change_version: number, candidate_id: string, manifest: FrozenManifestDto, decision: DecisionKind, reason: string | null, acknowledged_unresolved: boolean, recorded_at: number, };
+export type OwnerBriefSelectionInput = { include_scenarios: boolean, scenario_ids: Array<ScenarioRefDto>, include_candidate_identity: boolean, include_environment_details: boolean, include_limitations: boolean, };
+export type OwnerBriefPreviewDto = { app_id: string, change_id: string, change_version: number, markdown: string, bytes: number, estimated_tokens: number, omitted_sections: Array<string>, limitations: Array<string>, };
+export type OwnerStoreState = { "status": "ready" } | { "status": "unavailable", reason: string, } | { "status": "closed" };
+export type OwnerPageDto<T> = { items: Array<T>, next_cursor: string | null, };
 
 // ---- Commands ----
 
@@ -976,6 +1084,50 @@ export const COMMANDS = {
   skip_onboarding: [],
   set_autostart: ['enabled'],
   set_tray_forced_colors: ['active'],
+  get_owner_store_status: [],
+  save_owner_app: ['input'],
+  get_owner_app: ['appId'],
+  list_owner_apps: ['includeArchived'],
+  save_owner_capability: ['input'],
+  list_owner_capabilities: ['appId', 'includeArchived'],
+  confirm_owner_rule: ['input'],
+  list_owner_rule_revisions: ['appId', 'page'],
+  save_owner_change_draft: ['input'],
+  get_owner_change_draft: ['appId', 'changeId'],
+  list_owner_change_drafts: ['appId', 'page'],
+  get_owner_change_review: ['appId', 'changeId'],
+  save_owner_environment: ['input'],
+  list_owner_environments: ['appId', 'page'],
+  save_owner_candidate: ['input'],
+  list_owner_candidates: ['appId', 'page'],
+  select_owner_candidate: ['input'],
+  confirm_owner_scenario: ['input'],
+  list_owner_scenarios: ['appId', 'page'],
+  preview_owner_brief: ['appId', 'changeId', 'selection'],
+  prepare_preview_run: ['input'],
+  grant_preview_run: ['input'],
+  get_preview_runner_status: ['appId', 'runId'],
+  export_preview_recipe: ['input'],
+  save_preview_recipe: ['input', 'digest'],
+  capture_preview_surface: ['appId', 'runId', 'role'],
+  review_preview_capture: ['appId', 'runId', 'captureId', 'retain'],
+  list_preview_captures: ['appId', 'runId'],
+  continue_preview_login: ['appId', 'runId'],
+  cancel_preview_run: ['appId', 'runId'],
+  start_owner_manual_run: ['input'],
+  record_owner_manual_result: ['input'],
+  finish_owner_manual_run: ['input'],
+  get_owner_manual_run: ['appId', 'runId'],
+  list_owner_manual_runs: ['appId', 'changeId', 'page'],
+  record_owner_evidence_decision: ['input'],
+  list_owner_evidence_decisions: ['appId', 'changeId', 'page'],
+  save_project_decision: ['input'],
+  list_project_decisions: ['appId', 'filter'],
+  preview_owner_export: ['appId', 'selection'],
+  export_owner_bundle: ['appId', 'digest'],
+  validate_owner_import: [],
+  import_owner_bundle: ['input'],
+  get_imported_owner_history: ['appId'],
   get_dashboard_summary: ['range'],
   get_events: ['query'],
   expand_cluster: ['cluster'],

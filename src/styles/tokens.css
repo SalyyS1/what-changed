@@ -129,7 +129,7 @@
    * and the indicator must read the same two values. */
   --nav-row-height: 36px;
   --nav-row-gap: 2px;
-  --focus-ring: 2px solid var(--border-active);
+  --focus-ring: 2px solid var(--text-secondary);
 }
 
 @media (prefers-reduced-motion: reduce) {

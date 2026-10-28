@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "status": "pending",
+  "nodeVersion": "v24.12.0",
+  "playwrightVersion": "1.62.1",
+  "chromiumRevision": "1234",
+  "browserExecutable": "browsers/chromium-1234/chrome-win64/chrome.exe",
+  "checksumSource": "https://nodejs.org/dist/v24.12.0/SHASUMS256.txt",
+  "bundleInventorySha256": "ec77cefc82ae2b433b188391c36452a4302c049f6778228e53869527b3c66b1b",
+  "obligationsReviewed": false,
+  "reviewedBy": null,
+  "components": [
+    {
+      "name": "node",
+      "directory": "node-v24.12.0",
+      "source": "https://raw.githubusercontent.com/nodejs/node/v24.12.0/LICENSE",
+      "obligations": "Retain the complete Node license and all embedded dependency notices without removing copyright, disclaimers or conditions.",
+      "sourceFiles": [
+        {
+          "path": "legal/third-party/runner/node-v24.12.0/LICENSE",
+          "sha256": "537308465103a306d0e3eecf42632b4ff1b48aaaec044e9fc10a78c81fd00b34"
+        }
+      ]
+    },
+    {
+      "name": "playwright",
+      "directory": "playwright-1.62.1",
+      "source": "https://github.com/microsoft/playwright/tree/v1.62.1",
+      "obligations": "Retain Apache-2.0 LICENSE, NOTICE, ThirdPartyNotices and every packaged .LICENSE sidecar. Runtime files are unmodified.",
+      "sourceFiles": [
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/LICENSE",
+          "sha256": "45873d00a0dd243596deb4aa23b2493b3d1f0671921bf2538ea431d7380220eb"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/NOTICE",
+          "sha256": "6d602191187b35b9b01d2cffa01c8469c2c8d9de8a96f1bf868e0f264f51c81d"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/ThirdPartyNotices.txt",
+          "sha256": "a549d329bad8806fe279f0ecae0fc0270dec7e7c2dc8ec10f90e394f7c32b144"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/serverRegistry.js.LICENSE",
+          "sha256": "5cf540fe55a2ba9bcf0eb76e739b454faa8581e2f1a0f777602ef0855534302e"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/utilsBundle.js.LICENSE",
+          "sha256": "57945338cba4878e373646733528017fbe3db1503ec2b431fd30d2a390c70c33"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/webp_codec.LICENSE",
+          "sha256": "995c7ee35aceb7666829b7a501ca89c0864e12b493c1174b155774ab1e03d831"
+        }
+      ]
+    },
+    {
+      "name": "chromium",
+      "directory": "chrome-151.0.7922.34",
+      "source": "chrome://credits and chrome://terms from the matched packaged Chrome for Testing 151.0.7922.34",
+      "obligations": "Retain the complete embedded credits and executable terms. Google Chrome executable terms are distinct from Chromium source licenses. Redistribution permission still requires owner review; no open-source-only classification is asserted.",
+      "sourceFiles": [
+        {
+          "path": "legal/third-party/runner/chrome-151.0.7922.34/CHROME-CREDITS.txt",
+          "sha256": "ac89ad4aaa9e065084a16ec396d93ff73c8de97b164682b90fc4e26645c91dbb"
+        },
+        {
+          "path": "legal/third-party/runner/chrome-151.0.7922.34/CHROME-TERMS.txt",
+          "sha256": "2b1ac2cb26fbbcf8f328b1345214326c9e58e302175470b74a4833b127837033"
+        }
+      ]
+    }
+  ],
+  "noticePayload": {
+    "path": "release/RUNNER_THIRD_PARTY_NOTICES.txt",
+    "sha256": "ee2ceffb96e1203fe96ceb31b165c0e947524f7fb5339b0ab38cfe4f01b32410"
+  },
+  "note": "Prepared for exact-source review, not owner-approved. Chrome for Testing executable terms and all underlying credits are retained; redistribution is not presumed from Chromium source licensing."
+}

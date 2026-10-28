@@ -1,0 +1,14 @@
+{
+  "fixture": "Synthetic booking evidence, isolated browser harness; no production workspace or preview contacted",
+  "source_note": "Successful browser session before final surface-background token fix and journey artifact links. The later rerun timed out during navigation and is separately recorded in owner-map-browser-check.log.",
+  "browser": "Headless Microsoft Edge through installed Playwright",
+  "reduced_motion": "reduce",
+  "zoom2d": "width: 1032px; height: 320px; transform: translate(-436px, 116px) scale(1.2);",
+  "threeLoaded": true,
+  "selection3d": "c2-owner-node-3",
+  "contextFallback": "true",
+  "selectionFallback": "c2-owner-node-3",
+  "fallbackPreference": "2d",
+  "forcedColorsList": "true",
+  "runtimeErrors": []
+}

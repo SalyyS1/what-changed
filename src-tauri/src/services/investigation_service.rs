@@ -24,10 +24,13 @@ const DAY_MS: i64 = 24 * 60 * 60 * 1_000;
 const RELATED_WINDOW_MS: i64 = 60 * 60 * 1_000;
 
 #[derive(Clone, Copy)]
-struct AnalysisFilters<'a> {
-    categories: &'a [Category],
-    importance_min: Option<Importance>,
-    entity_id: Option<&'a str>,
+enum AnalysisFilters<'a> {
+    Timeline {
+        categories: &'a [Category],
+        importance_min: Option<Importance>,
+        entity_id: Option<&'a str>,
+    },
+    Workspace(&'a str),
 }
 
 #[derive(Clone)]
@@ -89,7 +92,7 @@ impl InvestigationService {
         let mut timings = StageTimings::new();
         let created_at = crate::domain::now_ms();
         let resolved_window = resolve_window(&self.db, &window, created_at)?;
-        let filters = AnalysisFilters {
+        let filters = AnalysisFilters::Timeline {
             categories,
             importance_min,
             entity_id,
@@ -117,11 +120,7 @@ impl InvestigationService {
     ) -> AppResult<Investigation> {
         let created_at = crate::domain::now_ms();
         let resolved_window = resolve_window(&self.db, &window, created_at)?;
-        let filters = project_id.as_deref().map(|entity_id| AnalysisFilters {
-            categories: &[],
-            importance_min: None,
-            entity_id: Some(entity_id),
-        });
+        let filters = project_id.as_deref().map(AnalysisFilters::Workspace);
         let (input, _) = self.load_input(
             problem,
             window,
@@ -173,13 +172,25 @@ impl InvestigationService {
                 .unchecked_transaction()
                 .during("start a consistent investigation read")?;
             let corpus = match filters {
-                Some(filters) => event_repository::analysis_window_filtered(
+                Some(AnalysisFilters::Workspace(project_id)) => {
+                    event_repository::analysis_window_workspace(
+                        &tx,
+                        resolved_window.from_ms,
+                        resolved_window.to_ms,
+                        project_id,
+                    )?
+                }
+                Some(AnalysisFilters::Timeline {
+                    categories,
+                    importance_min,
+                    entity_id,
+                }) => event_repository::analysis_window_filtered(
                     &tx,
                     resolved_window.from_ms,
                     resolved_window.to_ms,
-                    filters.categories,
-                    filters.importance_min,
-                    filters.entity_id,
+                    categories,
+                    importance_min,
+                    entity_id,
                 )?,
                 None => event_repository::analysis_window(
                     &tx,

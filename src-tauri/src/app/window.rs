@@ -80,6 +80,9 @@ pub fn on_window_event<R: Runtime>(window: &tauri::Window<R>, event: &WindowEven
         WindowEvent::ThemeChanged(theme) => tray::on_theme_changed(window.app_handle(), *theme),
         WindowEvent::CloseRequested { api, .. } => {
             let app = window.app_handle();
+            if let Some(state) = app.try_state::<AppState>() {
+                state.preview_runner.stop_all();
+            }
             match close_action(tray_is_available(app)) {
                 CloseAction::Exit => {
                     // Hiding would strand the user with a process they cannot

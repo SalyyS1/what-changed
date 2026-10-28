@@ -15,3 +15,20 @@ The honest loop is:
 Configuration values that are sensitive are represented as `[REDACTED]` or a
 value-free change notice. The app does not retain a hash, digest, length or
 encrypted comparison marker for a redacted value.
+
+## Use a workspace baseline
+
+In Settings, add the project root as a workspace and separately select any
+folders whose file changes should be recorded. Choose **Mark working** while
+the project works. In Investigations, select that workspace and describe the
+symptom; its baseline supplies the last known-good time window.
+
+New investigations include recorded file changes beneath the workspace's
+currently registered root, plus recorded direct and related workspace events.
+They can include file changes recorded before registration. Removing a
+workspace changes future selections; saved investigation results remain fixed.
+File rename membership follows the recorded destination path.
+
+**Copy context for AI** asks for confirmation, then copies redacted Markdown
+to the clipboard. Review it before pasting into an external service. The app
+does not send it anywhere; the text remains in the clipboard until replaced.

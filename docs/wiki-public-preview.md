@@ -1,8 +1,10 @@
 # What Changed public preview wiki
 
-**Evidence state: available public preview wiki; release claims remain gated.**
+**Evidence state: historical public-preview navigation; release claims remain gated.**
 
-This temporary in-repository wiki is the readable route for the public preview. It is intentionally honest about what is implemented, what is verified locally, and what still blocks a release.
+This page preserves the earlier in-repository public-preview navigation. Use the
+[documentation index](wiki-index.md) for current navigation, owner-workspace scope
+and evidence status.
 
 ## Start here
 
@@ -39,4 +41,6 @@ This temporary in-repository wiki is the readable route for the public preview. 
 
 This is a source preview, not a signed release. Runtime is designed to remain local and offline; the updater is opt-in and has no configured production feed or signing key. The public-v1 packet remains NO-GO until installed acceptance, upgrade/uninstall, accessibility, resource/soak, clean-tree and publication approvals are completed.
 
-The hosted GitHub Wiki can later be populated from these pages. Until then, this `docs/` route is the source of truth shipped with the repository.
+The earlier preview used this repository documentation route. Current website
+source and deployment boundaries are recorded in the [documentation index](wiki-index.md)
+and [deployment guide](deployment-guide.md).

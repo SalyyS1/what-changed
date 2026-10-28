@@ -34,7 +34,17 @@
     "mem": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/measure-memory.ps1",
     "toolchain": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-toolchain.ps1",
     "check:bundle": "node scripts/bundle-size.mjs",
-    "perf:soak": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/soak.ps1"
+    "perf:soak": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/soak.ps1",
+    "core:no-network": "node scripts/check-no-network.mjs",
+    "runner:test": "node scripts/check-runner-policy.mjs",
+    "runner:package": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-preview-runner.ps1",
+    "check:runner-bundle": "node scripts/check-runner-bundle.mjs",
+    "check:runner-notices": "node scripts/check-runner-notices.mjs",
+    "site:build": "node wiki-site/build.mjs",
+    "site:test": "node --test wiki-site/tests/*.test.mjs",
+    "check:site": "node scripts/check-site.mjs",
+    "check:download": "node scripts/check-download-manifest.mjs",
+    "check:owner-release": "node scripts/check-owner-release.mjs"
   },
   "dependencies": {
     "@tanstack/svelte-virtual": "3.13.36",
