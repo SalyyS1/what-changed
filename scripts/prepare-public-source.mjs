@@ -51,7 +51,7 @@ export function preparePublicSource(destination) {
           .replaceAll('C:/Users/project-maintainer', 'C:/Users/<user>')
           .replaceAll('C:\\\\Users\\\\project-maintainer', 'C:\\\\Users\\\\<user>');
       }
-      if (name === 'release/runner-runtime-inventory.json' || name === 'release/RUNNER_THIRD_PARTY_NOTICES.txt' || name.startsWith('legal/third-party/runner/')) {
+      if (name === 'release/runner-runtime-inventory.json' || name === 'release/RUNNER_THIRD_PARTY_NOTICES.txt' || name.startsWith('legal/third-party/')) {
         copyFileSync(source, target);
         files.push({ path: relative(output, target).replaceAll('\\', '/'), bytes: stat.size });
         return;
