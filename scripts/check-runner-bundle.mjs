@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
 import { lstat, readFile, readdir, realpath } from 'node:fs/promises';
-import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
+import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const runnerVersions = Object.freeze({ nodeVersion: 'v24.12.0', playwrightVersion: '1.62.1', chromiumRevision: '1234', browserExecutable: 'browsers/chromium-1234/chrome-win64/chrome.exe', checksumSource: 'https://nodejs.org/dist/v24.12.0/SHASUMS256.txt' });
@@ -28,6 +28,9 @@ export async function checkRunnerBundle(directory, { sourceRoot = root } = {}) {
     if ((await lstat(current)).isSymbolicLink()) throw new Error('Runner bundle root is redirected');
     if (dirname(current) === current) break;
   }
+  // Windows temp paths can contain 8.3 aliases; compare filesystem-resolved
+  // paths on both sides after auditing the original ancestors for redirects.
+  const canonicalBase = await realpath(base);
   const manifestFile = join(base, 'bundle-inventory.json');
   if ((await lstat(manifestFile)).size > 2 * 1024 * 1024) throw new Error('Runner inventory too large');
   const inventory = JSON.parse(await readFile(manifestFile, 'utf8'));
@@ -43,7 +46,8 @@ export async function checkRunnerBundle(directory, { sourceRoot = root } = {}) {
     if (bytes > 1536 * 1024 * 1024) throw new Error('Runner exceeds reviewed distribution budget');
     const path = join(base, entry.path);
     const metadata = await lstat(path);
-    if (!metadata.isFile() || metadata.isSymbolicLink() || relative(base, await realpath(path)).startsWith('..')) throw new Error('Runner entry is not a regular owned file');
+    const ownedRelative = relative(canonicalBase, await realpath(path));
+    if (!metadata.isFile() || metadata.isSymbolicLink() || ownedRelative === '..' || ownedRelative.startsWith(`..${sep}`) || isAbsolute(ownedRelative)) throw new Error('Runner entry is not a regular owned file');
     if (metadata.size !== entry.bytes || await sha256(path) !== entry.sha256) throw new Error(`Runner byte mismatch: ${entry.path}`);
     if (entry.path.startsWith('src/')) {
       const source = join(sourceRoot, 'runner', entry.path);
