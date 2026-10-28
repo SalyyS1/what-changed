@@ -54,8 +54,10 @@ accepted. The browser's other component terms, including DXC, are retained.
 - Artifact acquisition/extraction/source packet tests: 33/33 passed on Windows.
 - Inventory/release/continuity tests: 12/12; runner source tests: 15/15.
 - Four small supplemental source archives and required members were checked locally.
-- The 2 GB Chromium source archive is **not yet downloaded/verified here**. The
-  hosted gate will validate all seven source packets before any installer upload.
+- All seven source archives passed whole-file hashes and required-member checks
+  on the [successful hosted build](https://github.com/SalyyS1/what-changed/actions/runs/40730363355).
+  The 2 GB Chromium archive was not downloaded again locally. Co-delivery and
+  installer inspection are in the [QA result](../reports/qa-261029-0042-runner-installer-artifact.md).
 - [Research and provenance](../reports/research-261028-1703-redistributable-chromium.md),
   [artifact QA](../reports/qa-261028-1703-chromium-artifact.md).
 
@@ -65,5 +67,4 @@ It does not approve public v1, public branding, a GitHub Release, download CTA,
 network confinement, clean Windows acceptance, performance, soak or real-user
 repeat-use claims. The source build preview remains unsigned.
 
-Unresolved: hosted source/member receipt;
-installer build/inspection; artifact-specific publication and acceptance.
+Unresolved: artifact-specific public release approval and installed acceptance.

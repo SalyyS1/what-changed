@@ -1,10 +1,15 @@
 # Owner workspace development preview
 
-**Evidence state: available build procedure; hosted build and installed acceptance pending.**
+**Evidence state: hosted build and nonexecuting installer inspection passed; installed acceptance pending.**
 
 This unsigned Windows x64 preview contains the current owner workspace, confirmed
 rules, saved requests, reviewed AI briefs, manual acceptance, portable project
 memory, and the shared journey/2D/list/optional-3D evidence workbench.
+
+The [verified QA candidate](../plans/reports/qa-261029-0042-runner-installer-artifact.md)
+records the successful build, complete installer/source artifact, hashes and
+inspection limits. Download the complete artifact with its seven source archives;
+its GitHub retention expires on 11 November 2026. It is not a public-v1 release.
 
 ## Packaging boundary
 

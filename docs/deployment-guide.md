@@ -120,7 +120,9 @@ These resources are generated and ignored by Git. `bun run runner:test` checks
 source recipes/protocol/policy independently of browser packaging.
 `bun run check:runner-notices` requires a fresh exact-bundle license review and
 the packaged `release/RUNNER_THIRD_PARTY_NOTICES.txt` payload. Its review record
-is currently pending; the older desktop notice approval does not cover this delta.
+is approved for the exact Chromium QA packet recorded in
+[`runner-notice-approval.json`](../release/runner-notice-approval.json); the older
+desktop notice approval does not cover this delta. This is not public-v1 approval.
 The hosted artifact must also include all matching browser sources and build/relink
 materials. [Source delivery](runner-source-build.md) owns that required layout;
 `node scripts/prepare-runner-source-materials.mjs` verifies and stages it.

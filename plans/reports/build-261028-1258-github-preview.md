@@ -1,6 +1,6 @@
 # Current feature build and GitHub update
 
-Status: source on draft PR #1; replacement runtime approved for QA; new hosted packaging pending.
+Status: DONE for source update, complete runner-enabled QA artifact and nonexecuting inspection.
 
 ## Authorization and cleanup
 
@@ -177,5 +177,45 @@ and their required members were validated. No source completeness claim rests on
 minimal member samples alone; the pinned exporter and supported build recipe own
 the source-route evidence.
 
-Unresolved questions: hosted source receipt, installer build/inspection and
-artifact-bound publication approval.
+## Source archive verification and packet repairs
+
+The first replacement build passed native checks, exact runtime loading, notices
+and release compilation, then Windows `tar.exe` rejected an archive filename.
+Installer bundling/upload remained blocked. The source inspector now uses Python
+3.12.10 streaming tar metadata, supports Unicode/PAX names and fails on malformed
+or truncated later entries. Acquisition/archive/source tests passed 40/40.
+
+[Run 40729481803](https://github.com/SalyyS1/what-changed/actions/runs/40729481803)
+verified all seven whole-file source hashes and required archive members. It was
+cancelled after that successful source step to build the final integration commit;
+the cancelled run is not a completed installer result.
+
+The local release route now creates the same combined installer/source packet,
+the hosted verifier checks both desktop and runner NSIS notice resources, and
+build evidence is included in recursive checksums. Independent scoped review
+found no remaining concrete P1/P2 issue after the local co-delivery repair.
+
+Current build source: `e5906ea6ae2fb06859d7b361df00b36425dd496c`.
+[Run 40730363355](https://github.com/SalyyS1/what-changed/actions/runs/40730363355)
+passed source/frontend contracts and all seven source hashes/member checks at
+`2026-10-28T17:03:40Z`, then completed native checks, release compilation, exact
+runtime review, NSIS packaging, both notice checks and artifact upload successfully.
+
+## Successful candidate and inspection
+
+[Complete artifact 12838120354](https://github.com/SalyyS1/what-changed/actions/runs/40730363355/artifacts/12838120354)
+contains the unsigned installer and all seven corresponding-source archives.
+Installer SHA256: `70ced3ac9dd66abd4235d525b7418b0d9f5d147f05e9c652e1b34c619001efbc`.
+Local selective download verified ten file hashes, source descriptor/member receipts
+and co-delivery metadata without downloading large sources again. Fresh nonexecuting
+extraction verified the product against its embedded installer payload, all 197
+runtime files and both notices. No excluded SDK compiler DLL was present.
+Installer/application Authenticode status is `NotSigned`.
+
+The [inspection report](qa-261029-0042-runner-installer-artifact.md) owns exact
+hashes, retention and Azure-range/7-Zip listing qualifications. Source/archive
+bytes were verified on CI; the complete ZIP digest was not locally recomputed.
+The private selective QA copy is not a separate delivery packet.
+
+Unresolved for public release: artifact-bound approval and the installed/clean-Windows/
+network/accessibility/performance/soak/real-owner acceptance gates.
