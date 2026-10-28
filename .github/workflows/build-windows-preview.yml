@@ -62,6 +62,10 @@ jobs:
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           cargo test --locked --manifest-path src-tauri/Cargo.toml --lib dto::bindings::tests::generated_declarations_match_the_checked_in_frontend_contract -- --exact
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo test --locked --manifest-path src-tauri/Cargo.toml --lib platform::windows::managed_file_lock:: -- --test-threads=1
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo test --locked --manifest-path src-tauri/Cargo.toml --test redaction_leak every_secret_shape_is_redacted -- --test-threads=1
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
           cargo test --locked --manifest-path src-tauri/Cargo.toml --test preview_runner_lifecycle
           exit $LASTEXITCODE
       - name: Prepare exact reviewed runtime bytes

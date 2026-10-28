@@ -1,6 +1,7 @@
 # Runtime review packet for the requested complete preview
 
-Status: prepared, pending owner review. No approval or release inferred.
+Status: exact packet prepared; current browser redistribution is not authorized
+by the reviewed public terms. No runtime approval or release inferred.
 
 ## Exact scope
 
@@ -21,8 +22,15 @@ Chrome's complete embedded credit texts and executable terms are retained.
 The packaged browser identifies itself as Google Chrome for Testing. Its executable
 terms refer to Google's terms and AVC restrictions; it is not classified here as
 solely BSD Chromium. The Chromium source license alone does not establish permission
-to redistribute this exact executable. The owner must decide whether the supplied
-terms/permissions support the requested distribution or choose another browser package.
+to redistribute this exact executable. The owner requested verification of the
+current browser before considering another package.
+
+The [official-source check](../reports/research-261028-1638-browser-redistribution.md)
+found that CfT uses Chrome executable terms and that Google's public software
+terms prohibit distribution. No separate applicable grant was supplied or found.
+Owner acceptance of notices cannot grant Google's rights. Bundling this browser
+for distribution remains blocked; a separately applicable grant or a different
+browser artifact with verified redistribution rights is needed.
 
 Sources: [Node release license](https://raw.githubusercontent.com/nodejs/node/v24.12.0/LICENSE),
 [Playwright source](https://github.com/microsoft/playwright/tree/v1.62.1),
@@ -36,8 +44,11 @@ this exact inventory and full notice payload. The prior approval covers desktop
 dependencies only. Creating source/build infrastructure is authorized; recording
 that the owner reviewed new terms cannot be inferred from a cleanup/build request.
 
-Approval would permit installer QA with this exact runtime and retained notices.
+If applicable redistribution rights are established, exact human notice review
+would permit installer QA with that runtime and retained notices.
 Public publication still requires an artifact-specific decision after a successful
 build, with unsigned status and unverified acceptance boundaries disclosed.
 
-Unresolved questions: owner review and exact browser redistribution permission.
+Unresolved questions: separate permission for the current executable or owner
+decision to select a browser with verified redistribution rights; exact notice
+review after that decision.

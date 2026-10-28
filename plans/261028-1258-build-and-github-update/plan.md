@@ -18,11 +18,11 @@ Limit validation remains deferred; do not describe a preview as accepted public 
 - [x] Verify exact debug-cache target, no tracked files/reparse points/running app.
 - [ ] Reclaim reproducible cache where tooling permits.
 - [x] Prepare runtime notice source packet and concrete review surface.
-- [ ] Export an allowlisted source update against current public main; scan secrets
+- [x] Export an allowlisted source update against current public main; scan secrets
   and private evidence before any push. Preserve the original dirty workspace/history.
 - [ ] Build with matching runtime, notice inputs and exact source identity.
 - [ ] Inspect the produced artifact and prepare hash-bound publication information.
-- [ ] Push the authorized source update; publish only within actual approval scope.
+- [x] Push the authorized source update as a draft PR; installer publication remains open.
 
 ## Evidence / constraints
 
@@ -38,7 +38,18 @@ any remaining human approval. No claim that the cleanup request reviewed legal t
 
 Owner selected a complete runner-enabled candidate; no offline-only release.
 The exact browser is Chrome for Testing, with distinct executable/AVC terms.
-Runtime notice packet is prepared; browser redistribution decision is pending.
+Runtime notice packet is prepared. Owner selected verifying the current browser's
+redistribution permission first; this does not approve the runtime notice record.
+The [official-source check](../reports/research-261028-1638-browser-redistribution.md)
+found no distribution grant for CfT and a prohibition in the applicable public
+software terms. A browser replacement or separate applicable grant is now pending.
 The hosted workflow compiles first, then blocks bundling/upload until that review.
 
-Unresolved questions: none needed for source preparation or build infrastructure.
+Source is on [draft PR #1](https://github.com/SalyyS1/what-changed/pull/1).
+The first hosted run found a lexical/canonical Windows path mismatch in bundle
+validation. Canonical-root comparison preserves redirect/hash checks; twelve local
+inventory/release tests passed. The [follow-up run](https://github.com/SalyyS1/what-changed/actions/runs/40666073479)
+is pending; no new installer is claimed.
+
+Unresolved questions: current browser redistribution permission and exact runtime
+human review; artifact-specific publication after successful packaging.

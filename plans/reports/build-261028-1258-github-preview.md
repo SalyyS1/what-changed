@@ -1,6 +1,6 @@
 # Current feature build and GitHub update
 
-Status: source update prepared; hosted native build pending; installer review open.
+Status: source pushed to draft PR #1; hosted native build in progress; installer review open.
 
 ## Authorization and cleanup
 
@@ -9,7 +9,8 @@ reproducible build/dependency files. Verified `src-tauri/target/debug`: 42446398
 bytes / 6317 files, no tracked source, redirect or running project process.
 Native PowerShell cleanup was rejected by automatic approval review: `blocked by
 policy`. No alternate deletion bypass. Original source, release cache, QA backups
-and personal application data preserved. D free remains about 0.45 GB.
+and personal application data preserved. A later observation found D about 4.28 GiB
+free and C about 2.89 GiB; this session did not perform the rejected deletion.
 
 ## Build route
 
@@ -64,5 +65,31 @@ cover this executable. No runtime approval or G3 is fabricated.
 Independent hosted-build review and remote run receipts are recorded separately.
 No successful new installer, release upload or full acceptance is yet claimed.
 
-Unresolved questions: exact browser redistribution decision; artifact-bound
-publication approval after build. Current pending user question owns the first.
+## Source push and hosted follow-up
+
+- Source commit `c4830d8f1392f30a924a3e76558ace1332cd7f91` is on
+  [draft PR #1](https://github.com/SalyyS1/what-changed/pull/1); public main was preserved.
+- GitHub initially rejected the synthetic Slack fixture. No bypass was used.
+  Fixture strings are assembled with Rust `concat!`; a standalone Rust comparison
+  confirmed all five fields of all twelve fixtures are byte-identical to the prior
+  literals. This proves fixture parity, not a new full redaction-suite pass.
+- [First run](https://github.com/SalyyS1/what-changed/actions/runs/40646188908)
+  passed typecheck/rustfmt/desktop continuity, then failed four inventory tests at
+  the lexical-root versus realpath-entry containment check on hosted Windows.
+- Commit `2517f54f01829caf29f9f44bbbface9bb4976174` resolves the root after auditing
+  its original ancestors. Containment now compares canonical paths and rejects
+  parent-relative or absolute escapes. New junction-root/ancestor/nested escape
+  tests and existing inventory/release tests passed: 12/12 locally.
+- [Follow-up run](https://github.com/SalyyS1/what-changed/actions/runs/40666073479)
+  passed source/frontend checks and entered native tests at observation. Final
+  result remains pending.
+- Public documentation now preserves the historical preview navigation and passes
+  the relative-link check: 45 pages. Independent shipping review found no P1/P2 defect.
+- The owner selected verifying the current browser first. The
+  [official-source report](research-261028-1638-browser-redistribution.md) found no
+  distribution grant and a prohibition in the applicable public terms. A separate
+  applicable grant or owner decision to select a compatible redistributable browser
+  is pending. Neither a replacement nor notice approval is inferred.
+
+Unresolved questions: exact browser redistribution permission and runtime human
+review; artifact-bound publication approval after build.

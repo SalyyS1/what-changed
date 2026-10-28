@@ -13,6 +13,7 @@ const secretPatterns = [/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/, /\b
 const reviewedSyntheticSources = new Map([
   ['src-tauri/tests/fixtures/secrets.rs', '01a9e9243ac13aae5c1ecbf705c29fdf6591168ef3852aa46d54dc88755659d6'],
 ]);
+const publicReviewReports = new Set(['plans/reports/research-261028-1638-browser-redistribution.md']);
 
 // Public source uses a fresh clone's history. Local QA and repository objects are
 // never candidates, and files already published but absent locally are preserved.
@@ -32,7 +33,7 @@ export function preparePublicSource(destination) {
     if (!stat.isFile() || excludedFiles.test(name.split('/').at(-1))) return;
     if (name.startsWith('plans/') && !/\.(?:md|json|txt)$/.test(name)) return;
     // Internal candidate/advice transcripts are not public build inputs.
-    if (name.startsWith('plans/') && /(?:planner|brainstorm|advice|scout|research|candidate-\d)/i.test(name)) return;
+    if (name.startsWith('plans/') && /(?:planner|brainstorm|advice|scout|research|candidate-\d)/i.test(name) && !publicReviewReports.has(name)) return;
     if (name === 'scripts/third-party-notices-manifest.json') return; // preserve published review records
     const target = join(output, name); mkdirSync(dirname(target), { recursive: true });
     const textual = /\.(?:md|json|txt|toml|rs|ts|js|mjs|css|html|svelte|yml|yaml|ps1|svg|nsh)$/.test(name) || ['LICENSE', '.gitignore', '.gitattributes'].includes(name);
