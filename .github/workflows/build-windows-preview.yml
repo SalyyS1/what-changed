@@ -53,6 +53,8 @@ jobs:
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           node --test scripts/fetch-reviewed-runtime-artifact.test.mjs
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node --test scripts/verify-nsis-notice-copy.test.mjs
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
           bun run runner:test
           exit $LASTEXITCODE
       - name: Focused frontend integration
@@ -102,19 +104,23 @@ jobs:
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           node scripts/check-nsis-script.mjs src-tauri/target/release/nsis/x64/installer.nsi
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node scripts/verify-nsis-notice-copy.mjs src-tauri/target/release/nsis/x64/installer.nsi dist-installer/THIRD_PARTY_NOTICES.txt
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node scripts/verify-nsis-notice-copy.mjs src-tauri/target/release/nsis/x64/installer.nsi release/RUNNER_THIRD_PARTY_NOTICES.txt RUNNER_THIRD_PARTY_NOTICES.txt
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
           New-Item -ItemType Directory -Path preview-artifacts -Force | Out-Null
           Copy-Item 'src-tauri/target/release/bundle/nsis/*-setup.exe' preview-artifacts
           Copy-Item dist-installer/THIRD_PARTY_NOTICES.txt preview-artifacts
           Copy-Item release/RUNNER_THIRD_PARTY_NOTICES.txt preview-artifacts
           Copy-Item docs/development-preview.md preview-artifacts/PREVIEW-NOTES.md
           Copy-Item docs/runner-source-build.md preview-artifacts/RUNNER-SOURCE-BUILD.md
+          @{ sourceCommit = '${{ github.sha }}'; runId = '${{ github.run_id }}'; unsigned = $true; packagedPreviewRunner = $true; fullAcceptance = $false } | ConvertTo-Json | Set-Content preview-artifacts/build-evidence.json -Encoding utf8NoBOM
           $artifactRoot = [IO.Path]::GetFullPath('preview-artifacts')
           $checksums = Get-ChildItem preview-artifacts -File -Recurse | ForEach-Object {
             $relativeName = [IO.Path]::GetRelativePath($artifactRoot, $_.FullName).Replace('\', '/')
             '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $relativeName
           }
           $checksums | Set-Content preview-artifacts/SHA256SUMS.txt -Encoding utf8NoBOM
-          @{ sourceCommit = '${{ github.sha }}'; runId = '${{ github.run_id }}'; unsigned = $true; packagedPreviewRunner = $true; fullAcceptance = $false } | ConvertTo-Json | Set-Content preview-artifacts/build-evidence.json -Encoding utf8NoBOM
       - name: Upload review artifact only
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
