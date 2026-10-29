@@ -1,0 +1,9 @@
+{
+  "bundle": {
+    "resources": {
+      "../dist-installer/THIRD_PARTY_NOTICES.txt": "THIRD_PARTY_NOTICES.txt",
+      "../release/RUNNER_THIRD_PARTY_NOTICES.txt": "RUNNER_THIRD_PARTY_NOTICES.txt",
+      "../runner/bundle/": "preview-runner/"
+    }
+  }
+}

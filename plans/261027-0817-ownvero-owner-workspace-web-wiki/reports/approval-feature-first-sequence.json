@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "source": "user_message",
+  "actor": "user",
+  "recordedAt": "2026-10-28T09:00:00+07:00",
+  "answer": "làm tiếp hết tính năng đi rồi kiểm chứng giới hạn tiếp sau",
+  "supersedesSequence": "reports/approval-offline-sequence.json",
+  "authorizedImplementationPhases": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  "deferredAcceptance": ["clean_windows_packaged_runtime", "enforceable_network_boundary_proof", "real_owner_rehearsal", "native_resource_performance"],
+  "scope": "Implement remaining app, runner, visual models, draft brand, local landing/wiki and release tooling before deferred acceptance. Retain per-run consent and implement confinement. No automatic target execution, public brand switch or publication approval is inferred.",
+  "gateWaivers": [],
+  "publicationApproved": false
+}

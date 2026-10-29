@@ -1,0 +1,61 @@
+name: Deploy static wiki preview
+
+on:
+  push:
+    branches: ['codex/ownvero-pages-preview']
+    paths:
+      - 'wiki-site/**'
+      - 'scripts/check-site.mjs'
+      - 'scripts/check-download-manifest.mjs'
+      - 'docs/ownvero/**'
+      - 'docs/wiki-public-preview.md'
+      - 'release/**'
+      - '.github/workflows/deploy-wiki-site.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ownvero-site-preview
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    if: github.repository == 'SalyyS1/what-changed'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Install pinned source-preview tools
+        run: npm install --prefix "$RUNNER_TEMP/site-tools" --ignore-scripts --no-package-lock vite@8.2.2 three@0.185.1
+      - name: Link preview dependencies
+        run: ln -s "$RUNNER_TEMP/site-tools/node_modules" node_modules
+      - name: Build allowlisted static output
+        run: node wiki-site/build.mjs
+      - name: Check output and unavailable download boundary
+        run: |
+          node scripts/check-site.mjs
+          node scripts/check-download-manifest.mjs
+          node --test wiki-site/tests/content.test.mjs wiki-site/tests/download.test.mjs
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - name: Upload generated site
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: wiki-site/dist
+          include-hidden-files: true
+      - name: Deploy preview to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

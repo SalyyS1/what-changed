@@ -1,0 +1,169 @@
+[package]
+name = "what-changed"
+version = "0.1.0"
+description = "Windows change recorder and causal investigator"
+authors = ["What Changed contributors"]
+license = "MIT"
+edition = "2021"
+rust-version = "1.82"
+publish = false
+
+[lib]
+# `main.rs` is a shim; all wiring lives in the library so it can be unit-tested
+# and so the Tauri mobile entry points stay available without a second binary.
+name = "what_changed_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.6.3", features = [] }
+
+[dependencies]
+# `tray-icon` + `image-png`: the app lives in the tray and its icon is a PNG.
+tauri = { version = "2.11.5", features = ["tray-icon", "image-png"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Phase 10 watches only user-approved roots. The watcher lifecycle lands in a
+# separate module, while these direct dependencies pin the formats and notify
+# API that the collector core is built against.
+notify = "=8.2.0"
+notify-debouncer-full = "=0.7.0"
+serde_yaml_ng = "0.10.0"
+toml = "0.9.12"
+quick-xml = "0.41.0"
+zeroize = "1.8.2"
+thiserror = "2.0.20"
+# Redaction rules are regexes compiled once; `regex` is the only crate with a
+# guaranteed-linear matcher, which matters for a rule set that runs on every
+# event and every log line.
+regex = "1.11.1"
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
+tracing-appender = "0.2.3"
+# `bundled` vendors the SQLite amalgamation, so there is no system DLL to ship
+# and FTS5 availability is fixed at build time (D-11). `backup` is the online
+# backup API behind "Repair database".
+rusqlite = { version = "0.40.2", features = ["bundled", "backup", "functions"] }
+rusqlite_migration = "2.6.0"
+# Migration checksums and the entity-id grammar both hash; already in the
+# dependency graph through tauri-codegen, so it costs the binary nothing new.
+sha2 = "0.10.9"
+# The per-user data directory through the known-folder API rather than an
+# environment variable. Already in the graph through tauri (D-18).
+dirs = "6.0.0"
+# Local calendar boundaries for Today/Yesterday/Last 7 days. Chrono is already
+# in Tauri's resolved graph; declaring it directly lets the query contract use
+# the Windows local timezone without a platform-specific FFI layer.
+chrono = "0.4.45"
+uuid = { version = "1.26.0", features = ["v4"] }
+# Rust types are the source of truth for TypeScript. `tauri-specta` 1.0.2 is the
+# Tauri *v1* API and the Tauri 2 line is still a release candidate, so the
+# bindings come from `ts-rs` derives plus hand-written wrappers (D-14).
+# `serde-json-impl` is needed because an event's before/after are `Value`.
+ts-rs = { version = "12.0.1", features = ["serde-json-impl"] }
+# Lifecycle plugins. `single-instance` must be registered first; the others are
+# registered here so a later phase adds a caller, not a dependency.
+tauri-plugin-single-instance = "2.4.4"
+tauri-plugin-window-state = "2.4.1"
+tauri-plugin-dialog = "2.7.3"
+tauri-plugin-autostart = "2.5.1"
+tauri-plugin-notification = "2.4.0"
+
+# The product's only Windows API surface, target-gated so the release no-network
+# gate still resolves exactly one dependency graph. `windows` 0.61 is already in
+# the resolved graph through tauri, tao, wry and webview2-com, so declaring it
+# here adds features to that one crate instead of pulling in a second version of
+# it. Every feature is one API family a provider actually calls; there is no
+# blanket `Win32` feature and nothing here is reachable without elevation.
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.61", features = [
+    "Win32_Foundation",
+    "Win32_Devices_DeviceAndDriverInstallation",
+    "Win32_NetworkManagement_IpHelper",
+    "Win32_NetworkManagement_Ndis",
+    "Win32_Networking_WinSock",
+    "Win32_Security",
+    "Win32_Storage_FileSystem",
+    "Win32_System_Com",
+    "Win32_System_Diagnostics_ToolHelp",
+    "Win32_System_EventLog",
+    "Win32_System_IO",
+    "Win32_System_JobObjects",
+    "Win32_System_Ole",
+    "Win32_System_Pipes",
+    "Win32_System_ProcessStatus",
+    "Win32_System_Registry",
+    "Win32_System_Services",
+    "Win32_System_TaskScheduler",
+    "Win32_System_Threading",
+    "Win32_System_UpdateAgent",
+    "Win32_System_Variant",
+    "Win32_System_WindowsProgramming",
+] }
+
+[features]
+# Development-only surfaces: the temp-database helper, the binding generator,
+# and the synthetic event generator later. Never on in a shipped build.
+devtools = []
+
+[[example]]
+# Writes src/lib/tauri/bindings.ts, or compares against it with `--check`.
+name = "export_bindings"
+required-features = ["devtools"]
+
+[[example]]
+# A real release executable: Cargo test always unwinds, even for panic=abort.
+name = "collector_panic_probe"
+required-features = ["devtools"]
+
+[[example]]
+name = "collector_idle_probe"
+required-features = ["devtools"]
+
+[[bin]]
+# Deterministic, synthetic history is a QA tool only. Requiring the explicit
+# feature keeps the seeder out of a normal release target and gives the
+# release-audit gate a concrete target to assert is absent.
+name = "seed_history"
+path = "src/bin/seed_history.rs"
+required-features = ["devtools"]
+
+[[bin]]
+# Prints bounded process/resource samples for the Phase 20 budget worksheet.
+# It is intentionally a separate binary so sampling never enters the app's
+# runtime or collector hot path.
+name = "resource_probe"
+path = "src/bin/resource_probe.rs"
+required-features = ["devtools"]
+
+[profile.dev]
+# Debug information and incremental object copies exhausted this workspace
+# before binding generation could archive the application crate. Backtraces
+# still retain function names; line-level native debugging requires opting in
+# locally with CARGO_PROFILE_DEV_DEBUG (D-19/R15).
+debug = false
+incremental = false
+
+[profile.test]
+# Integration tests link many Tauri-heavy binaries. Debug symbols and
+# incremental object copies exhausted the workspace volume before any test
+# could run (R15); neither changes test behaviour, so keep this profile lean.
+debug = false
+incremental = false
+
+[lints.clippy]
+# Mechanical enforcement of the no-panic rule for shipped code. Test modules
+# opt out explicitly with #[allow(...)] so the exception is always visible.
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+todo = "deny"
+unimplemented = "deny"
+
+[profile.release]
+# A change recorder that runs all day should be small and fast to load.
+codegen-units = 1
+lto = true
+opt-level = "s"
+# Collector workers isolate provider panics with catch_unwind in shipped builds.
+panic = "unwind"
+strip = true

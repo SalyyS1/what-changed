@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "actor": "user",
+  "source": "user_message",
+  "date": "2026-10-28",
+  "answer": "Chấp thuận hồ sơ Chromium, tiếp tục build QA",
+  "bundleInventorySha256": "cc3bb9c020ec053b11df341d925f3f25e26a6dc9f0cfbdb5ab1d1cf3d3ec5554",
+  "noticePayloadSha256": "8ad9c7c28d00641f26af587959a1020e60749fd017a3d60945f4efcb53010d9a",
+  "proposedReviewSha256": "e5b6cbd534eb7db8ebd39056a5a8bac72b7e56895cfe46d5ab5a6304741e69fb",
+  "scope": "Exact new Node/Playwright/ungoogled Chromium notices and corresponding-source delivery duties accepted for installer QA; hosted source/member verification mandatory before upload.",
+  "publicationApproved": false,
+  "publicV1Approved": false,
+  "sourceDelivery": "All seven verified source archives, build/relink instructions and notices in same downloadable Actions artifact as installer; no written source offer substituted."
+}

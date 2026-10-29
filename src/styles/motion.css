@@ -1,0 +1,86 @@
+/*
+ * Motion. Every transition in the app reads its duration through
+ * --motion-scale, so one variable — set to 0 by prefers-reduced-motion in
+ * tokens.css — removes all of them. Components never write a literal ms.
+ *
+ * The two loops are the exception to the scale: a duration of 0 on an
+ * infinite animation is a strobe, not stillness. They keep their period and
+ * are frozen by the reduced-motion rule at the bottom instead.
+ */
+
+:root {
+  --t-instant: calc(var(--dur-instant) * var(--motion-scale));
+  --t-fast: calc(var(--dur-fast) * var(--motion-scale));
+  --t-base: calc(var(--dur-base) * var(--motion-scale));
+  --t-slow: calc(var(--dur-slow) * var(--motion-scale));
+  --t-loop-shimmer: var(--dur-loop-shimmer);
+  --t-loop-spin: var(--dur-loop-spin);
+}
+
+@layer utilities {
+  .motion-fast {
+    transition-duration: var(--t-fast);
+    transition-timing-function: var(--ease-standard);
+  }
+  .motion-base {
+    transition-duration: var(--t-base);
+    transition-timing-function: var(--ease-standard);
+  }
+  .motion-spring {
+    transition-duration: var(--t-slow);
+    transition-timing-function: var(--ease-spring);
+  }
+}
+
+@keyframes wc-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes wc-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wc-slide-in-right {
+  from {
+    transform: translateX(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes wc-shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+/* Belt and braces: even a hand-written animation-duration is neutralised. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-play-state: paused !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

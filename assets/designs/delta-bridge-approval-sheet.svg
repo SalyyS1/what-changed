@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 840" width="1280" height="840" role="img" aria-labelledby="title desc">
+  <title id="title">Delta Bridge source-labelled design preview</title>
+  <desc id="desc">A review sheet for the canonical mark, monochrome mark, tray variants, installer artwork and article template. This is not final human approval.</desc>
+  <rect width="1280" height="840" fill="#F7F9FA"/>
+  <rect width="1280" height="122" fill="#0B0E14"/>
+  <text x="44" y="67" fill="#E6E9EF" font-family="Segoe UI, Arial, sans-serif" font-size="35" font-weight="700">Delta Bridge</text>
+  <text x="44" y="99" fill="#B9C4D3" font-family="Segoe UI, Arial, sans-serif" font-size="15">SOURCE-LABELLED DESIGN PREVIEW · NOT FINAL HUMAN APPROVAL</text>
+
+  <rect x="44" y="154" width="368" height="297" rx="16" fill="#FFFFFF" stroke="#CFD6E1"/>
+  <g transform="translate(156 184) scale(0.5625)">
+    <rect width="256" height="256" rx="56" fill="#0B0E14"/>
+    <rect x="52" y="73" width="106" height="30" rx="15" fill="#3A4459"/>
+    <rect x="98" y="153" width="106" height="30" rx="15" fill="#4FA3FF"/>
+    <rect x="120" y="103" width="15" height="50" rx="7.5" fill="#E6E9EF"/>
+  </g>
+  <text x="68" y="385" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Canonical colour mark</text>
+  <text x="68" y="414" fill="#6F7C90" font-family="Segoe UI, Arial, sans-serif" font-size="12">assets/brand/icon-source.svg</text>
+
+  <rect x="456" y="154" width="368" height="297" rx="16" fill="#0B0E14"/>
+  <g transform="translate(568 184) scale(0.5625)" fill="#FFFFFF">
+    <rect x="52" y="73" width="106" height="30" rx="15"/>
+    <rect x="98" y="153" width="106" height="30" rx="15"/>
+    <rect x="120" y="103" width="15" height="50" rx="7.5"/>
+  </g>
+  <text x="480" y="385" fill="#E6E9EF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">One-colour mark</text>
+  <text x="480" y="414" fill="#B9C4D3" font-family="Segoe UI, Arial, sans-serif" font-size="12">assets/brand/logo-mark-monochrome.svg</text>
+
+  <rect x="868" y="154" width="368" height="297" rx="16" fill="#FFFFFF" stroke="#CFD6E1"/>
+  <text x="892" y="200" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Tray surface variants</text>
+  <g transform="translate(892 228) scale(2.5)">
+    <rect width="32" height="32" rx="7" fill="#F7F9FA"/>
+    <rect x="6.5" y="9.125" width="13.25" height="3.75" rx="1.875" fill="#3A4459"/>
+    <rect x="12.25" y="19.125" width="13.25" height="3.75" rx="1.875" fill="#2F8F83"/>
+    <rect x="15.0625" y="12.875" width="1.875" height="6.25" rx="0.9375" fill="#0B0E14"/>
+  </g>
+  <g transform="translate(1004 228) scale(2.5)">
+    <rect width="32" height="32" rx="7" fill="#0B0E14"/>
+    <rect x="6.5" y="9.125" width="13.25" height="3.75" rx="1.875" fill="#8994A8"/>
+    <rect x="12.25" y="19.125" width="13.25" height="3.75" rx="1.875" fill="#4FA3FF"/>
+    <rect x="15.0625" y="12.875" width="1.875" height="6.25" rx="0.9375" fill="#E6E9EF"/>
+  </g>
+  <g transform="translate(1116 228) scale(2.5)">
+    <rect width="32" height="32" fill="#000000"/>
+    <rect x="6.5" y="9.125" width="13.25" height="3.75" rx="1.875" fill="#FFFFFF"/>
+    <rect x="12.25" y="19.125" width="13.25" height="3.75" rx="1.875" fill="#FFFF00"/>
+    <rect x="15.0625" y="12.875" width="1.875" height="6.25" rx="0.9375" fill="#FFFFFF"/>
+  </g>
+  <text x="892" y="344" fill="#3A4459" font-family="Segoe UI, Arial, sans-serif" font-size="12">Light</text>
+  <text x="1004" y="344" fill="#3A4459" font-family="Segoe UI, Arial, sans-serif" font-size="12">Dark</text>
+  <text x="1116" y="344" fill="#3A4459" font-family="Segoe UI, Arial, sans-serif" font-size="12">Contrast</text>
+  <text x="892" y="384" fill="#6F7C90" font-family="Segoe UI, Arial, sans-serif" font-size="11">assets/brand/tray-light.svg</text>
+  <text x="892" y="405" fill="#6F7C90" font-family="Segoe UI, Arial, sans-serif" font-size="11">tray-dark.svg · tray-high-contrast.svg</text>
+
+  <rect x="44" y="479" width="580" height="304" rx="16" fill="#FFFFFF" stroke="#CFD6E1"/>
+  <text x="68" y="525" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Installer surfaces</text>
+  <g transform="translate(68 552) scale(2)">
+    <rect width="150" height="57" fill="#F7F9FA" stroke="#CFD6E1" stroke-width="0.5"/>
+    <g transform="translate(9 9) scale(0.1484375)">
+      <rect width="256" height="256" rx="56" fill="#0B0E14"/>
+      <rect x="52" y="73" width="106" height="30" rx="15" fill="#3A4459"/>
+      <rect x="98" y="153" width="106" height="30" rx="15" fill="#4FA3FF"/>
+      <rect x="120" y="103" width="15" height="50" rx="7.5" fill="#E6E9EF"/>
+    </g>
+    <text x="54" y="28" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700">What Changed</text>
+  </g>
+  <rect x="436" y="552" width="88" height="168" fill="#0B0E14"/>
+  <g transform="translate(446 568) scale(0.28)">
+    <rect x="52" y="73" width="106" height="30" rx="15" fill="#3A4459"/>
+    <rect x="98" y="153" width="106" height="30" rx="15" fill="#4FA3FF"/>
+    <rect x="120" y="103" width="15" height="50" rx="7.5" fill="#E6E9EF"/>
+  </g>
+  <text x="443" y="658" fill="#E6E9EF" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700">What Changed</text>
+  <text x="68" y="748" fill="#6F7C90" font-family="Segoe UI, Arial, sans-serif" font-size="12">assets/brand/installer-header.svg · installer-sidebar.svg</text>
+
+  <rect x="656" y="479" width="580" height="304" rx="16" fill="#FFFFFF" stroke="#CFD6E1"/>
+  <text x="680" y="525" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Article cover template</text>
+  <rect x="680" y="548" width="532" height="170" fill="#F7F9FA" stroke="#CFD6E1"/>
+  <rect x="680" y="548" width="532" height="5" fill="#0B0E14"/>
+  <text x="700" y="583" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700">What Changed</text>
+  <text x="700" y="642" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="27" font-weight="700">Article headline</text>
+  <rect x="1062" y="577" width="116" height="116" rx="24" fill="#0B0E14"/>
+  <g transform="translate(1073 590) scale(0.36)">
+    <rect x="52" y="73" width="106" height="30" rx="15" fill="#3A4459"/>
+    <rect x="98" y="153" width="106" height="30" rx="15" fill="#4FA3FF"/>
+    <rect x="120" y="103" width="15" height="50" rx="7.5" fill="#E6E9EF"/>
+  </g>
+  <text x="680" y="748" fill="#6F7C90" font-family="Segoe UI, Arial, sans-serif" font-size="12">assets/brand/article-cover-template.svg · placeholder text only</text>
+  <text x="44" y="814" fill="#6F7C90" font-family="Segoe UI, Arial, sans-serif" font-size="12">Review layout only. The installed Windows appearance, high-contrast behavior and final release approval remain open.</text>
+</svg>

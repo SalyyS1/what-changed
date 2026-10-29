@@ -1,0 +1,20 @@
+[
+  {
+    "Id": "111111111111aaaaaaaa",
+    "Names": ["/wc-db"],
+    "Image": "postgres:16",
+    "State": "running",
+    "Status": "Up 5 minutes",
+    "Labels": {"com.docker.compose.project": "what-changed", "ignored.secret.label": "not-exposed"},
+    "Ports": [{"IP": "127.0.0.1", "PrivatePort": 5432, "PublicPort": 5432, "Type": "tcp"}]
+  },
+  {
+    "Id": "444444444444bbbbbbbb",
+    "Names": ["/wc-api"],
+    "Image": "wc-api:dev",
+    "State": "exited",
+    "Status": "Exited (0) 2 minutes ago",
+    "Labels": {},
+    "Ports": []
+  }
+]

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 57" width="150" height="57" role="img" aria-labelledby="title desc">
+  <title id="title">What Changed installer header</title>
+  <desc id="desc">Light installer banner with the Delta Bridge mark and What Changed product name.</desc>
+  <rect width="150" height="57" fill="#F7F9FA"/>
+  <rect y="56" width="150" height="1" fill="#CFD6E1"/>
+  <!-- The mark is the 256-unit canonical geometry scaled without alteration. -->
+  <g transform="translate(9 9) scale(0.1484375)">
+    <rect width="256" height="256" rx="56" fill="#0B0E14"/>
+    <rect x="52" y="73" width="106" height="30" rx="15" fill="#3A4459"/>
+    <rect x="98" y="153" width="106" height="30" rx="15" fill="#4FA3FF"/>
+    <rect x="120" y="103" width="15" height="50" rx="7.5" fill="#E6E9EF"/>
+  </g>
+  <text x="54" y="27" fill="#0B0E14" font-family="Segoe UI, Arial, sans-serif" font-size="12.3" font-weight="700">What Changed</text>
+  <text x="54" y="39" fill="#3A4459" font-family="Segoe UI, Arial, sans-serif" font-size="6.8" font-weight="600" letter-spacing="1">CHANGE HISTORY</text>
+</svg>

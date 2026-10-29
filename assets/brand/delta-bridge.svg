@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="What Changed">
+  <title>What Changed</title>
+  <desc>Two offset bars: a muted before state above a bright after state, with the change marked between them.</desc>
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="#0B0E14"/>
+  <rect x="208" y="292" width="424" height="120" rx="60" ry="60" fill="#3A4459"/>
+  <rect x="392" y="612" width="424" height="120" rx="60" ry="60" fill="#4FA3FF"/>
+  <rect x="482" y="412" width="60" height="200" rx="30" ry="30" fill="#E6E9EF"/>
+</svg>

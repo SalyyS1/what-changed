@@ -1,0 +1,1 @@
+{"name":"driver-vs-install","problem":"my microphone has no sound","symptom_time_ms":10000000,"expected_top_three":[10,11],"events":[{"id":10,"kind":"audio_driver_updated","at":9700000},{"id":11,"kind":"app_installed","at":9900000}],"relationships":["driver:audio->device:microphone"]}

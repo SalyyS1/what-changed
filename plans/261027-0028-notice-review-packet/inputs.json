@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "target": "x86_64-pc-windows-msvc",
+  "cargoEdges": "normal,no-proc-macro",
+  "cargoLockSha256": "e00218729e5638649fcffb75a14a70d43be6aab9f85ff001abad82d8b1b97cd6",
+  "bunLockSha256": "00255794c32424fdd0e5e814a517995f0ae0a0129f2ac82a928004918d0a049e",
+  "cargoManifestSha256": "5d64037750d5a074843ed2d4f46d1ec65ac709ec5d8825210c7a0f214ecda65d",
+  "frontendInputsSha256": "3fc988a518b22b2dad728f01c06e30bb4b9b812aec0f407437d1765ab876c7f4",
+  "cargoTreeSha256": "3548094d01b8d7afa1de5af59a06bd24d4bf16bdd6e4fe910498bd4a54899707",
+  "cargoMetadataSha256": "8f33fb0e266ae5857c89f6fc16ce9cc71a0c11f0a91e3dbb25649248353c95f3"
+}

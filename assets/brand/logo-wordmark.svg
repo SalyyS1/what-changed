@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 128" role="img" aria-labelledby="title">
+  <title id="title">What Changed wordmark</title>
+  <rect width="128" height="128" rx="28" fill="#0B0E14"/>
+  <rect x="26" y="36" width="52" height="15" rx="7.5" fill="#3A4459"/>
+  <rect x="49" y="77" width="52" height="15" rx="7.5" fill="#4FA3FF"/>
+  <rect x="60" y="51" width="8" height="26" rx="4" fill="#E6E9EF"/>
+  <text x="152" y="82" fill="#E6E9EF" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="600" letter-spacing="1">What Changed</text>
+</svg>

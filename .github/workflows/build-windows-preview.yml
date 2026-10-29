@@ -1,0 +1,136 @@
+name: Build Windows development preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/preview-20261028']
+    paths-ignore: ['docs/**', 'plans/**', 'wiki-site/**']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-preview-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: windows-2025
+    timeout-minutes: 90
+    env:
+      CARGO_BUILD_JOBS: '2'
+      CARGO_INCREMENTAL: '0'
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: '1.3.11'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.12.0'
+      - name: Verify source archive auditor Python
+        shell: pwsh
+        run: |
+          python -I -c "import sys; print(sys.version); assert sys.version_info[:3] == (3, 12, 10), 'Source auditor requires Python 3.12.10'"
+          exit $LASTEXITCODE
+      - name: Install exact Rust toolchain
+        shell: pwsh
+        run: |
+          rustup toolchain install 1.98.0 --profile minimal --component rustfmt,clippy --target x86_64-pc-windows-msvc
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          rustc --version
+      - name: Install locked frontend dependencies
+        run: bun install --frozen-lockfile
+      - name: Verify source contracts
+        shell: pwsh
+        run: |
+          bun run check
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          bun run rs:fmt
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node scripts/verify-preview-notice-continuity.mjs
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node --test scripts/check-runner-bundle.test.mjs scripts/check-owner-release.test.mjs scripts/verify-preview-notice-continuity.test.mjs
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node --test scripts/fetch-reviewed-runtime-artifact.test.mjs
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node --test scripts/verify-nsis-notice-copy.test.mjs
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          bun run runner:test
+          exit $LASTEXITCODE
+      - name: Focused frontend integration
+        run: bun run test src/lib/stores/preview-runner.test.ts src/lib/stores/preview-revocations.test.ts src/app/App.test.ts src/features/verification-runner/verification-runner-panel.test.ts src/features/acceptance/run-review.test.ts --pool=threads --maxWorkers=1
+      - name: Prepare matching browser sources before redistribution
+        run: node scripts/prepare-runner-source-materials.mjs
+      - name: Native authority and generated contract
+        shell: pwsh
+        run: |
+          cargo test --locked --manifest-path src-tauri/Cargo.toml --lib owner_workspace::storage::evidence::run_source_tests:: -- --test-threads=1
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo test --locked --manifest-path src-tauri/Cargo.toml --lib dto::bindings::tests::generated_declarations_match_the_checked_in_frontend_contract -- --exact
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo test --locked --manifest-path src-tauri/Cargo.toml --lib platform::windows::managed_file_lock:: -- --test-threads=1
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo test --locked --manifest-path src-tauri/Cargo.toml --test redaction_leak every_secret_shape_is_redacted -- --test-threads=1
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo test --locked --manifest-path src-tauri/Cargo.toml --test preview_runner_lifecycle
+          exit $LASTEXITCODE
+      - name: Prepare exact reviewed runtime bytes
+        run: node scripts/hydrate-preview-runtime.mjs
+      - name: Verify actual packaged inventory through native loader
+        shell: pwsh
+        run: |
+          $env:OWNVERO_TEST_BUNDLE = Join-Path $PWD 'runner/bundle'
+          cargo test --locked --manifest-path src-tauri/Cargo.toml --lib preview_runner::bundle::tests::packaged_inventory_matches_native_loader -- --exact --ignored
+          exit $LASTEXITCODE
+      - name: Prepare reviewed desktop notices
+        shell: pwsh
+        run: |
+          bun run build
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node scripts/generate-third-party-notices.mjs --prepare
+          exit $LASTEXITCODE
+      - name: Compile runner-enabled desktop before installer review
+        run: bun run tauri build --no-bundle --config src-tauri/tauri.runner.conf.json
+      - name: Require runtime notice approval before redistribution
+        run: bun run check:runner-notices
+      - name: Bundle unsigned runner-enabled installer
+        run: bun run tauri bundle --ci --bundles nsis --config src-tauri/tauri.runner.conf.json
+      - name: Verify notices and write artifact evidence
+        shell: pwsh
+        run: |
+          node scripts/generate-third-party-notices.mjs --check
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          bun run check:bundle
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node scripts/check-nsis-script.mjs src-tauri/target/release/nsis/x64/installer.nsi
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node scripts/verify-nsis-notice-copy.mjs src-tauri/target/release/nsis/x64/installer.nsi dist-installer/THIRD_PARTY_NOTICES.txt
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node scripts/verify-nsis-notice-copy.mjs src-tauri/target/release/nsis/x64/installer.nsi release/RUNNER_THIRD_PARTY_NOTICES.txt RUNNER_THIRD_PARTY_NOTICES.txt
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          New-Item -ItemType Directory -Path preview-artifacts -Force | Out-Null
+          Copy-Item 'src-tauri/target/release/bundle/nsis/*-setup.exe' preview-artifacts
+          Copy-Item dist-installer/THIRD_PARTY_NOTICES.txt preview-artifacts
+          Copy-Item release/RUNNER_THIRD_PARTY_NOTICES.txt preview-artifacts
+          Copy-Item docs/development-preview.md preview-artifacts/PREVIEW-NOTES.md
+          Copy-Item docs/runner-source-build.md preview-artifacts/RUNNER-SOURCE-BUILD.md
+          @{ sourceCommit = '${{ github.sha }}'; runId = '${{ github.run_id }}'; unsigned = $true; packagedPreviewRunner = $true; fullAcceptance = $false } | ConvertTo-Json | Set-Content preview-artifacts/build-evidence.json -Encoding utf8NoBOM
+          $artifactRoot = [IO.Path]::GetFullPath('preview-artifacts')
+          $checksums = Get-ChildItem preview-artifacts -File -Recurse | ForEach-Object {
+            $relativeName = [IO.Path]::GetRelativePath($artifactRoot, $_.FullName).Replace('\', '/')
+            '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $relativeName
+          }
+          $checksums | Set-Content preview-artifacts/SHA256SUMS.txt -Encoding utf8NoBOM
+      - name: Upload review artifact only
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: what-changed-owner-workspace-preview-${{ github.run_number }}
+          path: preview-artifacts/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14

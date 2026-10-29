@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">What Changed mark</title>
+  <desc id="desc">Two offset state bars joined by a change bridge.</desc>
+  <rect width="256" height="256" rx="56" fill="#0B0E14"/>
+  <rect x="52" y="73" width="106" height="30" rx="15" fill="#3A4459"/>
+  <rect x="98" y="153" width="106" height="30" rx="15" fill="#4FA3FF"/>
+  <rect x="120" y="103" width="15" height="50" rx="7.5" fill="#E6E9EF"/>
+</svg>

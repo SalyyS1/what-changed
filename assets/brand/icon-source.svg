@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="What Changed">
+  <title>What Changed</title>
+  <desc>Two offset bars: a muted "before" state above a bright "after" state, with the change marked between them. Flat colors only, no gradients, legible at 32 px.</desc>
+
+  <!-- App tile. Flat fill so the glyph survives ICO downscaling to 16 px. -->
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="#0B0E14"/>
+
+  <!-- "Before": the state that worked. Muted, set back to the left. -->
+  <rect x="208" y="292" width="424" height="120" rx="60" ry="60" fill="#3A4459"/>
+
+  <!-- "After": the current state. Accent, shifted right by exactly one bar radius
+       so the offset reads as a change rather than a misalignment. -->
+  <rect x="392" y="612" width="424" height="120" rx="60" ry="60" fill="#4FA3FF"/>
+
+  <!-- The change itself: a single mark bridging the two states. -->
+  <rect x="482" y="412" width="60" height="200" rx="30" ry="30" fill="#E6E9EF"/>
+</svg>

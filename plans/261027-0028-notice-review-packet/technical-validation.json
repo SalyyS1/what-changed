@@ -1,0 +1,35 @@
+{
+  "status": "technical-checks-passed-human-review-pending",
+  "checkedOn": "2026-10-27",
+  "packages": 232,
+  "nativeComponents": 2,
+  "uniqueReferencedTexts": 263,
+  "releaseManifestUnchanged": true,
+  "previousDraftUnchanged": true,
+  "sqliteResolvedFeatures": [
+    "bundled",
+    "bundled_bindings",
+    "cc",
+    "default",
+    "min_sqlite_version_3_34_1",
+    "pkg-config",
+    "vcpkg"
+  ],
+  "sqliteScope": "Bundled SQLite amalgamation selected; no SQLCipher feature resolved. The crate also contains unused SQLCipher sources; their license is not substituted for SQLite public-domain source evidence.",
+  "mplSource": {
+    "file": "sources/option-ext-0.2.0.crate",
+    "sha256": "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d",
+    "bytes": 7345,
+    "publicDownloadVerified": true,
+    "sourceUrl": "https://static.crates.io/crates/option-ext/option-ext-0.2.0.crate",
+    "installedSourceFilesIdentical": true
+  },
+  "sourceArchiveVerification": {
+    "packages": 213,
+    "comparedFiles": 10116,
+    "differentFiles": 0
+  },
+  "humanApproval": false,
+  "finalArtifactBinding": false,
+  "publicationApproval": false
+}

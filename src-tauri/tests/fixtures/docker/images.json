@@ -1,0 +1,4 @@
+[
+  {"Id": "sha256:222222222222", "RepoTags": ["postgres:16"]},
+  {"Id": "sha256:555555555555", "RepoTags": ["wc-api:dev", "wc-api:latest"]}
+]

@@ -1,0 +1,4 @@
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System><Provider Name="Microsoft-Windows-Servicing"/><EventID>2</EventID><Level>4</Level><TimeCreated SystemTime="2026-09-20T01:09:00.0000000Z"/><Channel>Setup</Channel><Computer>SANITIZED-PC</Computer></System>
+  <EventData><Data Name="PackageIdentifier">Package_for_Sanitized_Update</Data><Data Name="PackageState">Installed</Data></EventData>
+</Event>

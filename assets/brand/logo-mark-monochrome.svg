@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title desc">
+  <title id="title">What Changed monochrome mark</title>
+  <desc id="desc">The Delta Bridge before and after bars with their connecting change mark, in one light colour for a dark surface.</desc>
+  <!-- Transparent field; keep one bridge-stroke of clear space around the silhouette. -->
+  <g fill="#FFFFFF">
+    <rect x="52" y="73" width="106" height="30" rx="15"/>
+    <rect x="98" y="153" width="106" height="30" rx="15"/>
+    <rect x="120" y="103" width="15" height="50" rx="7.5"/>
+  </g>
+</svg>
