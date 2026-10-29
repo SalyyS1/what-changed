@@ -40,8 +40,9 @@ test('rendered static navigation, search, demo, base path, no-JS and responsive 
     await page.getByRole('searchbox').fill('zzznomatchzzz'); await page.getByText('No matching page.', { exact: false }).waitFor();
     await page.goto(`${base}download/`); assert.equal(await page.locator('[data-download]').count(), 0);
     await page.locator('[data-platform] select').selectOption('macos'); assert.ok((await page.locator('[data-platform-state]').textContent()).includes('no installer'));
+    const requestsBeforeDemo = requests.length;
     await page.goto(`${base}demo/`);
-    assert.equal(requests.some((path) => /workbench-3d-/.test(path)), false, '3D loaded before the visitor asked');
+    assert.equal(requests.slice(requestsBeforeDemo).some((path) => /workbench-3d-/.test(path)), false, '3D loaded before the visitor asked');
     for (const value of ['failed', 'blocked', 'stale', 'current']) {
       await page.locator('[data-state]').selectOption(value);
       assert.equal(await page.locator('[data-verdict]').getAttribute('data-verdict'), value === 'current' ? 'passed' : value);

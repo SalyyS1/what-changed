@@ -128,8 +128,10 @@ testimonials, downloads, prices, certification or unsupported competitor claims.
 Sections: product outcome → 3-step example → evidence demo → why not just ask builder
 to test → privacy/limits → download → docs/support. A visitor should understand
 the repeated-use job without reading an architecture essay.
-Website 2D walkthrough required; 3D demo loads only on click, respects reduced-motion,
-uses the same labeled synthetic dataset, no live customer or local QA data.
+Website 2D walkthrough required; the landing preview opens the same 3D evidence model
+after first paint so the process is visible without hunting for a control. The full demo
+page keeps 3D opt-in on click. Both paths respect reduced-motion, use the same labeled
+synthetic dataset, and never include live customer or local QA data.
 
 Wiki: source docs canonical, version + last-reviewed commit shown; search excludes plans,
 private QA, logs and legal-review working files. Retain old deep links via build-time

@@ -21,28 +21,34 @@ export function attachDemo(root) {
     scene?.select(selected);
   });
   const load = root.querySelector('[data-load-3d]');
-  load?.addEventListener('click', async () => {
-    load.disabled = true; load.textContent = 'Loading 3D…';
-    const panel = root.querySelector('[data-three-panel]');
+  const panel = root.querySelector('[data-three-panel]');
+  const load3d = async () => {
+    if (scene || !panel) return;
+    if (load) { load.disabled = true; load.textContent = 'Loading 3D…'; }
     try {
       const { createWorkbench } = await import('./workbench-3d.mjs');
       panel.hidden = false;
       scene = createWorkbench(root.querySelector('[data-three-canvas]'), (id) => root.querySelector(`[data-select="${id}"]`).click());
       scene.select(selected); update();
-      load.textContent = '3D loaded';
+      if (load) load.textContent = '3D loaded';
     } catch {
-      panel.hidden = true; load.disabled = false; load.textContent = 'Retry 3D workbench';
+      panel.hidden = true;
+      if (load) { load.disabled = false; load.textContent = 'Retry 3D workbench'; }
       root.querySelector('[data-inspector]').textContent = '3D is unavailable in this browser. The complete 2D cards and connection list remain available.';
     }
-  });
+  };
+  load?.addEventListener('click', load3d);
+  if (root.getAttribute('data-auto-3d') === 'true') {
+    void load3d();
+  }
   root.querySelector('[data-reset]')?.addEventListener('click', () => { root.querySelector('[data-zoom]').value = '1'; scene?.reset(); });
   root.querySelector('[data-fit]')?.addEventListener('click', () => scene?.fit());
   root.querySelector('[data-zoom]')?.addEventListener('input', (event) => scene?.zoom(Number(event.target.value)));
   root.querySelector('[data-explode]')?.addEventListener('change', (event) => scene?.explode(event.target.checked));
   root.querySelector('[data-layer]')?.addEventListener('change', (event) => scene?.layer(event.target.value));
   root.querySelector('[data-close-3d]')?.addEventListener('click', () => {
-    scene?.dispose(); scene = undefined; root.querySelector('[data-three-panel]').hidden = true;
-    load.disabled = false; load.textContent = 'Load 3D workbench'; load.focus();
+    scene?.dispose(); scene = undefined; panel.hidden = true;
+    if (load) { load.disabled = false; load.textContent = 'Load 3D workbench'; load.focus(); }
   });
   window.addEventListener('pagehide', () => scene?.dispose(), { once: true });
   update();

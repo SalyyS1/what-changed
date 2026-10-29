@@ -3,6 +3,10 @@
 Static landing/wiki/demo for public review of the owner-workspace direction.
 Identity remains a G2 draft; binary publication remains G3-gated. The output has
 no desktop IPC and does not expose a download until an exact release is approved.
+The landing page includes a visual Intent → Brief → Evidence → Decision map and
+auto-opens the synthetic 3D evidence workbench after first paint. The full demo
+route keeps the 3D workbench opt-in, and both views retain the accessible card/list
+fallback.
 
 ## Build and review
 

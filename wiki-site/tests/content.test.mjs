@@ -8,6 +8,7 @@ import { renderMarkdown } from '../src/markdown.mjs';
 import { checkSite } from '../../scripts/check-site.mjs';
 import { booking } from '../src/demo-data.mjs';
 import { demoTemplate } from '../src/demo-template.mjs';
+import { landing } from '../src/landing.mjs';
 
 test('untrusted Markdown cannot inject HTML, handlers, or dangerous URLs', () => {
   const { html } = renderMarkdown('## Trust\n\n<script>alert(1)</script>\n\n<img src=x onerror=alert(1)>\n\n[x](javascript:evil) [y](//evil.test) [safe](https://example.com)');
@@ -26,6 +27,18 @@ test('the list exposes the same exact nodes and explicit edges as the optional r
     assert.ok(booking.nodes.some((node) => node.id === edge.from)); assert.ok(booking.nodes.some((node) => node.id === edge.to)); assert.ok(html.includes(edge.type));
   }
   assert.ok(html.includes('not yet made')); assert.equal(booking.states.blocked.after, 'blocked'); assert.equal(booking.states.stale.after, 'stale');
+});
+test('the landing page exposes the visual process map and an auto-loaded 3D preview', () => {
+  const html = landing();
+  for (const stage of ['Intent', 'Brief', 'Evidence', 'Decision']) assert.ok(html.includes(`>${stage}<`));
+  assert.ok(html.includes('class="process-edges"'));
+  assert.ok(html.includes('data-auto-3d="true"'));
+  assert.ok(html.includes('data-three-canvas'));
+});
+test('the full demo keeps 3D opt-in and lazy', () => {
+  const html = demoTemplate();
+  assert.ok(html.includes('data-load-3d'));
+  assert.ok(!html.includes('data-auto-3d="true"'));
 });
 test('generated routes, allowlist, private data boundary, and initial JS budget', async () => {
   const result = await checkSite(); assert.equal(result.pages, 19);
