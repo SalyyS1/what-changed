@@ -6,10 +6,17 @@ This unsigned Windows x64 preview contains the current owner workspace, confirme
 rules, saved requests, reviewed AI briefs, manual acceptance, portable project
 memory, and the shared journey/2D/list/optional-3D evidence workbench.
 
-The [verified QA candidate](../plans/reports/qa-261029-0042-runner-installer-artifact.md)
-records the successful build, complete installer/source artifact, hashes and
-inspection limits. Download the complete artifact with its seven source archives;
-its GitHub retention expires on 11 November 2026. It is not a public-v1 release.
+The [current verified QA candidate](../plans/reports/qa-261030-2235-runner-installer-artifact.md)
+records successful run `41091508412`, source `75dcb67c`, packaged inventory,
+notices, installer hashes and nonexecuting inspection limits. Its
+[complete installer/source artifact](https://github.com/SalyyS1/what-changed/actions/runs/41091508412/artifacts/12995563059)
+is 2,227,565,645 bytes and retains all seven source archives. GitHub retention
+expires on 13 November 2026 (UTC). It is not a public-v1 release.
+
+The installer itself is 175,182,373 bytes; the installed runner inventory is
+543,580,088 bytes. The additional source archives are co-delivered for the browser
+and are not installed or fetched at app startup. The complete QA ZIP remains the
+distribution packet; an extracted installer alone is for local inspection.
 
 ## Packaging boundary
 
@@ -44,7 +51,8 @@ network confinement, accessibility, performance, four-hour soak and real-owner
 repeat-use acceptance remain open. Automatic updates have no configured signed feed.
 
 The native product/data identity stays `What Changed` / `dev.whatchanged.app`.
-Ownvero assets and website remain draft source. Existing local history is retained
+Ownvero assets remain draft; the [landing/wiki preview](https://salyys1.github.io/what-changed/vi/)
+is live with 3D/2D explanation and an unavailable public download. Existing local history is retained
 by default on uninstall. Back up data before testing upgrades; no downgrade promise.
 
 ## Build provenance

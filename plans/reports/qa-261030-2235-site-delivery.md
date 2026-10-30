@@ -83,10 +83,14 @@ on the product pages.
 - Local screenshot: `.qa/website-overhaul-live-vi.png`; machine smoke receipt:
   `.qa/website-overhaul-live-results.json`. These private review artifacts are not
   copied to the public site.
-- QA public projection: `f9ac3005e7428b51af0f2ca9907015b90576af26`, from primary
-  `112f95b`. [Build](https://github.com/SalyyS1/what-changed/actions/runs/41086258362)
-  started; final artifact inspection is tracked separately. Exact approval-bound
-  blob hashes survived both primary staging and public projection.
+- Initial QA projection `f9ac3005e7428b51af0f2ca9907015b90576af26`, from primary
+  `112f95b`, failed desktop notice generation in
+  [run 41086258362](https://github.com/SalyyS1/what-changed/actions/runs/41086258362).
+  Primary repair `d71eaf3` restored exact reviewed legal bytes; public projection
+  `75dcb67c3ba9c6e8c6ad97e2166dd1626c44cb11` started
+  [replacement run 41091508412](https://github.com/SalyyS1/what-changed/actions/runs/41091508412).
+  [Artifact inspection](qa-261030-2235-runner-installer-artifact.md) owns the final
+  build result. Exact approval-bound blob hashes survived staging and projection.
 
 Public binary release remains gated by native acceptance and exact approval, as
 recorded in the release readiness report. No Release/tag/production updater was

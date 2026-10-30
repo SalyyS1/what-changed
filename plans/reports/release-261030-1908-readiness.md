@@ -2,9 +2,11 @@
 
 Status: DONE_WITH_CONCERNS. Build and source inspection advanced; public release remains NO-GO.
 
-Latest state: the owner approved the exact runtime source delta on 2026-10-30;
-the active freeze, preflight, notices and desktop continuity now pass. The initial
-audit below records the earlier blockers. See approval follow-through near the end.
+Latest state: the owner approved the exact runtime source delta on 2026-10-30.
+Replacement build `41091508412` and nonexecuting installer inspection passed on
+2026-10-31, Asia/Saigon, for public source `75dcb67c`. The active freeze, preflight,
+notices and desktop continuity pass. The initial audit below records the earlier
+blockers; follow-through and current artifact evidence appear near the end.
 
 ## Scope and source
 
@@ -13,9 +15,9 @@ audit below records the earlier blockers. See approval follow-through near the e
 - Initial audit made no app/site/config/approval edits, builds, installer execution, large downloads, publication or user-data access. Later explicitly authorized preflight and approval work is recorded below. Temporary test fixtures were handled by existing tests.
 - Repository `AGENTS.md` and `C:/Users/<user>/.Codex/rules/development-rules.md` are absent; supplied session instructions apply. Applied installed `ak-test` skill.
 
-## Hosted artifact: live API recheck
+## Prior hosted artifact: initial audit snapshot
 
-GitHub API on 2026-10-30 confirms the latest preview workflow run remains
+At the initial audit on 2026-10-30, GitHub API confirmed the latest preview run was
 [40730363355](https://github.com/SalyyS1/what-changed/actions/runs/40730363355):
 completed/success, source `e5906ea6ae2fb06859d7b361df00b36425dd496c`, branch
 `codex/preview-20261028`, created `2026-10-28T16:53:17Z`.
@@ -180,8 +182,9 @@ delta for an unsigned QA build; public release and G2/G3 remain unapproved.
 | Approval/reference/scope rehash | All active and preserved references match their recorded full SHA256 |
 
 The preflight's seven tests pass. CI now checks frozen source inputs before Rust,
-dependency, source archive and runtime preparation. No hosted build was dispatched
-in this task. Candidate packet/native/soak/pilot/publication evidence remains open.
+dependency, source archive and runtime preparation. No hosted build had been
+dispatched at that checkpoint; the later controller pushes and replacement build
+are recorded below. Candidate packet/native/soak/pilot/publication evidence remains open.
 
 Exact approved inventory JSON uses CRLF. The active release path already has
 `-text` attributes. The plan proposal also needs `-text` before staging, otherwise
@@ -194,7 +197,7 @@ Rehash approved inputs and evidence from the staged/committed blobs before push.
 The existing clean isolated clone is
 `D:/Project/.WhatChage/.qa/github-build-preview-20261028`, branch
 `codex/preview-20261028`, origin `https://github.com/SalyyS1/what-changed.git`.
-Both clone and live branch currently identify
+At route discovery, both clone and live branch identified
 `50b32fc88abbcbf80acc4d13965ef151c2e7ed71`. Use the existing
 `scripts/prepare-public-source.mjs` projection after the controller commits the
 intended primary source. It preserves public history/review records and excludes
@@ -241,6 +244,28 @@ the exact reviewed blobs from public `50b32fc88abbcbf80acc4d13965ef151c2e7ed71`
 repairs the bytes; no terms, license choice or human approval changes. The
 existing `legal/third-party/** -text` attribute preserves them thereafter.
 
+Primary repair commit `d71eaf3` restores those exact bytes and adds the read-only
+notice preflight before expensive CI work and after public projection. Combined
+early tests pass 13/13. Repeating the actual frontend build and desktop notice
+generator locally succeeds: 232 reviewed inputs, notice SHA256
+`aea1d355d6864858959b2a9e4c8ee628acd56718d1e6a8b2620961f344f8c6a5`.
+That is local generator evidence, not a hosted installer payload hash.
+
+Replacement public source `75dcb67c3ba9c6e8c6ad97e2166dd1626c44cb11`
+started [run 41091508412](https://github.com/SalyyS1/what-changed/actions/runs/41091508412).
+Its new early source/notice gate passed. Final artifact evidence is owned by the
+[QA inspection record](qa-261030-2235-runner-installer-artifact.md); do not reuse
+the failed run as a successful candidate.
+
+The replacement finished successfully at `2026-10-30T17:09:51Z` (31 October,
+00:09:51 Asia/Saigon). Complete artifact `12995563059` contains the installer,
+notices and all seven matching source archives. It is 2,227,565,645 bytes; API
+retention expires `2026-11-13T17:09:27Z`. Static inspection independently checked
+the installer checksum, native executable, packaged 197-file runtime inventory
+and notices. Source co-delivery was checked through the ZIP directory and hosted
+receipts; the complete ZIP and 2 GB sources were not downloaded/rehashed locally.
+No installer or product execution is claimed by this inspection.
+
 ## Public runner packet contract gap
 
 The current approved QA distribution keeps installer plus seven source archives
@@ -256,6 +281,12 @@ This is a measured format/hosting mismatch, separate from native acceptance.
 Keep downloads unavailable; a public distribution format requires an explicit
 scope decision and matching manifest/schema/evidence binding before G3. Do not
 silently omit sources or replace the approved source duties with a written offer.
+
+The [concrete public download proposal](../261030-1908-website-overhaul-release-readiness/public-download-proposal.md)
+recommends one Release with installer and corresponding-source ZIP, each below
+the host's individual-file limit, and coordinated manifest/evidence checks.
+This proposal leaves the approved complete QA Actions artifact unchanged. A new
+decision is pending; no public-format code or publication approval was inferred.
 
 ## Unresolved questions
 

@@ -23,8 +23,12 @@ page labels the evidence state of a claim:
 9. [2D/3D maps and keyboard list](ownvero/maps.md)
 10. [Ownvero FAQ](ownvero/faq.md)
 
-The local [web wiki and landing preview](../wiki-site/README.md) renders these
-canonical pages, with local search and explicit unavailable-download state.
+The [live English landing/wiki](https://salyys1.github.io/what-changed/) and
+[Vietnamese version](https://salyys1.github.io/what-changed/vi/) explain the owner
+workflow with an interactive 3D model, a 2D alternative and local search.
+This is a website preview; the Windows download remains unavailable pending
+exact release acceptance. The [site source and local commands](../wiki-site/README.md)
+remain available offline.
 
 ## Understand and trust
 

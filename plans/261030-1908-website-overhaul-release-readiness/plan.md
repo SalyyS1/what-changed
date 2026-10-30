@@ -33,7 +33,8 @@ Dials: variance 6, motion 2, density 3.
   reduced-motion behavior, context-loss recovery and cleanup.
 - [x] Inspect native release evidence and repair actionable release workflow gaps.
 - [x] Verify source/site, rendered desktop/tablet/mobile and independent review.
-- [ ] Commit, publish site preview, check hosted pages and record release status.
+- [x] Commit, publish site preview, check hosted pages and record release status.
+- [x] Build and inspect the updated runner-enabled Windows QA artifact.
 
 ## Acceptance
 
@@ -58,6 +59,26 @@ clean-Windows, human pilot, soak or exact approval is never reported as complete
   passing source gates from outstanding native acceptance.
 - Runtime delta explicitly approved by user; exact raw proposal and historical
   bytes preserved. New source preflight tests 7/7 pass before expensive CI work.
+- Website is live and smoke-checked on Pages at `d3efe70`; public QA source
+  `75dcb67` carries primary `d71eaf3` after the exact desktop notice-byte repair.
+- Combined early source/notice tests 13/13 pass. Actual frontend build and desktop
+  notice generation pass locally. Replacement hosted run is `41091508412`.
+- [Hosted QA and nonexecuting inspection](../reports/qa-261030-2235-runner-installer-artifact.md)
+  pass for source `75dcb67c`: installer, both notices and all 197 packaged runtime
+  files match the recorded checksums and approved inventory. Seven source
+  archives remain co-delivered in complete artifact `12995563059`.
+
+## Remaining release acceptance
+
+The QA build is not public release acceptance. Clean Windows, native install/
+upgrade/privacy/egress/accessibility, four-hour soak and consenting owner repeat
+use remain open. The complete runner packet also needs a public distribution
+format decision: the current single-EXE manifest cannot represent its full source
+packet, which exceeds GitHub's per-asset size limit. See the release readiness
+and independent review reports above. Do not drop source delivery or enable a CTA.
+The [public download proposal](public-download-proposal.md) prepares a concrete
+same-Release installer/source format for a separate decision; no format change
+or public publication is approved by completing this website/QA work.
 
 ## Ownership
 
