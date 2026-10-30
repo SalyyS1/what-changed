@@ -31,6 +31,7 @@
   let tooltipX = $state(0);
   let tooltipY = $state(0);
   let mapRegion = $state<HTMLDivElement>();
+  let mapFrame = $state<HTMLDivElement>();
   const preference = $derived(mode ?? settings.current?.visualization ?? 'auto');
   const renderer = $derived(resolveChangeMapRenderer({ preference, reducedMotion, webglAvailable: webgl, contextLost }));
   const screenState = $derived(fixture ?? controller.state);
@@ -67,7 +68,7 @@
   }
 </script>
 
-<div class="@container/system-map flex min-h-0 flex-1 flex-col" data-testid="system-map-frame">
+<div bind:this={mapFrame} class="@container/system-map flex min-h-0 flex-1 flex-col" data-testid="system-map-frame">
   <div class="shrink-0 space-y-2 border-y border-border-subtle px-4 py-3">
     <div class="flex flex-wrap items-center justify-between gap-2">
       <KindFilter
@@ -110,7 +111,7 @@
               <p class="text-xs text-text-muted">{hovered.degree} links · {hovered.recent_event_count} recent changes</p>
             </div>
           {/if}
-          <SystemMapNodeList nodes={data.nodes} selectedId={controller.hoveredId ?? data.focus?.entity_id ?? null} onhover={(id) => controller.hover(id)} onfocus={focusNode} onescape={() => mapRegion?.querySelector<HTMLElement>('[data-map-reset]')?.focus()} />
+          <SystemMapNodeList nodes={data.nodes} selectedId={controller.hoveredId ?? data.focus?.entity_id ?? null} onhover={(id) => controller.hover(id)} onfocus={focusNode} onescape={() => mapFrame?.querySelector<HTMLElement>('[data-map-reset]')?.focus()} />
         </div>
         <DependencyPanel {data} onfocus={focusNode} />
       </div>

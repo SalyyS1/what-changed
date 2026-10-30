@@ -32,3 +32,10 @@ Cargo.lock linguist-generated=true
 
 # Generated TypeScript bindings from Rust types (parity-gated, not hand-edited).
 src/lib/tauri/bindings.ts linguist-generated=true
+
+# Exact runtime and reviewed upstream notice bytes must survive checkout intact.
+release/runner-runtime-inventory.json -text
+release/history/** -text
+plans/261030-1908-website-overhaul-release-readiness/runtime-delta-inventory.json -text
+release/RUNNER_THIRD_PARTY_NOTICES.txt -text
+legal/third-party/** -text

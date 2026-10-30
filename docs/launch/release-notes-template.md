@@ -1,3 +1,9 @@
+**Publication status: ARCHIVED — legacy What Changed material; not approved Ownvero copy.**
+
+[Current owner-workspace messaging](messaging.md) owns the new draft positioning.
+This historical copy predates the owner workspace and is retained for provenance;
+it is not validated as current release, privacy, or brand guidance.
+
 # What Changed {{VERSION}}
 
 **Evidence state: available template; release-specific evidence is planned per RC.**

@@ -22,6 +22,9 @@ use crate::domain::{
     Relationship, RelationshipKind, ResolvedInvestigationWindow, RetentionPolicy, ScoreBreakdown,
     Settings, SettingsUpdate, Severity, SystemEvent, Theme, TimeRange, VisualizationMode,
 };
+use crate::dto::owner_evidence_dto::*;
+use crate::dto::owner_memory_dto::*;
+use crate::dto::owner_portability_dto::*;
 use crate::dto::{
     AppErrorDto, AppStatusDto, ChangeMapData, ChangeMapEdge, ChangeMapEdgeKind, ChangeMapLane,
     ChangeMapLaneData, ChangeMapNode, ChangeMapRequest, CheckpointCategoryDiffDto,
@@ -33,6 +36,8 @@ use crate::dto::{
     SystemMapRecentEvent, UpdateCheckDto, WatchedLocationDto,
 };
 use crate::notify::QuietHours;
+use crate::owner_workspace::*;
+use crate::preview_runner::*;
 use crate::services::cluster::{ClusterRef, TimelineItem};
 use crate::services::query_service::TimelinePage;
 use crate::storage::{
@@ -89,6 +94,45 @@ pub fn generate() -> String {
     let config = Config::new().with_large_int("number");
     let mut out = String::with_capacity(8 * 1024);
     out.push_str(HEADER);
+    declarations!(
+        &config,
+        out,
+        OwnerExportSelectionInput,
+        OwnerBundlePreviewDto,
+        OwnerImportPreviewDto,
+        ApplyOwnerImportInput,
+        OwnerImportResultDto
+    );
+    declarations!(
+        &config,
+        out,
+        StartOwnerManualRunInput,
+        OwnerManualManifestDto,
+        OwnerManualRunDto,
+        OwnerExecutionSummaryDto,
+        RunnerRouteDto,
+        PreparePreviewRunInput,
+        PreviewRunPlanDto,
+        PreviewRecipeFileDto,
+        PreviewRecipeExportDto,
+        PreviewCaptureDto,
+        GrantPreviewRunInput,
+        PreviewRunnerEventDto,
+        PreviewRunnerStatusDto,
+        ManualStepObservationDto,
+        ManualAssertionObservationInput,
+        RecordOwnerManualResultInput,
+        OwnerManualResultDto,
+        FinishOwnerManualRunInput,
+        RecordOwnerEvidenceDecisionInput,
+        OwnerEvidenceDecisionDto,
+        OwnerEvidenceCountsDto,
+        OwnerScenarioEvidenceDto,
+        OwnerEvidenceReviewDto,
+        SaveProjectDecisionInput,
+        ProjectDecisionRevisionDto,
+        ProjectMemoryFilterInput
+    );
 
     out.push_str("\n// ---- Domain vocabularies ----\n\n");
     declarations!(
@@ -209,6 +253,59 @@ pub fn generate() -> String {
         QuietHours,
     );
 
+    out.push_str("\n// ---- Offline owner workspace ----\n\n");
+    declarations!(
+        &config,
+        out,
+        RuleProvenance,
+        EnvironmentKind,
+        CandidateSource,
+        CandidateTrust,
+        ChangeState,
+        VerificationMethod,
+        RunLifecycle,
+        ResultStatus,
+        EvidenceFreshness,
+        DecisionKind,
+        RuleRefDto,
+        ScenarioRefDto,
+        OriginDto,
+        FrozenManifestDto,
+        AssertionOutcomeDto,
+        LocatorDto,
+        RecipeActionDto,
+        RecipeAssertionDto,
+        RecipeStepDto,
+        NamedAssertionDto,
+        ReadBackAdapterDto,
+        AdapterEffect,
+        ScenarioRecipeDto,
+        SaveOwnerAppInput,
+        OwnerAppDto,
+        SaveOwnerCapabilityInput,
+        OwnerCapabilityDto,
+        ConfirmOwnerRuleInput,
+        OwnerRuleRevisionDto,
+        SaveOwnerChangeInput,
+        OwnerChangeDraftDto,
+        SaveOwnerEnvironmentInput,
+        OwnerEnvironmentRevisionDto,
+        SaveOwnerCandidateInput,
+        OwnerCandidateRevisionDto,
+        SelectOwnerCandidateInput,
+        OwnerPageInput,
+        OwnerChangeReviewDto,
+        ConfirmOwnerScenarioInput,
+        ScenarioRevisionDto,
+        VerificationRunDto,
+        ScenarioResultDto,
+        OwnerDecisionDto,
+        OwnerBriefSelectionInput,
+        OwnerBriefPreviewDto,
+        OwnerStoreState,
+        OwnerPageDto<OwnerAppDto>
+    );
+
     out.push_str(COMMAND_SECTION);
     out
 }
@@ -267,6 +364,19 @@ pub fn generate_full() -> String {
 #[allow(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn generated_declarations_match_the_checked_in_frontend_contract() {
+        let target =
+            std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../src/lib/tauri/bindings.ts");
+        let current =
+            std::fs::read_to_string(target).expect("the frontend binding contract exists");
+        assert_eq!(
+            current.replace("\r\n", "\n"),
+            generate_full(),
+            "regenerate bindings from the current Rust declarations"
+        );
+    }
 
     #[test]
     fn every_declaration_is_exported_and_the_braces_balance() {

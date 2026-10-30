@@ -13,7 +13,8 @@
 param(
     [switch]$AllowDirty,
     [switch]$SkipInstaller,
-    [switch]$SkipPerf
+    [switch]$SkipPerf,
+    [switch]$IncludePreviewRunner
 )
 
 $ErrorActionPreference = "Stop"
@@ -86,7 +87,7 @@ try {
         $treeOutput | Set-Content -LiteralPath $treeFile -Encoding utf8
     }
     $env:WHAT_CHANGED_CARGO_TREE_FILE = $treeFile
-    Invoke-Gate "target-resolved no-network graph" { node scripts/check-no-network.mjs }
+    Invoke-Gate "core-only target-resolved no-network graph" { node scripts/check-no-network.mjs }
 } finally {
     Remove-Item -LiteralPath $treeFile -Force -ErrorAction SilentlyContinue
     Remove-Item Env:WHAT_CHANGED_CARGO_TREE_FILE -ErrorAction SilentlyContinue
@@ -109,6 +110,20 @@ if (-not $SkipInstaller) {
 Invoke-Gate "documentation links" { bun run check:docs }
 Invoke-Gate "brand assets" { bun run check:brand }
 Invoke-Gate "launch copy claims" { bun run check:launch }
+if ($IncludePreviewRunner) {
+    Invoke-Gate "runner source policy, recipes and protocol" { bun run runner:test }
+    Invoke-Gate "runner exact byte inventory and source parity" { bun run check:runner-bundle }
+    if (-not $SkipInstaller) {
+        Invoke-Gate "reviewed runtime/browser license delta" { bun run check:runner-notices }
+        Invoke-Gate "matching browser sources and archive members" {
+            node scripts/prepare-runner-source-materials.mjs
+        }
+    }
+    Invoke-Gate "static landing and wiki build" { bun run site:build }
+    Invoke-Gate "rendered site and download manifest" { bun run check:site }
+    Invoke-Gate "static site tests" { bun run site:test }
+    Write-Host '[release] Runner build: core graph does not prove child-process network confinement. Native/clean-Windows/egress/soak/license-delta/pilot evidence and G2/G3 remain required by check:owner-release.' -ForegroundColor Yellow
+}
 
 if (-not $SkipPerf) {
     Invoke-Gate "Phase 20 performance matrix (10k/100k/1M)" {
@@ -120,7 +135,12 @@ if (-not $SkipPerf) {
 
 if (-not $SkipInstaller) {
     $installerBuildStartedAt = Get-Date
-    Invoke-Gate "Tauri installer build" { bun run tauri build }
+    Invoke-Gate "Tauri installer build" {
+        if ($IncludePreviewRunner) {
+            bun run tauri build --config src-tauri/tauri.runner.conf.json
+        }
+        else { bun run tauri build }
+    }
     Invoke-Gate "bundled notice input parity" {
         node scripts/generate-third-party-notices.mjs --check
     }
@@ -128,6 +148,11 @@ if (-not $SkipInstaller) {
     $nsisScript = Join-Path $targetDir "release/nsis/x64/installer.nsi"
     Invoke-Gate "NSIS install/uninstall behavior surface" {
         node scripts/check-nsis-script.mjs $nsisScript
+    }
+    if ($IncludePreviewRunner) {
+        Invoke-Gate "packaged runtime notice resource parity" {
+            node scripts/verify-nsis-notice-copy.mjs $nsisScript release/RUNNER_THIRD_PARTY_NOTICES.txt RUNNER_THIRD_PARTY_NOTICES.txt
+        }
     }
     $cargoVersion = Select-String -LiteralPath (Join-Path $root "src-tauri/Cargo.toml") -Pattern '^version\s*=\s*"([^"]+)"' |
         Select-Object -First 1
@@ -154,12 +179,33 @@ if (-not $SkipInstaller) {
     Write-Host "[release] published installer: $destination"
 
     Invoke-Gate "installer artifact verification" {
+        # The packaged browser has its own 1536 MiB distribution budget; core
+        # installers retain the existing 25 MiB limit.
+        $installerBudgetMb = if ($IncludePreviewRunner) { 1536 } else { 25 }
         & powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-installer.ps1 `
             -RawInstaller $raw.FullName `
             -PublishedInstaller $published.FullName `
             -ChecksumsFile $checksumFile `
             -NoticesFile $notices.FullName `
-            -NsisScript $nsisScript
+            -NsisScript $nsisScript `
+            -MaximumSizeMb $installerBudgetMb
+    }
+
+    if ($IncludePreviewRunner) {
+        Invoke-Gate "combined runner installer and source packet" {
+            $packetRoot = Resolve-RequiredDirectory (Join-Path $root 'preview-artifacts') 'combined runner packet'
+            [void](Resolve-RequiredFile (Join-Path $packetRoot.FullName 'runtime-sources/source-materials-receipt.json') 'verified corresponding-source receipt')
+            Copy-Item -LiteralPath $published.FullName -Destination (Join-Path $packetRoot.FullName 'WhatChanged-Setup-x64.exe')
+            Copy-Item -LiteralPath $notices.FullName -Destination (Join-Path $packetRoot.FullName 'THIRD_PARTY_NOTICES.txt')
+            Copy-Item -LiteralPath (Join-Path $root 'release/RUNNER_THIRD_PARTY_NOTICES.txt') -Destination (Join-Path $packetRoot.FullName 'RUNNER_THIRD_PARTY_NOTICES.txt')
+            Copy-Item -LiteralPath (Join-Path $root 'docs/runner-source-build.md') -Destination (Join-Path $packetRoot.FullName 'RUNNER-SOURCE-BUILD.md')
+            $packetChecksums = Join-Path $packetRoot.FullName 'SHA256SUMS.txt'
+            Get-ChildItem -LiteralPath $packetRoot.FullName -File -Recurse | Where-Object { $_.FullName -ne $packetChecksums } | ForEach-Object {
+                $relativePacketPath = $_.FullName.Substring($packetRoot.FullName.Length + 1).Replace('\', '/')
+                '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $relativePacketPath
+            } | Set-Content -LiteralPath $packetChecksums -Encoding utf8
+            Write-Host "[release] distribute the complete installer/source packet together: $($packetRoot.FullName)"
+        }
     }
 
     $releaseBinary = Resolve-RequiredFile (Join-Path $targetDir "release/WhatChanged.exe") "release binary"

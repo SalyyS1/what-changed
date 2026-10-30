@@ -139,6 +139,8 @@ export default defineConfig({
 
   test: {
     environment: 'jsdom',
+    // Keep worker startup bounded on Windows while native collectors are active.
+    maxWorkers: 1,
     include: ['src/**/*.{test,spec}.{ts,svelte.ts}'],
     globals: false,
     setupFiles: ['./src/lib/test/vitest-setup.ts'],

@@ -1,0 +1,56 @@
+build	Native authority and generated contract	2026-10-28T09:45:33.9263782Z test dto::bindings::tests::generated_declarations_match_the_checked_in_frontend_contract ... ok
+build	Native authority and generated contract	2026-10-28T09:45:33.9264118Z 
+build	Native authority and generated contract	2026-10-28T09:45:33.9264332Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 550 filtered out; finished in 0.01s
+build	Native authority and generated contract	2026-10-28T09:45:33.9264563Z 
+build	Native authority and generated contract	2026-10-28T09:45:34.2989582Z    Compiling what-changed v0.1.0 (D:\a\what-changed\what-changed\src-tauri)
+build	Native authority and generated contract	2026-10-28T09:45:35.2027944Z warning: failed to parse serde attribute
+build	Native authority and generated contract	2026-10-28T09:45:35.2028892Z   | 
+build	Native authority and generated contract	2026-10-28T09:45:35.2029217Z   | deny_unknown_fields 
+build	Native authority and generated contract	2026-10-28T09:45:35.2029433Z   | 
+build	Native authority and generated contract	2026-10-28T09:45:35.2029659Z   = note: ts-rs failed to parse this attribute. It will be ignored.
+build	Native authority and generated contract	2026-10-28T09:45:35.2079196Z warning: failed to parse serde attribute
+build	Native authority and generated contract	2026-10-28T09:45:35.2079743Z   | 
+build	Native authority and generated contract	2026-10-28T09:45:35.2080008Z   | deny_unknown_fields 
+build	Native authority and generated contract	2026-10-28T09:45:35.2080264Z   | 
+build	Native authority and generated contract	2026-10-28T09:45:35.2080597Z   = note: ts-rs failed to parse this attribute. It will be ignored.
+build	Native authority and generated contract	2026-10-28T09:45:35.2131796Z warning: failed to parse serde attribute
+build	Native authority and generated contract	2026-10-28T09:45:35.2132296Z   | 
+build	Native authority and generated contract	2026-10-28T09:45:35.2132561Z   | deny_unknown_fields 
+build	Native authority and generated contract	2026-10-28T09:45:35.2132823Z   | 
+build	Native authority and generated contract	2026-10-28T09:45:35.2133161Z   = note: ts-rs failed to parse this attribute. It will be ignored.
+build	Native authority and generated contract	2026-10-28T09:46:08.4994480Z     Finished `test` profile [unoptimized] target(s) in 34.52s
+build	Native authority and generated contract	2026-10-28T09:46:08.5230175Z      Running tests\preview_runner_lifecycle.rs (src-tauri\target\debug\deps\preview_runner_lifecycle-27439669837a1195.exe)
+build	Native authority and generated contract	2026-10-28T09:46:08.5331813Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5332265Z running 3 tests
+build	Native authority and generated contract	2026-10-28T09:46:08.5375520Z test one_run_consent_cannot_reuse_changed_scope_and_missing_bundle_never_passes ... FAILED
+build	Native authority and generated contract	2026-10-28T09:46:08.5376297Z test reviewed_export_is_runnable_and_does_not_include_consent_or_login_storage ... FAILED
+build	Native authority and generated contract	2026-10-28T09:46:08.5376969Z test permissions_expire_when_environment_changes_before_grant ... FAILED
+build	Native authority and generated contract	2026-10-28T09:46:08.5377257Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5377379Z failures:
+build	Native authority and generated contract	2026-10-28T09:46:08.5378676Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5379115Z ---- one_run_consent_cannot_reuse_changed_scope_and_missing_bundle_never_passes stdout ----
+build	Native authority and generated contract	2026-10-28T09:46:08.5379456Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5380011Z thread 'one_run_consent_cannot_reuse_changed_scope_and_missing_bundle_never_passes' (1196) panicked at tests\preview_runner_lifecycle.rs:14:58:
+build	Native authority and generated contract	2026-10-28T09:46:08.5381385Z called `Result::unwrap()` on an `Err` value: File { operation: "validate existing managed ancestor", path: "C:\\Users\\RUNNER~1", source: Custom { kind: PermissionDenied, error: "opened object no longer matches its managed path" } }
+build	Native authority and generated contract	2026-10-28T09:46:08.5382142Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5382647Z ---- reviewed_export_is_runnable_and_does_not_include_consent_or_login_storage stdout ----
+build	Native authority and generated contract	2026-10-28T09:46:08.5383025Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5383573Z thread 'reviewed_export_is_runnable_and_does_not_include_consent_or_login_storage' (9972) panicked at tests\preview_runner_lifecycle.rs:14:58:
+build	Native authority and generated contract	2026-10-28T09:46:08.5384937Z called `Result::unwrap()` on an `Err` value: File { operation: "validate existing managed ancestor", path: "C:\\Users\\RUNNER~1", source: Custom { kind: PermissionDenied, error: "opened object no longer matches its managed path" } }
+build	Native authority and generated contract	2026-10-28T09:46:08.5385966Z note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+build	Native authority and generated contract	2026-10-28T09:46:08.5386277Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5386528Z ---- permissions_expire_when_environment_changes_before_grant stdout ----
+build	Native authority and generated contract	2026-10-28T09:46:08.5386850Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5387334Z thread 'permissions_expire_when_environment_changes_before_grant' (9752) panicked at tests\preview_runner_lifecycle.rs:14:58:
+build	Native authority and generated contract	2026-10-28T09:46:08.5388627Z called `Result::unwrap()` on an `Err` value: File { operation: "validate existing managed ancestor", path: "C:\\Users\\RUNNER~1", source: Custom { kind: PermissionDenied, error: "opened object no longer matches its managed path" } }
+build	Native authority and generated contract	2026-10-28T09:46:08.5389193Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5389197Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5389258Z failures:
+build	Native authority and generated contract	2026-10-28T09:46:08.5389508Z     one_run_consent_cannot_reuse_changed_scope_and_missing_bundle_never_passes
+build	Native authority and generated contract	2026-10-28T09:46:08.5389894Z     permissions_expire_when_environment_changes_before_grant
+build	Native authority and generated contract	2026-10-28T09:46:08.5390380Z     reviewed_export_is_runnable_and_does_not_include_consent_or_login_storage
+build	Native authority and generated contract	2026-10-28T09:46:08.5390633Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5390860Z test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+build	Native authority and generated contract	2026-10-28T09:46:08.5391089Z 
+build	Native authority and generated contract	2026-10-28T09:46:08.5391386Z error: test failed, to rerun pass `--test preview_runner_lifecycle`
+build	Native authority and generated contract	2026-10-28T09:46:08.5691348Z ##[error]Process completed with exit code 1.

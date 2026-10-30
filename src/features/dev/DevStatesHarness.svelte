@@ -8,6 +8,7 @@
   import ChangeMapStatesHarness from './ChangeMapStatesHarness.svelte';
   import SearchStatesHarness from './SearchStatesHarness.svelte';
   import SystemMapStatesHarness from './SystemMapStatesHarness.svelte';
+  import OwnerWorkspaceStatesHarness from './OwnerWorkspaceStatesHarness.svelte';
 
   /**
    * `#/dev/states`: every screen in every shell state, in one scrollable
@@ -37,6 +38,7 @@
   <SearchStatesHarness />
   <ChangeMapStatesHarness />
   <SystemMapStatesHarness />
+  <OwnerWorkspaceStatesHarness />
 
   <section class="mb-8">
     <h2 class="mb-2 text-caps text-text-muted">Small window · 900×600</h2>

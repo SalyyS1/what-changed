@@ -30,6 +30,11 @@ pub mod diagnostics;
 pub mod events;
 pub mod meta;
 pub mod onboarding;
+pub mod owner_evidence;
+pub mod owner_memory;
+pub mod owner_portability;
+pub mod owner_workspace;
+pub mod preview_runner;
 pub mod privacy;
 pub mod settings;
 pub mod storage;
@@ -59,6 +64,11 @@ pub fn signatures() -> Vec<(&'static str, Vec<String>)> {
         include_str!("meta.rs"),
         include_str!("onboarding.rs"),
         include_str!("privacy.rs"),
+        include_str!("owner_workspace.rs"),
+        include_str!("owner_evidence.rs"),
+        include_str!("preview_runner.rs"),
+        include_str!("owner_memory.rs"),
+        include_str!("owner_portability.rs"),
         include_str!("events.rs"),
         include_str!("checkpoints.rs"),
         include_str!("analysis.rs"),
@@ -161,6 +171,51 @@ pub const COMMANDS: &[&str] = &[
     "skip_onboarding",
     "set_autostart",
     "set_tray_forced_colors",
+    // offline owner workspace
+    "get_owner_store_status",
+    "save_owner_app",
+    "get_owner_app",
+    "list_owner_apps",
+    "save_owner_capability",
+    "list_owner_capabilities",
+    "confirm_owner_rule",
+    "list_owner_rule_revisions",
+    "save_owner_change_draft",
+    "get_owner_change_draft",
+    "list_owner_change_drafts",
+    "get_owner_change_review",
+    "save_owner_environment",
+    "list_owner_environments",
+    "save_owner_candidate",
+    "list_owner_candidates",
+    "select_owner_candidate",
+    "confirm_owner_scenario",
+    "list_owner_scenarios",
+    "preview_owner_brief",
+    "prepare_preview_run",
+    "grant_preview_run",
+    "get_preview_runner_status",
+    "export_preview_recipe",
+    "save_preview_recipe",
+    "capture_preview_surface",
+    "review_preview_capture",
+    "list_preview_captures",
+    "continue_preview_login",
+    "cancel_preview_run",
+    "start_owner_manual_run",
+    "record_owner_manual_result",
+    "finish_owner_manual_run",
+    "get_owner_manual_run",
+    "list_owner_manual_runs",
+    "record_owner_evidence_decision",
+    "list_owner_evidence_decisions",
+    "save_project_decision",
+    "list_project_decisions",
+    "preview_owner_export",
+    "export_owner_bundle",
+    "validate_owner_import",
+    "import_owner_bundle",
+    "get_imported_owner_history",
     // events
     "get_dashboard_summary",
     "get_events",
@@ -231,7 +286,7 @@ mod tests {
 
     #[test]
     fn the_surface_matches_the_documented_typed_commands() {
-        assert_eq!(COMMANDS.len(), 60);
+        assert_eq!(COMMANDS.len(), 94);
         assert!(COMMANDS.contains(&"simulate_event"));
         assert!(COMMANDS.contains(&"seed_synthetic"));
         assert!(COMMANDS.contains(&"mark_project_working"));
@@ -242,7 +297,7 @@ mod tests {
                 .iter()
                 .filter(|c| !matches!(**c, "simulate_event" | "seed_synthetic"))
                 .count(),
-            58
+            92
         );
     }
 

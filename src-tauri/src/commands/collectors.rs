@@ -44,6 +44,7 @@ pub async fn set_collector_enabled(
     collector_id: String,
     enabled: bool,
 ) -> CommandResult<Vec<CollectorStatusDto>> {
+    let _admission = state.data_lifecycle.admit()?;
     let mut change = BTreeMap::new();
     change.insert(collector_id, enabled);
     state.update_collector_settings(SettingsUpdateDto {
@@ -60,6 +61,7 @@ pub fn pause_monitoring(
     state: State<'_, AppState>,
     minutes: Option<u32>,
 ) -> CommandResult<crate::dto::MonitoringDto> {
+    let _admission = state.data_lifecycle.admit()?;
     state.collectors.set_monitoring_paused(true, minutes);
     Ok(state.monitoring.snapshot())
 }
@@ -70,6 +72,7 @@ pub fn resume_monitoring(
     _app: AppHandle,
     state: State<'_, AppState>,
 ) -> CommandResult<crate::dto::MonitoringDto> {
+    let _admission = state.data_lifecycle.admit()?;
     state.collectors.set_monitoring_paused(false, None);
     Ok(state.monitoring.snapshot())
 }
@@ -91,6 +94,7 @@ pub fn set_monitoring_paused(
     paused: bool,
     minutes: Option<u32>,
 ) -> CommandResult<crate::dto::MonitoringDto> {
+    let _admission = state.data_lifecycle.admit()?;
     state.collectors.set_monitoring_paused(paused, minutes);
     Ok(state.monitoring.snapshot())
 }

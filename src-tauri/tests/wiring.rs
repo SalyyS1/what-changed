@@ -86,9 +86,9 @@ fn quitting_is_the_only_exit_path() {
         "an exit outside the quit path: {offenders:?}"
     );
 
-    // And the two allowed files use it only where they are meant to: the quit
-    // command, and the three startup failures that have nothing to boot into
-    // (including the reserved QA-directory guard).
+    // The GUI exits only through Quit or its three startup failures. The
+    // feature-gated backend diagnostic returns its CLI exit status before
+    // opening a profile or building the GUI.
     let lifecycle = read("src-tauri/src/app/lifecycle.rs");
     assert_eq!(
         lifecycle.matches(".exit(").count(),
@@ -96,10 +96,23 @@ fn quitting_is_the_only_exit_path() {
         "lifecycle exits exactly once, from quit"
     );
     let lib = read("src-tauri/src/lib.rs");
+    let diagnostic_dispatch = concat!(
+        "    #[cfg(feature = \"devtools\")]\n",
+        "    if std::env::args().any(|argument| argument == \"--soak\") {\n",
+        "        std::process::exit(soak::run(std::env::args().skip(1)));\n",
+        "    }\n",
+    );
+    let lib = lib.replace("\r\n", "\n");
     assert_eq!(
-        lib.matches("process::exit").count(),
+        lib.matches(diagnostic_dispatch).count(),
+        1,
+        "the diagnostic exit must remain behind the devtools feature and explicit CLI flag"
+    );
+    let gui = lib.replacen(diagnostic_dispatch, "", 1);
+    assert_eq!(
+        gui.matches("process::exit").count(),
         3,
-        "lib.rs exits only on startup failures"
+        "the GUI exits only on startup failures"
     );
 }
 

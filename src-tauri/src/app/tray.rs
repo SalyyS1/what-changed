@@ -274,6 +274,13 @@ fn on_menu_event<R: Runtime>(app: &AppHandle<R>, event: MenuEvent) {
         use tauri::Emitter;
         let _ = app.emit(EVENT_TRAY_NAVIGATE, "checkpoints");
         if let Some(state) = app.try_state::<crate::app::AppState>() {
+            let mutation = match state.data_lifecycle.admit() {
+                Ok(lease) => lease,
+                Err(error) => {
+                    tracing::warn!(%error, "tray checkpoint admission is closed");
+                    return;
+                }
+            };
             let service = state.checkpoints.clone();
             let handle = app.clone();
             let total = state
@@ -285,6 +292,13 @@ fn on_menu_event<R: Runtime>(app: &AppHandle<R>, event: MenuEvent) {
                 })
                 .count();
             tauri::async_runtime::spawn_blocking(move || {
+                // The detached worker owns the lease even if its caller or
+                // frontend disappears before the executor starts it.
+                let _mutation = mutation;
+                if let Err(error) = _mutation.validate() {
+                    tracing::warn!(%error, "tray checkpoint admission expired");
+                    return;
+                }
                 match crate::commands::checkpoints::create_manual_with_progress(
                     handle.clone(),
                     service,

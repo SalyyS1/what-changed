@@ -1095,6 +1095,50 @@ pub fn analysis_window_filtered(
     importance_min: Option<Importance>,
     entity_id: Option<&str>,
 ) -> AppResult<AnalysisEventWindow> {
+    analysis_window_with_scope(
+        conn,
+        from,
+        to,
+        categories,
+        importance_min,
+        entity_id.map(AnalysisEntityScope::Entity),
+    )
+}
+
+/// A workspace includes its direct/related evidence and recorded file paths
+/// beneath its current registered root. Membership is resolved for this new
+/// analysis only; persisted event associations and investigation snapshots do
+/// not change when a workspace is registered or removed.
+pub fn analysis_window_workspace(
+    conn: &Connection,
+    from: i64,
+    to: i64,
+    project_id: &str,
+) -> AppResult<AnalysisEventWindow> {
+    analysis_window_with_scope(
+        conn,
+        from,
+        to,
+        &[],
+        None,
+        Some(AnalysisEntityScope::Workspace(project_id)),
+    )
+}
+
+#[derive(Clone, Copy)]
+enum AnalysisEntityScope<'a> {
+    Entity(&'a str),
+    Workspace(&'a str),
+}
+
+fn analysis_window_with_scope(
+    conn: &Connection,
+    from: i64,
+    to: i64,
+    categories: &[Category],
+    importance_min: Option<Importance>,
+    scope: Option<AnalysisEntityScope<'_>>,
+) -> AppResult<AnalysisEventWindow> {
     let (from, to) = if from <= to { (from, to) } else { (to, from) };
     let mut predicate = "timestamp >= ?1 AND timestamp <= ?2".to_owned();
     let mut params: Vec<Box<dyn rusqlite::ToSql>> = vec![Box::new(from), Box::new(to)];
@@ -1110,13 +1154,39 @@ pub fn analysis_window_filtered(
         let placeholders = bind_list(&mut params, allowed);
         predicate.push_str(&format!(" AND importance IN ({placeholders})"));
     }
-    if let Some(entity_id) = entity_id {
+    if let Some(scope) = scope {
+        let (AnalysisEntityScope::Entity(entity_id) | AnalysisEntityScope::Workspace(entity_id)) =
+            scope;
         params.push(Box::new(entity_id.to_owned()));
         predicate.push_str(&format!(
-            " AND (entity_id = ?{} OR EXISTS (SELECT 1 FROM json_each(COALESCE(events.related_entity_ids, '[]')) WHERE json_each.value = ?{}))",
+            " AND (entity_id = ?{} OR EXISTS (SELECT 1 FROM json_each(COALESCE(events.related_entity_ids, '[]')) WHERE json_each.value = ?{})",
             params.len(),
             params.len()
         ));
+        if matches!(scope, AnalysisEntityScope::Workspace(_)) {
+            if let Some(project) = super::project_repository::by_id(conn, entity_id)? {
+                let root = crate::domain::ids::canonical_path(&project.path);
+                let prefix = format!("{}\\", root.trim_end_matches('\\'));
+                let upper_bound = format!("{}]", root.trim_end_matches('\\'));
+                // Keep the time/category/importance predicates outside this OR.
+                // CASE prevents non-string JSON values reaching canonical_path.
+                params.push(Box::new(root));
+                params.push(Box::new(prefix));
+                params.push(Box::new(upper_bound));
+                predicate.push_str(&format!(
+                    " OR (source_collector = 'files' AND entity_type = 'file' \
+                     AND CASE WHEN json_type(metadata_json, '$.path') = 'text' THEN \
+                         (canonical_path(json_extract(metadata_json, '$.path')) = ?{} \
+                          OR (canonical_path(json_extract(metadata_json, '$.path')) >= ?{} \
+                              AND canonical_path(json_extract(metadata_json, '$.path')) < ?{})) \
+                         ELSE 0 END)",
+                    params.len() - 2,
+                    params.len() - 1,
+                    params.len()
+                ));
+            }
+        }
+        predicate.push(')');
     }
     let refs = params
         .iter()

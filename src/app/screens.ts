@@ -19,7 +19,7 @@ import type { RouteId } from './routes';
 // four faces; the payload type differs per screen, hence the loose `any`.
 export type ScreenComponent = Component<{ data?: AsyncState<any> }>;
 
-export const navScreens: Record<Exclude<RouteId, 'dev-states' | 'dev-perf' | 'dev-system-map-perf'>, ScreenComponent> = {
+export const navScreens: Record<Exclude<RouteId, 'dev-states' | 'dev-perf' | 'dev-system-map-perf' | 'owner-apps' | 'owner-app' | 'owner-change'>, ScreenComponent> = {
   home: HomeScreen,
   timeline: TimelineScreen,
   investigations: InvestigationsScreen,

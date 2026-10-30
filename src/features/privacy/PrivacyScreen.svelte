@@ -55,6 +55,7 @@
           <div><dt class="text-caps text-text-muted">Checkpoints</dt><dd class="m-0 mt-1 text-text-primary">{summary.checkpoints}</dd></div>
           <div><dt class="text-caps text-text-muted">Investigations</dt><dd class="m-0 mt-1 text-text-primary">{summary.investigations}</dd></div>
           <div><dt class="text-caps text-text-muted">Database</dt><dd class="m-0 mt-1 text-text-primary">{summary.database_bytes} bytes</dd></div>
+          <div><dt class="text-caps text-text-muted">App memory</dt><dd class="m-0 mt-1 text-text-primary">{summary.owner_workspace_bytes === null ? 'Size unavailable' : `${summary.owner_workspace_bytes} bytes`} · {summary.owner_store.status.replaceAll('_', ' ')}</dd></div>
         </dl>
         <p class="mt-3 selectable break-all text-xs text-text-muted">Data folder: {summary.data_path}</p>
         <div class="mt-4 border-t border-border-subtle pt-4">
@@ -89,7 +90,7 @@
     {#if !confirming}
       <Button variant="danger" disabled={!active || privacy.pending} onclick={() => confirming = true}>Delete everything now</Button>
     {:else}
-      <p class="m-0 text-sm text-danger">This is irreversible. Type <strong>delete</strong> to remove history and start watching again.</p>
+      <p class="m-0 text-sm text-danger">This is irreversible. Type <strong>delete</strong> to remove event history, app workspaces, confirmed rules, requests and app-owned copies. Your project source and files exported elsewhere are kept.</p>
       <div class="mt-3 flex flex-wrap gap-2">
         <input class="min-h-11 rounded-md border border-border-subtle bg-surface-1 px-3 text-sm" aria-label="Type delete to confirm" bind:value={phrase} autocomplete="off" />
         <Button variant="danger" disabled={privacy.pending || phrase.trim().toLowerCase() !== 'delete'} onclick={() => void removeEverything()}>Confirm deletion</Button>

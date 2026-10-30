@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
+  import { onDestroy, tick } from 'svelte';
   import type { SystemMapNode } from '../../lib/tauri/bindings';
   import { entityKindName } from '../../features/system-map/copy';
 
@@ -11,13 +11,43 @@
     onescape: () => void;
   }
   let { nodes, selectedId, onhover, onfocus, onescape }: Props = $props();
+  const instanceId = $props.id();
   let active = $state(0);
+  let listbox: HTMLDivElement;
+  let scrollRevision = 0;
   let search = '';
   let searchTimer: ReturnType<typeof setTimeout> | null = null;
   let previousNodes: SystemMapNode[] | null = null;
   const start = $derived(Math.max(0, Math.min(active - 20, nodes.length - 41)));
   const visible = $derived(nodes.slice(start, start + 41));
-  const activeId = $derived(nodes[active] ? `system-node-${active}` : undefined);
+  const activeId = $derived(nodes[active] ? `${instanceId}-system-node-${active}` : undefined);
+
+  // Keyboard selection belongs to the scroll viewport. Virtualizing its rows
+  // changes the option's offset, so synchronize after Svelte renders the slice.
+  $effect(() => {
+    activeId;
+    nodes;
+    void revealActiveOption();
+  });
+
+  async function revealActiveOption(): Promise<void> {
+    const revision = ++scrollRevision;
+    await tick();
+    if (revision !== scrollRevision || !listbox?.isConnected || document.activeElement !== listbox) return;
+    const option = activeId ? listbox.querySelector<HTMLElement>(`#${CSS.escape(activeId)}`) : null;
+    if (!option) return;
+    const viewport = listbox.getBoundingClientRect();
+    const row = option.getBoundingClientRect();
+    const top = viewport.top + listbox.clientTop;
+    const bottom = top + listbox.clientHeight;
+    if (row.top < top) listbox.scrollTop -= Math.ceil(top - row.top);
+    else if (row.bottom > bottom) listbox.scrollTop += Math.ceil(row.bottom - bottom);
+  }
+
+  function focusList(): void {
+    onhover(nodes[active]?.entity_id ?? null);
+    void revealActiveOption();
+  }
 
   $effect.pre(() => {
     const current = nodes;
@@ -40,6 +70,7 @@
   function move(next: number): void {
     active = Math.max(0, Math.min(nodes.length - 1, next));
     onhover(nodes[active]?.entity_id ?? null);
+    void revealActiveOption();
   }
   function typeahead(key: string): void {
     search += key.toLocaleLowerCase();
@@ -64,16 +95,16 @@
     event.preventDefault();
   }
 
-  onDestroy(() => { if (searchTimer) clearTimeout(searchTimer); });
+  onDestroy(() => { scrollRevision += 1; if (searchTimer) clearTimeout(searchTimer); });
 </script>
 
 <div class="group absolute bottom-3 left-3 z-10 max-w-[min(32rem,calc(100%-1.5rem))]">
-  <div class="h-11 overflow-hidden rounded-md border border-border-subtle bg-surface-1/95 px-3 py-2 text-sm text-text-secondary shadow-md outline-none focus-within:h-auto focus-within:max-h-[30vh] focus-within:overflow-y-auto">
-    <div role="listbox" aria-label="Explore system map nodes" aria-activedescendant={activeId} tabindex="0" class="outline-none" onkeydown={keydown} onfocus={() => onhover(nodes[active]?.entity_id ?? null)} onblur={() => onhover(null)}>
+  <div bind:this={listbox} role="listbox" aria-label="Explore system map nodes" aria-activedescendant={activeId} tabindex="0" onkeydown={keydown} onfocus={focusList} onblur={() => { scrollRevision += 1; onhover(null); }} class="h-11 overflow-hidden rounded-md border border-border-subtle bg-surface-1/95 px-3 py-2 text-sm text-text-secondary shadow-md focus-within:h-auto focus-within:max-h-[30vh] focus-within:overflow-y-auto">
+    <div>
       <p class="mb-2 text-xs text-text-muted">Use arrows to explore · Enter focuses · Escape returns to map controls</p>
       {#each visible as node, offset (node.entity_id)}
         {@const index = start + offset}
-        <div id={`system-node-${index}`} role="option" aria-selected={selectedId === node.entity_id} aria-setsize={nodes.length} aria-posinset={index + 1} class="truncate rounded px-2 py-1 {index === active ? 'bg-accent/15 text-text-primary' : 'text-text-secondary'}">
+        <div id={`${instanceId}-system-node-${index}`} role="option" aria-selected={selectedId === node.entity_id} aria-setsize={nodes.length} aria-posinset={index + 1} class="truncate rounded px-2 py-1 {index === active ? 'bg-accent/15 text-text-primary' : 'text-text-secondary'}">
           {index + 1} of {nodes.length} · {entityKindName(node.entity_type)} · {node.display_name}
         </div>
       {/each}

@@ -24,6 +24,7 @@ pub fn get_onboarding_state(state: State<'_, AppState>) -> CommandResult<Onboard
 /// Mark onboarding complete and capture the first known-good checkpoint.
 #[tauri::command]
 pub async fn complete_onboarding(state: State<'_, AppState>) -> CommandResult<()> {
+    let _admission = state.data_lifecycle.admit()?;
     complete_onboarding_inner(&state)
 }
 
@@ -106,6 +107,7 @@ fn complete_onboarding_inner(state: &AppState) -> CommandResult<()> {
 /// Re-open the tour from Settings. Existing history remains intact.
 #[tauri::command]
 pub async fn reopen_onboarding(state: State<'_, AppState>) -> CommandResult<()> {
+    let _admission = state.data_lifecycle.admit()?;
     let _config = state.lock_collector_config();
     let settings = state.db.read(settings_repository::load)?;
     let mut disabled: Vec<String> = Vec::new();

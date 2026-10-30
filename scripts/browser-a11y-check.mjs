@@ -6,6 +6,7 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import { mkdir } from 'node:fs/promises';
 import { get } from 'node:http';
 import { createServer } from 'node:net';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -175,6 +176,88 @@ async function checkReducedMotion(page) {
   await requireFocus(page, preview, 'Fixture dialog did not return focus to its opener');
 }
 
+async function checkSystemMapFocus(page) {
+  await page.evaluate(() => { location.hash = '#/'; });
+  await page.getByRole('heading', { name: 'Home', level: 1, exact: true }).waitFor();
+  await page.getByTestId('dev-states').waitFor({ state: 'detached' });
+  await page.setViewportSize({ width: 900, height: 600 });
+  await page.evaluate(() => { location.hash = '#/dev/system-map-perf'; });
+  const frame = page.getByTestId('system-map-perf').getByTestId('system-map-frame');
+  const list = frame.getByRole('listbox', { name: 'Explore system map nodes' });
+  await list.waitFor({ state: 'visible' });
+  assert.equal(await list.count(), 1, 'The isolated System Map must have one node list');
+  await list.scrollIntoViewIfNeeded();
+  await frame.getByRole('button', { name: 'Reset view', exact: true }).focus();
+  await page.keyboard.press('Tab');
+  await requireFocus(page, list, 'Tab did not enter the system map node list');
+  for (const key of ['Home', 'PageDown', 'End', 'PageUp', 'ArrowUp', 'Home']) {
+    await page.keyboard.press(key);
+    const focus = await list.evaluate((element) => {
+      const style = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      const width = Number.parseFloat(style.outlineWidth);
+      const extension = Number.parseFloat(style.outlineOffset) + width / 2;
+      const top = rect.top - extension;
+      let left = Math.max(0, rect.left - extension);
+      let right = Math.min(innerWidth, rect.right + extension);
+      let topVisible = top >= 0 && top < innerHeight;
+      for (let parent = element.parentElement; parent; parent = parent.parentElement) {
+        const ancestorStyle = getComputedStyle(parent);
+        const clip = parent.getBoundingClientRect();
+        if (['auto', 'scroll', 'hidden', 'clip'].includes(ancestorStyle.overflowY)) {
+          topVisible &&= top >= clip.top && top < clip.bottom;
+        }
+        if (['auto', 'scroll', 'hidden', 'clip'].includes(ancestorStyle.overflowX)) {
+          left = Math.max(left, clip.left);
+          right = Math.min(right, clip.right);
+        }
+      }
+      return { visible: element.matches(':focus-visible'), style: style.outlineStyle, width, topVisible, visibleOutlineWidth: Math.max(0, right - left) };
+    });
+    assert.ok(focus.visible, `System Map lost keyboard focus after ${key}`);
+    assert.equal(focus.style, 'solid', `System Map suppresses the focus ring after ${key}`);
+    assert.ok(focus.width >= 2, 'System Map focus ring is thinner than 2px');
+    assert.ok(focus.topVisible && focus.visibleOutlineWidth >= 24, `System Map upper focus outline is clipped after ${key}: ${JSON.stringify(focus)}`);
+    await page.waitForFunction((element) => {
+      const option = document.getElementById(element.getAttribute('aria-activedescendant'));
+      if (!option || !element.contains(option)) return false;
+      const row = option.getBoundingClientRect();
+      const bounds = element.getBoundingClientRect();
+      return row.top >= bounds.top + element.clientTop && row.bottom <= bounds.top + element.clientTop + element.clientHeight + 1;
+    }, await list.elementHandle(), { timeout: 10_000 });
+    const active = await list.evaluate((element) => {
+      const option = document.getElementById(element.getAttribute('aria-activedescendant'));
+      if (!option || !element.contains(option)) return { descendant: false, visible: false };
+      const row = option.getBoundingClientRect();
+      const bounds = element.getBoundingClientRect();
+      return { descendant: true, visible: row.top >= bounds.top && row.bottom <= bounds.bottom };
+    });
+    assert.ok(active.descendant, 'System Map active option is not a listbox descendant');
+    assert.ok(active.visible, `System Map active option is outside its scroll viewport after ${key}`);
+  }
+  const pageScroll = await page.evaluate(() => ({ x: scrollX, y: scrollY, main: document.querySelector('main').scrollTop }));
+  await list.evaluate((element) => { element.scrollTop = element.scrollHeight; });
+  await page.keyboard.press('Home');
+  await page.waitForFunction((element) => {
+    const option = document.getElementById(element.getAttribute('aria-activedescendant'));
+    const bounds = element.getBoundingClientRect();
+    const row = option?.getBoundingClientRect();
+    return document.activeElement === element && row && row.top >= bounds.top + element.clientTop && row.bottom <= bounds.top + element.clientTop + element.clientHeight;
+  }, await list.elementHandle(), { timeout: 10_000 });
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('End');
+  await page.keyboard.press('Home');
+  await page.waitForFunction((element) => {
+    const option = document.getElementById(element.getAttribute('aria-activedescendant'));
+    return option && option.getBoundingClientRect().top >= element.getBoundingClientRect().top;
+  }, await list.elementHandle());
+  assert.deepEqual(await page.evaluate(() => ({ x: scrollX, y: scrollY, main: document.querySelector('main').scrollTop })), pageScroll, 'Node navigation scrolled the page');
+  await mkdir(join(root, '.qa'), { recursive: true });
+  await page.screenshot({ path: join(root, '.qa', `browser-system-map-focus-${Date.now()}.png`) });
+  await page.keyboard.press('Escape');
+  await requireFocus(page, frame.getByRole('button', { name: 'Reset view', exact: true }), 'Escape did not return to this map’s Reset control');
+}
+
 async function main() {
   await requireFreeDevPort();
   const viteScript = join(root, 'node_modules', 'vite', 'bin', 'vite.js');
@@ -220,9 +303,10 @@ async function main() {
     await page.getByTestId('dev-states').waitFor({ state: 'visible', timeout: 120_000 });
     assert.ok(await page.getByRole('heading', { name: 'States harness', level: 1 }).isVisible());
     await checkReducedMotion(page);
+    await checkSystemMapFocus(page);
     assert.deepEqual(offOrigin, [], 'The dev preview attempted an external request');
     assert.deepEqual(pageErrors, [], 'The dev preview raised an uncaught browser error');
-    console.log('PASS: dev-source headless Edge/Chromium — seven-link Tab/Shift+Tab order and focus ring; Ctrl+K, modal Tab containment, Escape focus restoration; synthetic ready dialog; computed reduced-motion transition and animation.');
+    console.log('PASS: dev-source headless Edge/Chromium — seven-link Tab/Shift+Tab order and focus ring; Ctrl+K, modal Tab containment, Escape focus restoration; synthetic ready dialog; computed reduced-motion transition and animation; System Map keyboard focus ring at 900x600.');
   } finally {
     await browser?.close();
     await stopServer(server);

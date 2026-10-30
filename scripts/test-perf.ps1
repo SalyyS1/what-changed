@@ -4,15 +4,16 @@
 
 .DESCRIPTION
   Invoked by `bun run test:perf` and by the default release gate. Checks the
-  SQLite query plans once, then runs the eight-shape query budget and database
+  SQLite query plans on the canonical 10k corpus, including actual page and
+  complete checkpoint comparison reads, then runs the query budget and database
   size/vacuum tests separately at 10k, 100k, and 1M events. A separate 10k
   size gate uses an opt-in, checked-in collector-payload sensitivity profile;
   it is not a production-history representativeness claim. It is intentionally
   not enabled at 100k or 1M pending review of the 10k result. A separate 10k
   gate exercises production retention and incremental reclaim without a full
   VACUUM. A failing test or Cargo invocation terminates the matrix nonzero.
-  This does not by itself prove the canonical fixture or all §61 plan shapes;
-  those test implementations and acceptance evidence have separate gates.
+  Most plan-shape SQL remains copied from production, so the canonical fixture
+  and captured page/checkpoint reads do not yet prove every §61 service path.
 
 .EXAMPLE
   powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-perf.ps1
@@ -68,10 +69,22 @@ try {
     if (-not $jobsWasSet) { $env:CARGO_BUILD_JOBS = '1' }
     Remove-Item Env:WHAT_CHANGED_PERF_ROWS -ErrorAction SilentlyContinue
     Remove-Item Env:WHAT_CHANGED_PERF_COLLECTOR_PAYLOAD_SENSITIVITY -ErrorAction SilentlyContinue
-    Invoke-PerfTest 'SQLite query plans' @(
+    Invoke-PerfTest 'Canonical 10k SQLite query-plan shapes' @(
         'test', '--locked', '--manifest-path', 'src-tauri/Cargo.toml',
         '--features', 'devtools', '--test', 'perf_query_plans',
         '--', '--include-ignored', '--nocapture'
+    )
+    Invoke-PerfTest 'Canonical 10k actual first and tenth page plans' @(
+        'test', '--locked', '--manifest-path', 'src-tauri/Cargo.toml',
+        '--features', 'devtools', '--test', 'page_plan_capture_profile',
+        'canonical_10k_actual_first_and_tenth_page_plans',
+        '--', '--exact', '--ignored', '--nocapture'
+    )
+    Invoke-PerfTest 'Canonical 10k actual complete checkpoint comparison plans' @(
+        'test', '--locked', '--manifest-path', 'src-tauri/Cargo.toml',
+        '--features', 'devtools', '--test', 'checkpoint_window_plan_profile',
+        'canonical_10k_actual_complete_checkpoint_compare_plans',
+        '--', '--exact', '--ignored', '--nocapture'
     )
 
     foreach ($rows in @(10000, 100000, 1000000)) {

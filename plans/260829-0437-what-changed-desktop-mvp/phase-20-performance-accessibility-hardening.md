@@ -168,7 +168,7 @@ by editing `001_initial.sql`),
 ## Todo (commit boundaries)
 
 - [ ] Deterministic seeder with purge (canonical counts pass at 10k/100k/1M and exact tagged purge/full compaction passes; 3k entity IDs remain unprovable after purge, and the latest canonical 1M seed is 316.439/240 s)
-- [ ] Query-plan assertions green (the eight SQL-stage checks and new sorted recurrence covering-index gate pass; final service/corpus parity still needs proof)
+- [ ] Query-plan assertions green (canonical 10k SQL-stage shapes and actual first/tenth page plus complete checkpoint capture pass; copied SQL in other shapes still needs final service parity)
 - [x] 10k / 100k / 1M query gates green (frozen guarded-recurrence profiler-free matrices pass 8/8 each; 1M investigation 1,032.501/1,500 ms; prior failures retained as historical evidence)
 - [ ] DB-size and vacuum gates green (canonical 10k/100k/1M sizes, explicit full compaction and routine incremental retention pass; collector-shaped 10k sensitivity exceeds 12 MB by 42,240 bytes; fresh purge/full-compaction results do not generalize to retention-first fixtures)
 - [ ] Idle CPU, working set (B2 verdict), start-time numbers recorded
@@ -179,7 +179,7 @@ by editing `001_initial.sql`),
 ## Success Criteria
 
 - [x] Every cell of the §61 table passes at its size, or has a recorded, user-approved exception (all 24 cells pass without exceptions; 2026-10-05 guarded-recurrence matrix)
-- [ ] `perf_query_plans.rs`: zero `SCAN TABLE events` across all measured queries (eight SQL-stage smoke checks pass, but copied SQL and noncanonical fixture do not yet prove service/corpus parity)
+- [ ] `perf_query_plans.rs`: zero `SCAN TABLE events` across all measured queries (canonical 10k shapes pass, with actual page and complete checkpoint captures; copied SQL in remaining shapes does not prove whole-service parity)
 - [ ] DB size within budget at all three sizes on the specified corpus; post-purge `freelist_count` reaches zero after
       routine incremental vacuum plus the explicit full-compaction perf action
 - [ ] Idle CPU ≤ 1% over 10 minutes with all collectors enabled
@@ -1011,3 +1011,28 @@ The bounded live negative check returned unavailable Docker, exit 1, failed/not
 ready report, zero writer loss and incomplete shutdown. No pass or checkbox was
 promoted. [Report](../reports/soak-hardening-261026.md),
 [review](../reports/soak-review-261026.md).
+
+## Verification evidence — 2026-10-27 installed and canonical-plan continuation
+
+The [repaired installed candidate](../reports/qa-261027-0619-repaired-installed-candidate.md)
+passed bounded category-purge, diagnostics, checkpoint/compare and map-fallback
+checks. Native profile/startup restoration completed and monitoring resumed.
+Both total and private memory snapshots were recorded; the four-hour checkpoint
+is still absent. A ten-minute CPU diagnostic failed evidence serialization,
+so it does not close the CPU criterion.
+
+`perf_query_plans.rs` now uses the canonical streamed 10k corpus and its owned
+detail/checkpoint/window selectors rather than the legacy synthetic profile.
+Its existing EQP assertions pass. Actual first/tenth-page capture and complete
+checkpoint comparison capture also pass: five reads, 3,000 items per side,
+full-result equality. Strict Clippy passes for these three targets. The normal
+performance script now includes those two actual-capture gates. Other shapes
+still copy SQL, so neither plan-parity checkbox is promoted.
+
+Installed keyboard sampling exposed the System Map listbox's absent/clipped
+focus ring and active-option scrolling defect. The subsequent source fix
+moves listbox focus to its scroll viewport, scopes option IDs per instance,
+keeps the active option visible and returns Escape to the owning Reset control.
+Focused keyboard/component and browser results are recorded in the report.
+These fixes postdate the installed candidate; whole-screen Narrator, native
+scale/zoom and full installed keyboard acceptance remain open.

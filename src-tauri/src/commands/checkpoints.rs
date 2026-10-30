@@ -38,6 +38,7 @@ pub async fn create_checkpoint(
     name: Option<String>,
     reason: Option<String>,
 ) -> CommandResult<CheckpointDto> {
+    let admission = state.data_lifecycle.admit()?;
     let (name, reason) = normalize_checkpoint_text(name, reason)?;
     let total = state
         .collectors
@@ -49,6 +50,7 @@ pub async fn create_checkpoint(
         .count();
     let service = state.checkpoints.clone();
     let result = tauri::async_runtime::spawn_blocking(move || {
+        let _admission = admission;
         create_manual_with_progress(app, service, name, reason, total)
     })
     .await
@@ -63,6 +65,7 @@ pub fn rename_checkpoint(
     checkpoint_id: i64,
     name: String,
 ) -> CommandResult<CheckpointDto> {
+    let _admission = state.data_lifecycle.admit()?;
     validate::in_range("checkpoint id", checkpoint_id, 1, i64::MAX)?;
     let name = validate::text("checkpoint name", &name, MAX_NAME)?;
     let (name, _) = Sanitizer::new().sanitize(name);
@@ -79,6 +82,7 @@ pub fn rename_checkpoint(
 /// Delete one, and the snapshots it owns.
 #[tauri::command]
 pub fn delete_checkpoint(state: State<'_, AppState>, checkpoint_id: i64) -> CommandResult<()> {
+    let _admission = state.data_lifecycle.admit()?;
     validate::in_range("checkpoint id", checkpoint_id, 1, i64::MAX)?;
     Ok(state.db.write(move |conn| {
         if checkpoint_repository::delete(conn, checkpoint_id)? {

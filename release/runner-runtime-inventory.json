@@ -1,0 +1,996 @@
+{
+    "schemaVersion":  1,
+    "nodeVersion":  "v24.12.0",
+    "playwrightVersion":  "1.62.1",
+    "chromiumRevision":  "156.0.8078.47-1.1",
+    "browserExecutable":  "browsers/chromium-156.0.8078.47-1.1/chrome.exe",
+    "checksumSource":  "https://nodejs.org/dist/v24.12.0/SHASUMS256.txt",
+    "installedBytes":  543580088,
+    "files":  [
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/156.0.8078.47.manifest",
+                      "bytes":  226,
+                      "sha256":  "baf34d8bd7bb91b90523c696d1c99fa5df22ef996d8d3255ed108cc5978ff1a1"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/chrome.dll",
+                      "bytes":  303974912,
+                      "sha256":  "f6eafdd30e2633b06f628a0577c189b9be47a4938218aecf55bfad1040af73f3"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/chrome.exe",
+                      "bytes":  4394496,
+                      "sha256":  "b211ae4d314dafae9692ffe2a0090b32fc58fe18fd8c841ad12d471615140200"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/chrome_100_percent.pak",
+                      "bytes":  566533,
+                      "sha256":  "d3181dbdb72f2f3372b4cb374a751e81a68ea3ffea4413c54461519e557cfebc"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/chrome_200_percent.pak",
+                      "bytes":  915585,
+                      "sha256":  "2306a837022d9d82cdbfeb1e7cfa4895ad65e194b5857b9017bb33750b6a0858"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/chrome_elf.dll",
+                      "bytes":  2740224,
+                      "sha256":  "7e315225c8d574b6d492113aebc6b47ad393e52189043b141456352b426e5791"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/chrome_proxy.exe",
+                      "bytes":  2639872,
+                      "sha256":  "d73c1a68f4fa452529a01fb75de89febcb94899c4a77ea22307adb6ae3da6d59"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/chrome_pwa_launcher.exe",
+                      "bytes":  3269120,
+                      "sha256":  "da63b5345b367320beb93a42ce36dcf61f240eecff4da0e91a6723b4ef1fc5ae"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/chrome_wer.dll",
+                      "bytes":  110592,
+                      "sha256":  "c2d3f602d5fee4efeb75a4b4af21caae43828a274ad96cd516d37d656d8c331e"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/dxcompiler.dll",
+                      "bytes":  26010112,
+                      "sha256":  "ea756b8fb9fbfd44dcf29acf29e8d2b1a78c421de5c429d2615d9ac97c3f2143"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/elevated_tracing_service.exe",
+                      "bytes":  4608000,
+                      "sha256":  "aa9e45b3004dcfba0421c83be678291af386a91eafae86196b4f2d0e1f611a2c"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/elevation_service.exe",
+                      "bytes":  3981312,
+                      "sha256":  "9a375dcb518ea82c0c432aac93064bdcc328531b020c50cae9c099208dee8ab3"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/First Run",
+                      "bytes":  8,
+                      "sha256":  "839adbaaca1c43dd4575c502ada96ebb4651f1a69b6fc5e42679beb47584181e"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/icudtl.dat",
+                      "bytes":  10824432,
+                      "sha256":  "02a01b3188b6a41a756f7322fdb5e6b5ca6573b327b01dfc8ed662d571a6f769"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/IwaKeyDistribution/iwa-key-distribution.pb",
+                      "bytes":  3793,
+                      "sha256":  "db1b46bcb253793ecc2cb734e2eb7c04ee6a69acfe3548abe27c4ea62a3b402a"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/IwaKeyDistribution/manifest.json",
+                      "bytes":  114,
+                      "sha256":  "2de00b641c03834a89f9c9c06327cb72a948dc59a18a5c2d28ddd617eb64ff9d"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/libEGL.dll",
+                      "bytes":  448512,
+                      "sha256":  "2644f309b240b7cae37e404d84f5b7d0ec5987e8a5fa895f8ee287090d6b0d84"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/libGLESv2.dll",
+                      "bytes":  448512,
+                      "sha256":  "fbc21ca09135778c3861f0560d4c9a9498a47078202ff730594cb5d6301439f5"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/ar.pak",
+                      "bytes":  1005856,
+                      "sha256":  "a27c8371c84ca61c5c23fba8feff43253e8a25c98f04be49ca3e4602b03e14c2"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/bg.pak",
+                      "bytes":  1040670,
+                      "sha256":  "cb8f4fa28e8945e0e0ebd02bb6a6c10de8c16a839ff4340eced63dc4e04ca478"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/bn.pak",
+                      "bytes":  1322332,
+                      "sha256":  "7dc9f3373d773b2d53587fc2014289117273a89ef66f13909883733510e4f72b"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/ca.pak",
+                      "bytes":  641147,
+                      "sha256":  "9dfc51c4d6630ae60c4762709b37c51dc2d40aa6a0f992c388df88f2cd076a22"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/cs.pak",
+                      "bytes":  657560,
+                      "sha256":  "95bf9db1f9c3e162a4ddab47262ae3debb537fab69882dc6fb2fb5a7cb0a13ea"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/da.pak",
+                      "bytes":  593764,
+                      "sha256":  "34c72d69a4bb0f43b0081cfd0d0c6f44dd8661614faf6523089fb7dbb8986164"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/de.pak",
+                      "bytes":  645244,
+                      "sha256":  "2ab92775ce5cdbdc901b922ed7b71e896d74b48c0814c9e37b65f05facec04ec"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/el.pak",
+                      "bytes":  1143864,
+                      "sha256":  "b5288830e9b82af19d2b8b4293c0fca3201851ef5eb433fb59ee960d6ad2c344"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/en-GB.pak",
+                      "bytes":  511690,
+                      "sha256":  "4389d504f3bf0bc5bff901dc825b07256b435cea982107fc9766dfbc93c978d8"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/en-US.pak",
+                      "bytes":  517521,
+                      "sha256":  "717498bdca01a75d62614fd2b90543b558fbc5b5a8d0515f554fdf4b41945062"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/es.pak",
+                      "bytes":  623158,
+                      "sha256":  "b9c124f7e1ceabfc82fe17c73b3c08771776dc42084a307aafa061061897cec0"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/es-419.pak",
+                      "bytes":  626658,
+                      "sha256":  "e6248c7dbc292a75a393b5daa09af41343dc29d5c3d1cf3a9f65ebf94b515a72"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/et.pak",
+                      "bytes":  571344,
+                      "sha256":  "345e5225b609490fffd48999d888d39d3ca4fc730b983895b5a9b885eedf8d7c"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/fi.pak",
+                      "bytes":  580496,
+                      "sha256":  "9c9082cc0abf6baeece1467e90ff91075d563346dfb7f87af4242c0a9cd695b8"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/fil.pak",
+                      "bytes":  654871,
+                      "sha256":  "19d2bb311748c3461b19d83d58b431cec3eb756761c52c0535561c6817a5ad3c"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/fr.pak",
+                      "bytes":  681653,
+                      "sha256":  "af4f235ba4d7004fd42e256f02e96d182407adc1bde7209e831ad1b62b833a3e"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/gu.pak",
+                      "bytes":  1314740,
+                      "sha256":  "537e1a252d045b633e2f425df5ddd13e73a9b607b8a62b438eb5b2bce10e6c2c"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/he.pak",
+                      "bytes":  824675,
+                      "sha256":  "07d9003bacefa5525b180bc3515f5bcfbced4858be465978792f5abb2267a8b6"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/hi.pak",
+                      "bytes":  1401988,
+                      "sha256":  "97f363d71977f96ef48592734e770f4a3eca6533990b417ee05e53bdf5489b5f"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/hr.pak",
+                      "bytes":  633684,
+                      "sha256":  "22597a066e50d1058d4fc4ad66119e47c2bf65cf608fa78b2136ce71086937f2"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/hu.pak",
+                      "bytes":  678929,
+                      "sha256":  "15cd873136db5798f9f604ddeb28c3b482879288230e3efaa06a05bc68dad92b"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/id.pak",
+                      "bytes":  562189,
+                      "sha256":  "07e91d043a810443b1bf9ea7b03cac90d120bde4aeafe4dea092c7dd969dea2c"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/it.pak",
+                      "bytes":  621067,
+                      "sha256":  "81b6ca09a219c792e8bcf4b299825ad1d91df1596cefa541d4cc80e4f2c9026a"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/ja.pak",
+                      "bytes":  750187,
+                      "sha256":  "bc323ecdffbd2c0f9a8d2c27133a585e9f2215eb50b9e1c63afc05cc79e1a4cf"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/kn.pak",
+                      "bytes":  1506497,
+                      "sha256":  "4587f41529d85fd1eeeb91f25b618573464f31ed5db5d17af2292e6796143caf"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/ko.pak",
+                      "bytes":  640503,
+                      "sha256":  "536c199bc6f4accc75791c5d0dae962a3549cd40813c3d64387c558b9dd079f0"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/lt.pak",
+                      "bytes":  686455,
+                      "sha256":  "90ff1b80885cdffb1882c1e45044630c03e476c4d2d529238468b31ca48d6d03"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/lv.pak",
+                      "bytes":  683438,
+                      "sha256":  "529958ab64a401ed424158af7fd4d5b333bce79c0ba51764ddbd210c94e4cdea"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/ml.pak",
+                      "bytes":  1550880,
+                      "sha256":  "e391490c59c25289d3670668ccf82fce1f50b42c81c9c9edf6e39237c0fe69cd"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/mr.pak",
+                      "bytes":  1287018,
+                      "sha256":  "92f4ee3ced4852999f16664bcadfd080c048dcc73a51b04f0f9d8baebba9be29"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/ms.pak",
+                      "bytes":  592066,
+                      "sha256":  "1cd6076b6370f3234c4976a6247349c5ffcf23efbe1fc2c9e2844e55cf685994"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/nb.pak",
+                      "bytes":  563900,
+                      "sha256":  "389d3b02b4efab2f3e15e5232cda6f7ff3a5727330176636438f5fe136f6e416"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/nl.pak",
+                      "bytes":  589255,
+                      "sha256":  "bdbca322bd6009a6a9cb9f09c70898ac2616e84d68fd791e8041683f0db08af2"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/pl.pak",
+                      "bytes":  658775,
+                      "sha256":  "9edeb53e2c8ef782741cf613d565a1f8baa3f763741fea1d5a9eee3561ca1127"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/pt-BR.pak",
+                      "bytes":  617050,
+                      "sha256":  "242fab6945392a81c7c93b8610186fe588f46470068216f30ca9b47f950617ff"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/pt-PT.pak",
+                      "bytes":  620723,
+                      "sha256":  "b8d9877517b26560401a3252372b20f5785decf9089e3c3fa719396a64cb8858"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/ro.pak",
+                      "bytes":  641525,
+                      "sha256":  "a29f260a25d7ed59a94b669c78e60ef5c8e0f88e002894e2d86ac90d02743325"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/ru.pak",
+                      "bytes":  1057355,
+                      "sha256":  "36eaf8fb646fb81964c768f3bb80fa2ef0577f9ac79fcb56fd09d8d386f3e4a5"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/sk.pak",
+                      "bytes":  668635,
+                      "sha256":  "62734dd550796d5c94ed70a44935ce170d7950e184a68bb4607e4f10fee74f93"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/sl.pak",
+                      "bytes":  637223,
+                      "sha256":  "09162fbb7fa271d27d0940e6003d861f5f426b1e4e210ac0f1871a2a24b67dbe"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/sr.pak",
+                      "bytes":  978551,
+                      "sha256":  "912a0d876c9c54ecb5dd48b00b32964dc7527b3606543d48d12f80d668794e26"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/sv.pak",
+                      "bytes":  572622,
+                      "sha256":  "75c006a1e414427d197ca88cacb80fa55a0425433c6c452849efa43b7a9ba85f"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/ta.pak",
+                      "bytes":  1545697,
+                      "sha256":  "3477c5f0a0ccf68aa1d413014bffea3de484517bf1caa378b9ce89d619091098"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/te.pak",
+                      "bytes":  1434036,
+                      "sha256":  "d0603458e30bb04864008c7ba541f3412c5634056e752c0845995009bf2710e4"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/th.pak",
+                      "bytes":  1200821,
+                      "sha256":  "350a45c8797dad1e8f85aec67a1d6237e62ea20e9b7d378c297c40b19c0d8206"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/tr.pak",
+                      "bytes":  617411,
+                      "sha256":  "9edf810786a176ed0061c1477d1587267c79c7561c7d1c61334968eb159b736f"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/uk.pak",
+                      "bytes":  1064943,
+                      "sha256":  "afb4ec10a34aedb94bfe3f2e39a0f1125ab6ec3870eb03463ecd5ea74edad913"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/vi.pak",
+                      "bytes":  733876,
+                      "sha256":  "441bfa2e4032b28dae7532a4fa181d03a42430299a4aa91e7f7e4c0e1b5620f3"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/zh-CN.pak",
+                      "bytes":  526241,
+                      "sha256":  "b23346802148c8f8543a9a1b9fe184b69b9ddcb851c7e61b04b5c596c5eb5455"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/locales/zh-TW.pak",
+                      "bytes":  520257,
+                      "sha256":  "149b4188eac3a1d9ca31b88473f3cb49775ab27ec522dc90df236dc3a07a24a4"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/notification_helper.exe",
+                      "bytes":  2689536,
+                      "sha256":  "540c8eb8c2d6a6a1ea90397ab68d904b619dbf2bf4714bfa5c7754011e14ed15"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/resources.pak",
+                      "bytes":  24605308,
+                      "sha256":  "b3f86dd202eb91217a4e899b7559d26159e0960fbec2107a7567d8b98c41c5dd"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/v8_context_snapshot.bin",
+                      "bytes":  754192,
+                      "sha256":  "4cf4b259bdf78a9790d913306c50cb88a7b4d7f868a7dd2d5240a17ac9021b1e"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/vk_swiftshader.dll",
+                      "bytes":  5393408,
+                      "sha256":  "ff7806a6f30558a5ad9f8db32b3476843d890593ec62ad0c5ac8fdc19987e28e"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/vk_swiftshader_icd.json",
+                      "bytes":  106,
+                      "sha256":  "32d83ff113fef532a9f97e0d2831f8656628ab1c99e9060f0332b1532839afd9"
+                  },
+                  {
+                      "path":  "browsers/chromium-156.0.8078.47-1.1/vulkan-1.dll",
+                      "bytes":  981504,
+                      "sha256":  "651860ecc1c90515fd00e271d1e8cbed0b6b54ce4197210eb21569a76eab5032"
+                  },
+                  {
+                      "path":  "node.exe",
+                      "bytes":  89935872,
+                      "sha256":  "2ffe3acc0458fdde999f50d11809bbe7c9b7ef204dcf17094e325d26ace101d8"
+                  },
+                  {
+                      "path":  "playwright-core/bin/install_media_pack.ps1",
+                      "bytes":  174,
+                      "sha256":  "bc20f049badf021e3a53bdb4156603caa5ef482c9a9a251f927605e676a44171"
+                  },
+                  {
+                      "path":  "playwright-core/bin/install_webkit_wsl.ps1",
+                      "bytes":  1464,
+                      "sha256":  "bc61beda37a808eef27d39ce684baa792f6d17737a25a432b1a84d3b591ab815"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_chrome_beta_linux.sh",
+                      "bytes":  1217,
+                      "sha256":  "dc8c22b9dde76583cece2857575b88094299615f3136a3c598149710c45dee3a"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_chrome_beta_mac.sh",
+                      "bytes":  563,
+                      "sha256":  "a92eaeb4ebcf5633a4e9c981481e14c80764fc81b6fcbc0565398e50ff319433"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_chrome_beta_win.ps1",
+                      "bytes":  957,
+                      "sha256":  "b6d9e44742feafb98d5edc56fa20042949973cf30d141a1c5b4fb384096967c5"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_chrome_stable_linux.sh",
+                      "bytes":  1212,
+                      "sha256":  "dc72ab3567a4ce43bd8353d4ecf41f1d9c03e870169367cd3ed9043aabf67dd1"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_chrome_stable_mac.sh",
+                      "bytes":  519,
+                      "sha256":  "bb43a96c192a6cc81524ade0264686fff7809c019a89f7db0a9849635879c3be"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_chrome_stable_win.ps1",
+                      "bytes":  923,
+                      "sha256":  "3d96c4e2f4ebbb3fad44cf3ba58d9cf90af1c9fb3073e3b27d45a74cf005515b"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_msedge_beta_linux.sh",
+                      "bytes":  1494,
+                      "sha256":  "10b26f35dbc2000b94edf1172d803a29c5873a4eb8d523afbc687997b642767e"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_msedge_beta_mac.sh",
+                      "bytes":  377,
+                      "sha256":  "0036d738bc90d686100d81f328ba0003bf07863f5500b792c8da391d149750fa"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_msedge_beta_win.ps1",
+                      "bytes":  874,
+                      "sha256":  "b173c378a59f0cc38033cee702de1f44f09276c9b2270d1a650ebe66ee312433"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_msedge_dev_linux.sh",
+                      "bytes":  1489,
+                      "sha256":  "00e4947e7a4f8339c6db09c87976d808583c07f9179e4aa7694d88614b82fe95"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_msedge_dev_mac.sh",
+                      "bytes":  372,
+                      "sha256":  "6f899e3b311f742c24ca37ff9e32298e8290514ffc14bf588cc51556a29da4c0"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_msedge_dev_win.ps1",
+                      "bytes":  869,
+                      "sha256":  "46f7f98c81cb0abe687d7f4a5afea9b897a38d2a6dd6f6662fbd847f7a22bd51"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_msedge_stable_linux.sh",
+                      "bytes":  1507,
+                      "sha256":  "ec0a31a5f09c565e108473a1850895a4458ab00c713ac1de3aa2001912e4668f"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_msedge_stable_mac.sh",
+                      "bytes":  371,
+                      "sha256":  "3af1e893527ff2257aa2dbc3b259a053b92f45c3eadb13e38eba46e87902655d"
+                  },
+                  {
+                      "path":  "playwright-core/bin/reinstall_msedge_stable_win.ps1",
+                      "bytes":  856,
+                      "sha256":  "40bb5fcbfcebbbe2ce43c6e736e7c5deefc5be03b6e9c6914423c06ec1f591be"
+                  },
+                  {
+                      "path":  "playwright-core/browsers.json",
+                      "bytes":  1780,
+                      "sha256":  "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99"
+                  },
+                  {
+                      "path":  "playwright-core/cli.js",
+                      "bytes":  839,
+                      "sha256":  "f1c4075aef116c766092250d7f37b3249a7cee6465d953207fc38c8f6145becd"
+                  },
+                  {
+                      "path":  "playwright-core/index.d.ts",
+                      "bytes":  634,
+                      "sha256":  "7a8ec10b0834eb7183e4bfcd929838ac77583828e343211bb73676d1e47f6f01"
+                  },
+                  {
+                      "path":  "playwright-core/index.js",
+                      "bytes":  697,
+                      "sha256":  "a58fb2cec4293e7dcf73c58a179898a4f3986666451a19da4e731fa3af63265b"
+                  },
+                  {
+                      "path":  "playwright-core/index.mjs",
+                      "bytes":  1063,
+                      "sha256":  "3d36e2132d3c8b62397d23f0bb4177336aaee503203ae2a2c90fbeb5bf3317dd"
+                  },
+                  {
+                      "path":  "playwright-core/lib/bootstrap.js",
+                      "bytes":  3481,
+                      "sha256":  "4637f4dbfef9cfc01baeb5f5d2cb63fa0901522c96915ea2227290558d27123e"
+                  },
+                  {
+                      "path":  "playwright-core/lib/coreBundle.js",
+                      "bytes":  3425603,
+                      "sha256":  "9393fa79e1c67c74edc26b610d65a4f7ed73d345a762465cc88340a33a2454ac"
+                  },
+                  {
+                      "path":  "playwright-core/lib/entry/cliDaemon.js",
+                      "bytes":  197,
+                      "sha256":  "062f256fb29a7bf91793a014b9c3f1f9cf2dc6b12e40a8a2ebba88a630ae16a0"
+                  },
+                  {
+                      "path":  "playwright-core/lib/entry/dashboardApp.js",
+                      "bytes":  108,
+                      "sha256":  "209962c6eaeef11629f226d6a2ab33ec7a2480754242b6e19590a9e6eb71d126"
+                  },
+                  {
+                      "path":  "playwright-core/lib/entry/mcp.js",
+                      "bytes":  442,
+                      "sha256":  "cc87dc0020cb41caebbf04f50e42bc7835b033a6d80e9c3f0a3d0b3dbdf341c7"
+                  },
+                  {
+                      "path":  "playwright-core/lib/entry/oopBrowserDownload.js",
+                      "bytes":  120,
+                      "sha256":  "87567cdbd67dd2f50bb232d47d3784701ece7c81e39c0287bb7d1b466b68cf06"
+                  },
+                  {
+                      "path":  "playwright-core/lib/package.js",
+                      "bytes":  2112,
+                      "sha256":  "9f938e1d44a0dd231b1660ca62f7dae964859b79cbdc370b8542c5d375ca3c05"
+                  },
+                  {
+                      "path":  "playwright-core/lib/server/chromium/appIcon.png",
+                      "bytes":  16565,
+                      "sha256":  "6ba994f05c5cf18e22d9b6bef9898fbdec6ad4d4d77f5187d0609cb42d72d01e"
+                  },
+                  {
+                      "path":  "playwright-core/lib/server/electron/loader.js",
+                      "bytes":  5100,
+                      "sha256":  "8f4f2c20933e7bef2bbed9a1b455278ad1461aa919b0386f360aee5b2580149d"
+                  },
+                  {
+                      "path":  "playwright-core/lib/serverRegistry.js",
+                      "bytes":  247102,
+                      "sha256":  "e9db9d4eaa8c3690f700ea3047af7b0b6e0b16937a969589678c51db92272ae9"
+                  },
+                  {
+                      "path":  "playwright-core/lib/serverRegistry.js.LICENSE",
+                      "bytes":  18617,
+                      "sha256":  "5cf540fe55a2ba9bcf0eb76e739b454faa8581e2f1a0f777602ef0855534302e"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/cli-client/channelSessions.js",
+                      "bytes":  7087,
+                      "sha256":  "6b9c613e87340f48ad7182addd7495a8ff3fbe55feb1bbd0ce04f59f1552e126"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/cli-client/cli.js",
+                      "bytes":  153,
+                      "sha256":  "dfde8e9dfde30c4b3914eb25ba1c5a8524ec64651d866171d75cd7b41a827180"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/cli-client/help.json",
+                      "bytes":  38111,
+                      "sha256":  "d63f1c7e006b1bdfbe656e6bea2b4dca9e1b6c17f8c806fdaca656fef71d234d"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/cli-client/minimist.js",
+                      "bytes":  4106,
+                      "sha256":  "1d200627373a367e0097f1abeaaa4d67cde2c33f2e5efca5cb55222c7667adc3"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/cli-client/output.js",
+                      "bytes":  11703,
+                      "sha256":  "2eace914547a487b2aa1dc34af787fe92168f0b7b3dde24f2b127e817cc9b2b4"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/cli-client/program.js",
+                      "bytes":  16059,
+                      "sha256":  "4a3ece6f75a707e6af71c1dde8650080e7819421594f251b9397e2e45e89cbb8"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/cli-client/registry.js",
+                      "bytes":  6662,
+                      "sha256":  "c11d278e05542808ba37bdb032018eccf9dc78377f8025bd74fa906ae009ca30"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/cli-client/session.js",
+                      "bytes":  9519,
+                      "sha256":  "716e87fc77251129adf8c66374cccc6788f76a02b4b33692c7e63a01a659cb5c"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/dashboard/appIcon.png",
+                      "bytes":  18945,
+                      "sha256":  "38037bcf18c7f9b950da2e1a2d8800d38fb27637ccda293d38368a3704b67f18"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/references/element-attributes.md",
+                      "bytes":  665,
+                      "sha256":  "bf19aa4671e0a50a0fefa9c790f39124e803060eefe395042b723c29fcb7faa2"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/references/playwright-tests.md",
+                      "bytes":  1690,
+                      "sha256":  "c5b0719fef2cfdff50bd744051b2f9afc119775db4b48e9b2882c1cf3886797c"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/references/request-mocking.md",
+                      "bytes":  2182,
+                      "sha256":  "54e801c9663fc2b6d68ceb058cb1c360724c2499f42acc7852a68e83e5b5f37c"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/references/running-code.md",
+                      "bytes":  5642,
+                      "sha256":  "d95c539a5990b71d02d8bdf1d9414df16191eb6cff95b0063820518b7a13dcb2"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/references/session-management.md",
+                      "bytes":  5671,
+                      "sha256":  "cd3e261b8763bf952f1e371b876cb78d054379afec85482f9250633e1b7e6c44"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/references/storage-state.md",
+                      "bytes":  5198,
+                      "sha256":  "9ac47f9ae4a1aedcd2077f8ac9ab1ba6bee1962cb83ff51adcd36fb6d83b5ec6"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/references/test-generation.md",
+                      "bytes":  16114,
+                      "sha256":  "12f54cfa718d9e559bad918120a4ca4f11c933167713d1b9c5f99872eddaf749"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/references/tracing.md",
+                      "bytes":  3440,
+                      "sha256":  "792e0ac7705e56ac48df84c0f5400221ce86107897c671590a64a4ea6a82508e"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/references/video-recording.md",
+                      "bytes":  5387,
+                      "sha256":  "8555ab5400df0d90e66318aacc0a8a4418fbf872e7463824d55d5c41615abd83"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-cli/SKILL.md",
+                      "bytes":  12587,
+                      "sha256":  "29c0b669a524d42b51934d7db9144c1c07a566d0549ae6fb6ccd810e5a3cf61b"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-component-testing/references/gallery-spec.md",
+                      "bytes":  6199,
+                      "sha256":  "0ca25dde6112eb379f56eb618585b64dc2dfd13c2f7f956ac7eabbd76a68912b"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-component-testing/references/migration.md",
+                      "bytes":  4758,
+                      "sha256":  "0afda2e933235ad5c538c914e75c2469c160cd3be7650bd4ec86bef9efae8d63"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-component-testing/references/react.md",
+                      "bytes":  2921,
+                      "sha256":  "2a9661c3bff8d12064d50aa71c4e0fe120bcf6e9f243f2506a1ad90b0edf2f90"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-component-testing/references/vue.md",
+                      "bytes":  3180,
+                      "sha256":  "5a01334a5521d6728f7d0e87751efb0723d6a7e3f715f994fdf96b88853966c1"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-component-testing/SKILL.md",
+                      "bytes":  10027,
+                      "sha256":  "77bc6f8d1de57ac8f8996ae860c1cfc446f18f48e78cc643b43389e5a97d5c66"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/skills/playwright-trace/SKILL.md",
+                      "bytes":  4712,
+                      "sha256":  "df85506bfa8a445c961efa1ac244cca733667b717711bcc99c1f93994c29d5dc"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/utils/extension.js",
+                      "bytes":  4260,
+                      "sha256":  "ed1a56cb9a6b4643a6a1dea604c541a4e3a4be8d8971edcfe53c7dc9cceefe98"
+                  },
+                  {
+                      "path":  "playwright-core/lib/tools/utils/socketConnection.js",
+                      "bytes":  3317,
+                      "sha256":  "973c2bea70a1f1445f4673f99e9fa351e50a2ec9fd93d7381b2c41bb4de764dd"
+                  },
+                  {
+                      "path":  "playwright-core/lib/utilsBundle.js",
+                      "bytes":  3239355,
+                      "sha256":  "580f571bf063e2256b51b3946a035bc452fc0e22808d5547b198baea39923a32"
+                  },
+                  {
+                      "path":  "playwright-core/lib/utilsBundle.js.LICENSE",
+                      "bytes":  122225,
+                      "sha256":  "57945338cba4878e373646733528017fbe3db1503ec2b431fd30d2a390c70c33"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/dashboard/assets/codicon-DCmgc-ay.ttf",
+                      "bytes":  80340,
+                      "sha256":  "0f1d5219934e96e83b8db162d60b4d8c09b5de1e7d38031cbafe4a3c0f2889c9"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/dashboard/assets/firefox-1bWoP6pv.svg",
+                      "bytes":  7488,
+                      "sha256":  "3f3742d1e78c0db6c2d3531250f70c30675ee5310de32fa89befaf738c54efd0"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/dashboard/assets/firefox-beta-k3eOH_eK.svg",
+                      "bytes":  9280,
+                      "sha256":  "7eab5ffdc25903ba33a7202f7fffa1999f119c7be45a39e9e703c118904f917a"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/dashboard/assets/firefox-nightly-Cp5nfeDT.svg",
+                      "bytes":  9143,
+                      "sha256":  "f311c074b0fa999fcd6b73441301fb54ee87a48ff3bf05f318647928110476da"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/dashboard/assets/index-CyWAfh-p.js",
+                      "bytes":  324278,
+                      "sha256":  "33abc7596e49d241e5b397141073e73bb2fb7eec9880bb1e0e2e6d0f673a150e"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/dashboard/assets/index-DhC616m4.css",
+                      "bytes":  131922,
+                      "sha256":  "b4adaf3c09a3a3a4d17d0268255113d0bbacd2045cfab47ed69a78e0b9bdbd78"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/dashboard/assets/safari-na3_-uQk.svg",
+                      "bytes":  5254,
+                      "sha256":  "80fd72ca5eb8545f1981277b31f4f92951d469d4efebd078e4086b676fe517dc"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/dashboard/index.html",
+                      "bytes":  1078,
+                      "sha256":  "3c127919b93d9a2a621ec5aa5be8565680edc6e961e62d028914549d22bcb218"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/dashboard/playwright-logo.svg",
+                      "bytes":  5645,
+                      "sha256":  "511524a1c145819303a18fb71870a4307c3e740f9e9722f7686a2b42b0995b6c"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/htmlReport/index.html",
+                      "bytes":  464,
+                      "sha256":  "ce7c098020a0eb9ce10edd416245ea6da50dfeaab18dfd0a2176979d22643be6"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/htmlReport/report.css",
+                      "bytes":  99364,
+                      "sha256":  "afa5c8f204098c79eb093e9354d82488a2ccaa771b45453cd4d1e9a075779cb8"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/htmlReport/report.js",
+                      "bytes":  415216,
+                      "sha256":  "f0941744b2ef35b91eafb3d6099f5d4acb342ddbb3000ff293b6e3abf80d29ac"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/recorder/assets/codeMirrorModule-CwYYHbcZ.js",
+                      "bytes":  307374,
+                      "sha256":  "b673acf747a1667bbd90b96d9de583d69905b0bd78a196b2a7979a573f5171fd"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/recorder/assets/codeMirrorModule--QdMvsKi.css",
+                      "bytes":  6251,
+                      "sha256":  "20be824a82832b62cc04642d31da3c609fd280b23f1cdcb1e622c4f40aac5ab8"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/recorder/assets/codicon-DCmgc-ay.ttf",
+                      "bytes":  80340,
+                      "sha256":  "0f1d5219934e96e83b8db162d60b4d8c09b5de1e7d38031cbafe4a3c0f2889c9"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/recorder/assets/index-DYjdXIbE.js",
+                      "bytes":  358249,
+                      "sha256":  "f3c0288840bedb5739649f7fe938a30f57469d46d6ca1e56ee885a0860b98df9"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/recorder/assets/index-l_lX622x.css",
+                      "bytes":  85451,
+                      "sha256":  "01eecbef954379cb99bf36502849ff6e503887bd8a131a5d02dd5d8c23b6106f"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/recorder/index.html",
+                      "bytes":  1078,
+                      "sha256":  "d8a974540383c01c031dd7f317d4276675ecc562747986e6d70234751127e891"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/recorder/playwright-logo.svg",
+                      "bytes":  5033,
+                      "sha256":  "6b0a4367bdeab10995bc239278f04c68c10e48adbec15e799e01909a0d66dcb9"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/assets/codeMirrorModule-rXmQmLUY.js",
+                      "bytes":  307393,
+                      "sha256":  "bb0f7c41f9889e4195c2504878e38061288881f426498434c9955479828f7e66"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/assets/defaultSettingsView-B-dXF5JN.js",
+                      "bytes":  643184,
+                      "sha256":  "2ce8be133fe21a4abd7d8330d9b443092dc2ce28826f191442c14989f9d55b15"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/assets/urlMatch-L3liM589.js",
+                      "bytes":  2510,
+                      "sha256":  "1bc6321e32d11c31a452bc75896f0b344e6153321854d9f1658818be7f845c16"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/assets/xtermModule-BuZfJS5v.js",
+                      "bytes":  288730,
+                      "sha256":  "17584c22ad7d49f3c3c9e07e8b2655203cd33e60c1cb527356eabfda6a59c830"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/codeMirrorModule.-QdMvsKi.css",
+                      "bytes":  6251,
+                      "sha256":  "20be824a82832b62cc04642d31da3c609fd280b23f1cdcb1e622c4f40aac5ab8"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/codicon.DCmgc-ay.ttf",
+                      "bytes":  80340,
+                      "sha256":  "0f1d5219934e96e83b8db162d60b4d8c09b5de1e7d38031cbafe4a3c0f2889c9"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/defaultSettingsView.BLFoOugd.css",
+                      "bytes":  105310,
+                      "sha256":  "72241b3112ab609ca0e06195e85e02cb373799217cd5f24a07d61d9273c4ad3e"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/index.B_TqY17P.css",
+                      "bytes":  2055,
+                      "sha256":  "08a212fcacae1866f44f065654afcc4c7d03409c68c74b3315c5bda17a0ca003"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/index.html",
+                      "bytes":  2363,
+                      "sha256":  "e2218af9284b6e1c2ec3b547320857778a323fd1473d90620153e967223c5721"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/index.KZ4wOW1K.js",
+                      "bytes":  6566,
+                      "sha256":  "53e2227532161670bc601e241a7a9af00ac54826a9dd2ef9c15b8c1f77e92e63"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/manifest.webmanifest",
+                      "bytes":  429,
+                      "sha256":  "d8540500603a32a39fe7e5a0375dc0f9ebafd11118e06a846db7efc608223ab9"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/playwright-logo.svg",
+                      "bytes":  5033,
+                      "sha256":  "6b0a4367bdeab10995bc239278f04c68c10e48adbec15e799e01909a0d66dcb9"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/snapshot.B_Jk1wbt.js",
+                      "bytes":  650,
+                      "sha256":  "d4d09e05451d107d8e1a6bbd041405fe518b9fd2833890e4ebaaad83b7f554f5"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/snapshot.html",
+                      "bytes":  389,
+                      "sha256":  "c608c8899c95c5a74d3f556e20146c3d852b9df85ae2854c659a7cc773c9b727"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/sw.bundle.js",
+                      "bytes":  93459,
+                      "sha256":  "cfd6662a71914516efe90a5a6f3da2bbe5db6e442939b868ca465f765d33723f"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/uiMode.C7UW1sC9.css",
+                      "bytes":  54341,
+                      "sha256":  "c194e703ad4697e31c5e9b8d1e4f75f201a1fbe9940620fa6319dfa5543707b4"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/uiMode.Dzuouizj.js",
+                      "bytes":  37932,
+                      "sha256":  "a584f96f0797144552430d7a04f7e3b84b1baaa0b781a664b1512339ec1c760b"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/uiMode.html",
+                      "bytes":  727,
+                      "sha256":  "32b260f173708fe088834efe8eff0f9d92af0c7e2e6c987cd8e197f0a066742f"
+                  },
+                  {
+                      "path":  "playwright-core/lib/vite/traceViewer/xtermModule.kHJ-D0s7.css",
+                      "bytes":  2853,
+                      "sha256":  "0dd60056134e6a2994a86b59a1e9789b9f04e92924da109aef8c923acaf08ce5"
+                  },
+                  {
+                      "path":  "playwright-core/lib/webp_codec.LICENSE",
+                      "bytes":  8841,
+                      "sha256":  "995c7ee35aceb7666829b7a501ca89c0864e12b493c1174b155774ab1e03d831"
+                  },
+                  {
+                      "path":  "playwright-core/lib/webp_codec.wasm",
+                      "bytes":  565369,
+                      "sha256":  "164cd9583a3e4d081f767d3b41ff0a730443dc7535fcc5caff83561463384b79"
+                  },
+                  {
+                      "path":  "playwright-core/lib/xdg-open",
+                      "bytes":  32416,
+                      "sha256":  "7d759d54f0d4ce1beeb34ee62c587985b5042374e8de237b0dcb8cd47aa698cf"
+                  },
+                  {
+                      "path":  "playwright-core/LICENSE",
+                      "bytes":  11601,
+                      "sha256":  "45873d00a0dd243596deb4aa23b2493b3d1f0671921bf2538ea431d7380220eb"
+                  },
+                  {
+                      "path":  "playwright-core/NOTICE",
+                      "bytes":  254,
+                      "sha256":  "6d602191187b35b9b01d2cffa01c8469c2c8d9de8a96f1bf868e0f264f51c81d"
+                  },
+                  {
+                      "path":  "playwright-core/package.json",
+                      "bytes":  876,
+                      "sha256":  "07c47543631fef9508760365dee9fbe958c562093ec8d122543949ed231f233f"
+                  },
+                  {
+                      "path":  "playwright-core/README.md",
+                      "bytes":  120,
+                      "sha256":  "d16ff7f8e38fa1fc954f695ad551cdc118d9c9bdd5f3d83203901f4c317d7d7e"
+                  },
+                  {
+                      "path":  "playwright-core/ThirdPartyNotices.txt",
+                      "bytes":  676,
+                      "sha256":  "a549d329bad8806fe279f0ecae0fc0270dec7e7c2dc8ec10f90e394f7c32b144"
+                  },
+                  {
+                      "path":  "playwright-core/types/protocol.d.ts",
+                      "bytes":  823302,
+                      "sha256":  "b836eed98b79fabb54f1df73252a0ce178b8df4a89794251ade2fa0c5e52b678"
+                  },
+                  {
+                      "path":  "playwright-core/types/structs.d.ts",
+                      "bytes":  2455,
+                      "sha256":  "c9b9179b7291c8562eb0fb781219ddbdcf36149ebd7bd355e5b4a553d6b60b81"
+                  },
+                  {
+                      "path":  "playwright-core/types/types.d.ts",
+                      "bytes":  1110840,
+                      "sha256":  "6c688250f2b7061cec3a17ab8797671137b653f8c4e81a6df3190cb112a7579a"
+                  },
+                  {
+                      "path":  "src/browser-session.mjs",
+                      "bytes":  3015,
+                      "sha256":  "fe03c59d93af3de42a908b22611e310151f7f31e8f69ee91415789e529ca0f28"
+                  },
+                  {
+                      "path":  "src/egress-proxy.mjs",
+                      "bytes":  5157,
+                      "sha256":  "51107f3099082472a79bc74941e8923f9d3b5343272126dcf2df817de924bb44"
+                  },
+                  {
+                      "path":  "src/execute-recipe.mjs",
+                      "bytes":  6372,
+                      "sha256":  "ec5bf4b61469509bdd636d7301723e7e94270d29a69b668770ee8c5fe61a906a"
+                  },
+                  {
+                      "path":  "src/export-harness.mjs",
+                      "bytes":  3776,
+                      "sha256":  "b15b8e4dab5999a9e2df8654c66feaaf21b01c8f3bf22398e4cc8114c18b6d35"
+                  },
+                  {
+                      "path":  "src/main.mjs",
+                      "bytes":  5450,
+                      "sha256":  "c57b2d39c9aae6e9670b6cbf63d406bc8d520a31dc0ed44d2f06fcbe05f28f5a"
+                  },
+                  {
+                      "path":  "src/policy.mjs",
+                      "bytes":  4512,
+                      "sha256":  "0a4cd02e3153754ceb133cc76f5eab9025ce470508fb03687ce66df5c0a0c912"
+                  },
+                  {
+                      "path":  "src/protocol.mjs",
+                      "bytes":  1463,
+                      "sha256":  "7c51f310b41de0c9421444cfbfce8ac5bb5cb7e860bb1d63841604844a3fd139"
+                  },
+                  {
+                      "path":  "src/recipe-validation.mjs",
+                      "bytes":  5031,
+                      "sha256":  "3983b19981027add69d9f8a4c9d89688d53e65bfb3fc03641c26d5a2a452533a"
+                  },
+                  {
+                      "path":  "src/record-locator.mjs",
+                      "bytes":  1482,
+                      "sha256":  "784c3a3d39f054c7b62093e03976f3abb0016239647c0bcc47cf065a81589806"
+                  },
+                  {
+                      "path":  "src/revision-marker.mjs",
+                      "bytes":  1332,
+                      "sha256":  "d0a02aacc98da7c2548a871fb285fdaefdc7fcc29c66b8ccc1342a37aeaf7edd"
+                  },
+                  {
+                      "path":  "src/session-authority.mjs",
+                      "bytes":  3091,
+                      "sha256":  "afcb9b879a4ccdb889275e6d368704148caae2e04f4be10bf4957ef933c42cd7"
+                  }
+              ]
+}

@@ -9,6 +9,9 @@
 
 export type RouteId =
   | 'home'
+  | 'owner-apps'
+  | 'owner-app'
+  | 'owner-change'
   | 'timeline'
   | 'investigations'
   | 'checkpoints'
@@ -36,6 +39,9 @@ const home: RouteDef = { id: 'home', path: '', label: 'Home', icon: 'home', shor
 
 const all: readonly RouteDef[] = [
   home,
+  { id: 'owner-apps', path: 'apps', label: 'My apps', icon: 'settings', inNav: true },
+  { id: 'owner-app', path: 'apps/:appId', label: 'App overview', icon: 'settings', inNav: false },
+  { id: 'owner-change', path: 'apps/:appId/change', label: 'Change request', icon: 'settings', inNav: false },
   { id: 'timeline', path: 'timeline', label: 'Timeline', icon: 'timeline', shortcut: 2, inNav: true },
   { id: 'investigations', path: 'investigations', label: 'Investigations', icon: 'investigate', shortcut: 3, inNav: true },
   { id: 'checkpoints', path: 'checkpoints', label: 'Checkpoints', icon: 'checkpoint', shortcut: 4, inNav: true },
@@ -62,7 +68,11 @@ export const navRoutes: readonly RouteDef[] = routes.filter((r) => r.inNav);
 export const defaultRoute: RouteDef = home;
 
 export function routeByPath(path: string): RouteDef | undefined {
-  return routes.find((r) => r.path === path);
+  const exact = routes.find((r) => r.path === path);
+  if (exact) return exact;
+  if (/^apps\/[^/]+\/change(?:\/[^/]+)?$/.test(path)) return routes.find((r) => r.id === 'owner-change');
+  if (/^apps\/[^/]+$/.test(path)) return routes.find((r) => r.id === 'owner-app');
+  return undefined;
 }
 
 export function routeById(id: RouteId): RouteDef | undefined {

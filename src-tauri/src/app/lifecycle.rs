@@ -17,6 +17,9 @@ pub fn set_monitoring_paused<R: Runtime>(app: &AppHandle<R>, paused: bool) {
     let Some(state) = app.try_state::<AppState>() else {
         return;
     };
+    let Ok(_mutation) = state.data_lifecycle.admit() else {
+        return;
+    };
     state.collectors.set_monitoring_paused(paused, None);
 }
 
@@ -38,6 +41,16 @@ pub fn quit<R: Runtime>(app: &AppHandle<R>) {
 /// idempotent — which it is: flushing an empty queue is a no-op, and writing
 /// the marker twice writes the same bytes.
 pub fn shutdown(state: &AppState) {
+    let _operation = state.data_lifecycle.lock_operation();
+    state.data_lifecycle.begin_shutdown();
+    state.preview_runner.stop_all();
+    state
+        .preview_retention
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+        .take();
+    state.stop_resume_monitor();
+    state.stop_maintenance();
     // Close admission first. Collector shutdown then wakes any checkpoint
     // capture already waiting on workers; the automation thread can therefore
     // join without holding shutdown hostage. Only flush after every detached
@@ -46,10 +59,36 @@ pub fn shutdown(state: &AppState) {
     state.collectors.stop_all();
     state.stop_checkpoint_automation();
     state.checkpoints.wait_for_idle();
-    if let Err(error) = state.db.flush() {
-        // A database that is already closed or corrupt cannot be flushed, and
-        // that is not a reason to hang on the way out.
-        tracing::debug!(%error, "the write queue could not be flushed at shutdown");
+    let mut clean = true;
+    if state.collectors.shutdown_incomplete() {
+        tracing::warn!("collector workers did not all join at shutdown");
+        clean = false;
     }
-    state.mark_clean_shutdown();
+    if let Err(error) = state.data_lifecycle.wait_for_idle() {
+        tracing::warn!(%error, "mutation workers did not drain at shutdown");
+        clean = false;
+    }
+    if let Err(error) = state.db.close_write_admission(state.data_lifecycle.epoch()) {
+        tracing::warn!(%error, "the legacy mutation barrier could not drain at shutdown");
+        clean = false;
+    }
+    state.owner_portability.clear();
+    if let Err(error) = super::data_lifecycle::DataLifecycle::flush_owner(&state.owner_store) {
+        tracing::debug!(%error, "the owner-workspace write queue could not be flushed at shutdown");
+        clean = false;
+    }
+    if state.db.state().is_ready() {
+        if let Err(error) = state.db.flush() {
+            tracing::debug!(%error, "the write queue could not be flushed at shutdown");
+            clean = false;
+        }
+    }
+    if let Err(error) = super::data_lifecycle::DataLifecycle::shutdown_owner(&state.owner_store) {
+        tracing::debug!(%error, "the owner-workspace writer could not stop at shutdown");
+        clean = false;
+    }
+    super::data_lifecycle::DataLifecycle::shutdown_legacy(&state.db);
+    if clean {
+        state.mark_clean_shutdown();
+    }
 }

@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "status": "pending",
+  "nodeVersion": "v24.12.0",
+  "playwrightVersion": "1.62.1",
+  "chromiumRevision": "156.0.8078.47-1.1",
+  "browserExecutable": "browsers/chromium-156.0.8078.47-1.1/chrome.exe",
+  "checksumSource": "https://nodejs.org/dist/v24.12.0/SHASUMS256.txt",
+  "bundleInventorySha256": "cc3bb9c020ec053b11df341d925f3f25e26a6dc9f0cfbdb5ab1d1cf3d3ec5554",
+  "obligationsReviewed": false,
+  "reviewedBy": null,
+  "components": [
+    {
+      "name": "node",
+      "directory": "node-v24.12.0",
+      "source": "https://raw.githubusercontent.com/nodejs/node/v24.12.0/LICENSE",
+      "obligations": "Retain the complete Node license and all embedded dependency notices without removing copyright, disclaimers or conditions.",
+      "sourceFiles": [
+        {
+          "path": "legal/third-party/runner/node-v24.12.0/LICENSE",
+          "sha256": "537308465103a306d0e3eecf42632b4ff1b48aaaec044e9fc10a78c81fd00b34"
+        }
+      ]
+    },
+    {
+      "name": "playwright",
+      "directory": "playwright-1.62.1",
+      "source": "https://github.com/microsoft/playwright/tree/v1.62.1",
+      "obligations": "Retain Apache-2.0 LICENSE, NOTICE, ThirdPartyNotices and every packaged .LICENSE sidecar. Runtime files are unmodified.",
+      "sourceFiles": [
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/LICENSE",
+          "sha256": "45873d00a0dd243596deb4aa23b2493b3d1f0671921bf2538ea431d7380220eb"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/NOTICE",
+          "sha256": "6d602191187b35b9b01d2cffa01c8469c2c8d9de8a96f1bf868e0f264f51c81d"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/ThirdPartyNotices.txt",
+          "sha256": "a549d329bad8806fe279f0ecae0fc0270dec7e7c2dc8ec10f90e394f7c32b144"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/serverRegistry.js.LICENSE",
+          "sha256": "5cf540fe55a2ba9bcf0eb76e739b454faa8581e2f1a0f777602ef0855534302e"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/utilsBundle.js.LICENSE",
+          "sha256": "57945338cba4878e373646733528017fbe3db1503ec2b431fd30d2a390c70c33"
+        },
+        {
+          "path": "legal/third-party/runner/playwright-1.62.1/webp_codec.LICENSE",
+          "sha256": "995c7ee35aceb7666829b7a501ca89c0864e12b493c1174b155774ab1e03d831"
+        }
+      ]
+    },
+    {
+      "name": "chromium",
+      "directory": "chromium-156.0.8078.47-1.1",
+      "source": "https://github.com/ungoogled-software/ungoogled-chromium-windows/releases/tag/156.0.8078.47-1.1",
+      "obligations": "Retain the complete Chromium/component credits, Chromium BSD license and ungoogled patch licenses. Deliver the exact corresponding Chromium and patch/build sources with build/relink instructions in the same download as the installer, with equivalent access and retention. LGPL library modification and reverse engineering for debugging such modifications remain permitted. Do not distribute the installer alone or substitute a written source offer.",
+      "sourceFiles": [
+        {
+          "path": "legal/third-party/runner/chromium-156.0.8078.47-1.1/CHROMIUM-CREDITS.txt",
+          "sha256": "9c48aad6914260957008db581aa676e1d39d584d15863b80d9fb17f621f644d5"
+        },
+        {
+          "path": "legal/third-party/runner/chromium-156.0.8078.47-1.1/CHROMIUM-LICENSE.txt",
+          "sha256": "368cca1106be99d39ecd32a38d8305585d802a475effb66380b91ffc9bcf709b"
+        },
+        {
+          "path": "legal/third-party/runner/chromium-156.0.8078.47-1.1/CHROMIUM-TERMS.txt",
+          "sha256": "14a7e4c6e7bb460ab9d33e0a4d4dbb55f0f841b749a6d8e79546fb55707c6aa4"
+        },
+        {
+          "path": "legal/third-party/runner/chromium-156.0.8078.47-1.1/UNGOOGLED-CORE-LICENSE.txt",
+          "sha256": "78bc4abfc3e5606b5b88c3cb9409a3250a7f64cffe704bef0563e11910a29189"
+        },
+        {
+          "path": "legal/third-party/runner/chromium-156.0.8078.47-1.1/UNGOOGLED-WINDOWS-LICENSE.txt",
+          "sha256": "9539b394e4179952698894bd62ef6566b6804ab0ff360dcf3a511cfaf7f78c4d"
+        },
+        {
+          "path": "release/runner-browser-source.json",
+          "sha256": "ecf9f37480515d689d2bebc7154b30f4d3743ba9099dee8c5bf19741eb24b6da"
+        },
+        {
+          "path": "docs/runner-source-build.md",
+          "sha256": "997f70d881bf30e7cfcf6a467c0df75a5d05fa8c9a983a769ff0655b6cfe4749"
+        }
+      ]
+    }
+  ],
+  "noticePayload": {
+    "path": "release/RUNNER_THIRD_PARTY_NOTICES.txt",
+    "sha256": "8ad9c7c28d00641f26af587959a1020e60749fd017a3d60945f4efcb53010d9a"
+  },
+  "sourceMaterials": [
+    {
+      "name": "chromium-156.0.8078.47-lite.tar.xz",
+      "url": "https://storage.googleapis.com/chromium-browser-official/chromium-156.0.8078.47-lite.tar.xz?generation=1792539541153162",
+      "bytes": 2009127748,
+      "sha256": "28432028890ef70e1f2e9db880c500907ad1b04f5ae6b655a3f394b9f2eaa705",
+      "requiredMembers": [
+        "chromium-156.0.8078.47/LICENSE",
+        "chromium-156.0.8078.47/DEPS",
+        "chromium-156.0.8078.47/BUILD.gn",
+        "chromium-156.0.8078.47/chrome/VERSION",
+        "chromium-156.0.8078.47/build/config/BUILDCONFIG.gn",
+        "chromium-156.0.8078.47/third_party/ffmpeg/BUILD.gn",
+        "chromium-156.0.8078.47/third_party/ffmpeg/ffmpeg_options.gni",
+        "chromium-156.0.8078.47/third_party/ffmpeg/COPYING.LGPLv2.1",
+        "chromium-156.0.8078.47/third_party/ffmpeg/CREDITS.chromium",
+        "chromium-156.0.8078.47/third_party/ffmpeg/libavcodec/avcodec.h",
+        "chromium-156.0.8078.47/third_party/ffmpeg/libavutil/avutil.h",
+        "chromium-156.0.8078.47/third_party/ffmpeg/chromium/config/Chrome/win/x64/config.h"
+      ]
+    },
+    {
+      "name": "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af.tar.gz",
+      "url": "https://codeload.github.com/ungoogled-software/ungoogled-chromium-windows/tar.gz/258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af",
+      "bytes": 415624,
+      "sha256": "1cdfcea2b5d914ef567302cb814927759b47b10d1893d2432313797591d93ddc",
+      "requiredMembers": [
+        "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/build.py",
+        "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/package.py",
+        "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/flags.windows.gn",
+        "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/downloads.ini",
+        "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/patches/series",
+        "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/LICENSE"
+      ]
+    },
+    {
+      "name": "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246.tar.gz",
+      "url": "https://codeload.github.com/ungoogled-software/ungoogled-chromium/tar.gz/0673f8701c94e5688c33ef8ce5e36602d311d246",
+      "bytes": 679725,
+      "sha256": "dd554b3d95abd7a2c55f9d78a37f3d2e9b59692d50ed016cb959d2ff148ce945",
+      "requiredMembers": [
+        "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/flags.gn",
+        "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/downloads.ini",
+        "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/utils/patches.py",
+        "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/patches/series",
+        "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/pruning.list",
+        "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/domain_regex.list",
+        "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/LICENSE"
+      ]
+    },
+    {
+      "name": "directx-headers-07b94cba474be6cdfd934febdbd0b21ca0524187.zip",
+      "url": "https://github.com/microsoft/DirectX-Headers/archive/07b94cba474be6cdfd934febdbd0b21ca0524187.zip",
+      "bytes": 551235,
+      "sha256": "0545f43a34ac447770cc988d8631de41e6987fc02cc3d2ae82d7fba979f5398d",
+      "requiredMembers": [
+        "DirectX-Headers-07b94cba474be6cdfd934febdbd0b21ca0524187/LICENSE",
+        "DirectX-Headers-07b94cba474be6cdfd934febdbd0b21ca0524187/include/directx/d3d12.h"
+      ]
+    },
+    {
+      "name": "webauthn-ef82c157125a0490e05f6ea82a7adb1b8e1bad08.zip",
+      "url": "https://github.com/microsoft/webauthn/archive/ef82c157125a0490e05f6ea82a7adb1b8e1bad08.zip",
+      "bytes": 22947,
+      "sha256": "f7a9c3c4fa7e6f557e8182d68db67cd9dad87d9f42fdb5adc39d0f2968e903ec",
+      "requiredMembers": [
+        "webauthn-ef82c157125a0490e05f6ea82a7adb1b8e1bad08/LICENSE",
+        "webauthn-ef82c157125a0490e05f6ea82a7adb1b8e1bad08/webauthn.h"
+      ]
+    },
+    {
+      "name": "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109.zip",
+      "url": "https://github.com/microsoft/multimedia-redirection/archive/8b1d8893d126547309f1bab8d8232418aa7c7109.zip",
+      "bytes": 39178,
+      "sha256": "d0451ade64f4a24ffbc0128683015f3e3bf40f02c90a4c4acef664e26088980f",
+      "requiredMembers": [
+        "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109/LICENSE",
+        "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109/api/Mmr.idl",
+        "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109/api/Mmr_h.h",
+        "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109/api/Mmr_i.c"
+      ]
+    },
+    {
+      "name": "rust-windows-create-0.52.0.zip",
+      "url": "https://github.com/microsoft/windows-rs/archive/refs/tags/0.52.0.zip",
+      "bytes": 35516630,
+      "sha256": "96379ad8ab18901040f007a0fe27431edd7b16db5e3853d90f0f4ee9be5aa926",
+      "requiredMembers": [
+        "windows-rs-0.52.0/Cargo.toml",
+        "windows-rs-0.52.0/crates/libs/windows/Cargo.toml",
+        "windows-rs-0.52.0/crates/libs/windows/src/lib.rs",
+        "windows-rs-0.52.0/crates/libs/windows/license-apache-2.0",
+        "windows-rs-0.52.0/crates/libs/windows/license-mit"
+      ]
+    }
+  ],
+  "note": "Prepared for exact-source review, not owner-approved. Unbranded ungoogled Chromium replaces Chrome for Testing. Its full component terms and corresponding-source delivery obligations require exact human review before installer QA. Source archives are verified and delivered by the hosted workflow, not claimed present from this metadata alone."
+}

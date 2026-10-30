@@ -86,6 +86,8 @@ pub fn privacy_summary(state: &AppState) -> CommandResult<PrivacySummaryDto> {
         data_path: paths.data.to_string_lossy().into_owned(),
         database_path: paths.db.database.to_string_lossy().into_owned(),
         retention,
+        owner_store: state.owner_store.state(),
+        owner_workspace_bytes: state.owner_store.owned_file_bytes(),
     })
 }
 
@@ -95,6 +97,7 @@ pub async fn purge_category(
     state: State<'_, AppState>,
     category: String,
 ) -> CommandResult<PurgeReportDto> {
+    let _mutation = state.data_lifecycle.admit()?;
     let category = category
         .parse::<Category>()
         .map_err(|_| AppError::InvalidInput {
@@ -116,6 +119,7 @@ pub async fn purge_folder(
     state: State<'_, AppState>,
     path: String,
 ) -> CommandResult<PurgeReportDto> {
+    let _mutation = state.data_lifecycle.admit()?;
     let canonical = validate::watched_folder(&path, &state.paths.data)?;
     let shown = validate::display_path(&canonical);
     let counts = state
@@ -186,23 +190,15 @@ pub async fn purge_all(
             operation: "encode preserved visualization preference",
             reason: error.to_string(),
         })?;
-    // Cancel and discard every active collector instance before replacing the
-    // database. The fresh onboarding state then prevents collection until the
-    // user explicitly starts watching again.
-    state.reset_collectors_after_history_purge()?;
-    if let Err(error) = state.db.replace_history(&theme, &visualization) {
-        // The lifecycle helper restores the old database when staging or
-        // verification fails. Restore the runtime to the same persisted
-        // collector choices so a failed destructive action is not a silent
-        // monitoring outage.
-        for (id, enabled) in settings.collectors {
-            if enabled {
-                let _ = state.collectors.set_enabled(&id, true);
-            }
-        }
+    // The coordinator persists one cross-store purge intent before stopping
+    // producers, closes owner admission at the same epoch, replaces both
+    // stores, and removes every app-owned copy before reopening admission.
+    if let Err(error) = state.purge_all_stores(&theme, &visualization) {
+        // A failed purge intentionally leaves the journal and admission
+        // closed. Startup must resume deletion before opening either store;
+        // do not re-enable producers against a half-purged generation.
         return Err(error.into());
     }
-    clear_log_files(&state.paths.logs);
     Ok(PurgeReportDto {
         events_deleted: counts.events_deleted,
         checkpoints_deleted: counts.checkpoints_deleted,
@@ -218,6 +214,7 @@ pub async fn set_retention(
     state: State<'_, AppState>,
     retention: RetentionPolicy,
 ) -> CommandResult<SettingsDto> {
+    let _mutation = state.data_lifecycle.admit()?;
     Ok(state.update_collector_settings(SettingsUpdateDto {
         retention: Some(retention),
         ..Default::default()
@@ -230,6 +227,7 @@ pub async fn set_quiet_hours(
     state: State<'_, AppState>,
     quiet_hours: QuietHours,
 ) -> CommandResult<QuietHours> {
+    let _mutation = state.data_lifecycle.admit()?;
     if quiet_hours.start_hour > 23 || quiet_hours.end_hour > 23 {
         return Err(AppError::InvalidInput {
             what: "quiet_hours",
@@ -266,31 +264,6 @@ fn directory_bytes(path: &std::path::Path) -> u64 {
         .filter(|metadata| metadata.is_file())
         .map(|metadata| metadata.len())
         .sum()
-}
-
-/// Truncate app-owned logs after a confirmed full history purge. The active
-/// tracing file may be held open by the logger on Windows, so a failure to
-/// truncate one file is deliberately best-effort and never turns a successful
-/// database purge into a misleading retry prompt.
-fn clear_log_files(path: &std::path::Path) {
-    let entries = std::fs::read_dir(path)
-        .ok()
-        .into_iter()
-        .flatten()
-        .filter_map(Result::ok);
-    for entry in entries {
-        let file = entry.path();
-        if !file.is_file() {
-            continue;
-        }
-        if let Err(error) = std::fs::OpenOptions::new()
-            .write(true)
-            .truncate(true)
-            .open(&file)
-        {
-            tracing::debug!(%error, "a log file could not be truncated after privacy purge");
-        }
-    }
 }
 
 #[cfg(test)]

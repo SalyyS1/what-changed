@@ -8,6 +8,7 @@
 pub mod composition;
 pub mod devices;
 pub mod eventlog;
+pub mod managed_file_lock;
 pub mod memory;
 pub mod named_pipe;
 pub mod network;

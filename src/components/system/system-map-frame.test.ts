@@ -45,7 +45,8 @@ describe('SystemMapFrame', () => {
     const navigator = screen.getByRole('listbox', { name: 'Explore system map nodes' });
     expect(screen.getAllByRole('option').length).toBeLessThanOrEqual(41);
     await fireEvent.keyDown(navigator, { key: 'End' });
-    expect(navigator.getAttribute('aria-activedescendant')).toBe('system-node-99');
+    expect(navigator.getAttribute('aria-activedescendant')).toMatch(/-system-node-99$/);
+    expect(navigator.contains(document.getElementById(navigator.getAttribute('aria-activedescendant')!))).toBe(true);
   });
 
   it('names why a zero-count entity kind is disabled', async () => {
@@ -53,6 +54,21 @@ describe('SystemMapFrame', () => {
     const chip = await screen.findByRole('button', { name: 'Containers, 0 recorded' });
     expect(chip.hasAttribute('disabled')).toBe(true);
     expect(chip.getAttribute('title')).toBe('No Docker containers recorded — the Docker collector is off');
+  });
+
+  it('returns keyboard focus to map controls on Escape', async () => {
+    const props = { data: ready(fixture(3)), mode: '2d' as const, controller: new SystemMapStore({ fetch: vi.fn() }) };
+    render(SystemMapFrame, props);
+    render(SystemMapFrame, { ...props, controller: new SystemMapStore({ fetch: vi.fn() }) });
+    const navigators = screen.getAllByRole('listbox', { name: 'Explore system map nodes' });
+    const navigator = navigators[1];
+    if (!navigator) throw new Error('Second map must render');
+    const ownFrame = navigator.closest('[data-testid="system-map-frame"]');
+    const reset = ownFrame?.querySelector('[data-map-reset]');
+    expect(reset).not.toBeNull();
+    navigator.focus();
+    await fireEvent.keyDown(navigator, { key: 'Escape' });
+    expect(document.activeElement).toBe(reset);
   });
 
   it('shows the explicit relationship empty state without mounting a renderer', async () => {

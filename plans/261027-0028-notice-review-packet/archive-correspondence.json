@@ -1,0 +1,1923 @@
+{
+  "schemaVersion": 1,
+  "scope": "Cached crates match Cargo.lock; every packaged regular file compared to installed source without extraction or execution.",
+  "records": [
+    {
+      "name": "adler2",
+      "version": "2.0.1",
+      "archiveSha256": "320119579fcad9c21884f5c4861d16174d0e06250625266f50fe6898340abefa",
+      "archiveBytes": 13366,
+      "comparedFiles": 13,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/adler2/adler2-2.0.1.crate"
+    },
+    {
+      "name": "aho-corasick",
+      "version": "1.1.5",
+      "archiveSha256": "c982642fa9e8606056828ee9a8505737230110bb1099153c79efe865c59d12ba",
+      "archiveBytes": 184315,
+      "comparedFiles": 48,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/aho-corasick/aho-corasick-1.1.5.crate"
+    },
+    {
+      "name": "alloc-no-stdlib",
+      "version": "2.0.4",
+      "archiveSha256": "cc7bb162ec39d46ab1ca8c77bf72e890535becd1751bb45f64c597edb4c8c6b3",
+      "archiveBytes": 10105,
+      "comparedFiles": 20,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/alloc-no-stdlib/alloc-no-stdlib-2.0.4.crate"
+    },
+    {
+      "name": "alloc-stdlib",
+      "version": "0.2.4",
+      "archiveSha256": "0e76a019e91224d279006ff972f1e984179a6e9feb050adba6ce8274aef23195",
+      "archiveBytes": 6730,
+      "comparedFiles": 12,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/alloc-stdlib/alloc-stdlib-0.2.4.crate"
+    },
+    {
+      "name": "anyhow",
+      "version": "1.0.104",
+      "archiveSha256": "330a5ed07fa54e4702c9d6c4174f74427fc0ef6e214bbd677ae50a5099946470",
+      "archiveBytes": 48819,
+      "comparedFiles": 54,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/anyhow/anyhow-1.0.104.crate"
+    },
+    {
+      "name": "auto-launch",
+      "version": "0.5.0",
+      "archiveSha256": "1f012b8cc0c850f34117ec8252a44418f2e34a2cf501de89e29b241ae5f79471",
+      "archiveBytes": 8819,
+      "comparedFiles": 13,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/auto-launch/auto-launch-0.5.0.crate"
+    },
+    {
+      "name": "base64",
+      "version": "0.22.1",
+      "archiveSha256": "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6",
+      "archiveBytes": 81597,
+      "comparedFiles": 38,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/base64/base64-0.22.1.crate"
+    },
+    {
+      "name": "bitflags",
+      "version": "2.13.1",
+      "archiveSha256": "b588b76d00fde79687d7646a9b5bdf3cc0f655e0bbd080335a95d7e96f3587da",
+      "archiveBytes": 51395,
+      "comparedFiles": 64,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/bitflags/bitflags-2.13.1.crate"
+    },
+    {
+      "name": "block-buffer",
+      "version": "0.10.4",
+      "archiveSha256": "3078c7629b62d3f0439517fa394996acacc5cbc91c5a20d8c658e77abd503a71",
+      "archiveBytes": 10538,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/block-buffer/block-buffer-0.10.4.crate"
+    },
+    {
+      "name": "brotli-decompressor",
+      "version": "5.0.3",
+      "archiveSha256": "3a32acac15fe1967bc3986b2a6347dffc965602354ea6f450ad07e8bfd253583",
+      "archiveBytes": 197262,
+      "comparedFiles": 37,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/brotli-decompressor/brotli-decompressor-5.0.3.crate"
+    },
+    {
+      "name": "brotli",
+      "version": "8.0.4",
+      "archiveSha256": "5cc91aac060a7a1e25823bdccbfb6af1875b88f17c6daac97894eed8207166b3",
+      "archiveBytes": 751794,
+      "comparedFiles": 76,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/brotli/brotli-8.0.4.crate"
+    },
+    {
+      "name": "bytemuck",
+      "version": "1.25.2",
+      "archiveSha256": "95832e849adfb21180ccb6826a99da14e5d266ae5c2e668e1602cf234f153797",
+      "archiveBytes": 54075,
+      "comparedFiles": 38,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/bytemuck/bytemuck-1.25.2.crate"
+    },
+    {
+      "name": "byteorder-lite",
+      "version": "0.1.0",
+      "archiveSha256": "8f1fe948ff07f4bd06c30984e69f5b4899c516a3ef74f34df92a2df2ab535495",
+      "archiveBytes": 15909,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/byteorder-lite/byteorder-lite-0.1.0.crate"
+    },
+    {
+      "name": "byteorder",
+      "version": "1.5.0",
+      "archiveSha256": "1fd0f2584146f6f2ef48085050886acf353beff7305ebd1ae69500e27c67f64b",
+      "archiveBytes": 23288,
+      "comparedFiles": 14,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/byteorder/byteorder-1.5.0.crate"
+    },
+    {
+      "name": "bytes",
+      "version": "1.12.1",
+      "archiveSha256": "fc652a48c352aef3ea3aed32080501cf3ef6ed5da78602a020c991775b0aff04",
+      "archiveBytes": 75667,
+      "comparedFiles": 40,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/bytes/bytes-1.12.1.crate"
+    },
+    {
+      "name": "cfb",
+      "version": "0.7.3",
+      "archiveSha256": "d38f2da7a0a2c4ccf0065be06397cc26a81f4e528be095826eee9d4adbb8c60f",
+      "archiveBytes": 63277,
+      "comparedFiles": 41,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/cfb/cfb-0.7.3.crate"
+    },
+    {
+      "name": "cfg-if",
+      "version": "1.0.4",
+      "archiveSha256": "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801",
+      "archiveBytes": 9360,
+      "comparedFiles": 14,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/cfg-if/cfg-if-1.0.4.crate"
+    },
+    {
+      "name": "chrono",
+      "version": "0.4.45",
+      "archiveSha256": "1aa79e62e7697b8e29b513a68abacf485adcd1fe8284a4316c5ae868e6633327",
+      "archiveBytes": 240866,
+      "comparedFiles": 51,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/chrono/chrono-0.4.45.crate"
+    },
+    {
+      "name": "cookie",
+      "version": "0.18.2",
+      "archiveSha256": "1a373e3602691c3cdea496d2f0ee5935151e6168fe87739483c463db1b2f2f87",
+      "archiveBytes": 47534,
+      "comparedFiles": 26,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/cookie/cookie-0.18.2.crate"
+    },
+    {
+      "name": "cpufeatures",
+      "version": "0.2.17",
+      "archiveSha256": "59ed5838eebb26a2bb2e58f6d5b5316989ae9d08bab10e0e6d103e656d1b0280",
+      "archiveBytes": 13466,
+      "comparedFiles": 16,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/cpufeatures/cpufeatures-0.2.17.crate"
+    },
+    {
+      "name": "crc32fast",
+      "version": "1.5.1",
+      "archiveSha256": "8498c871161e1742aaa9d52551b2d6ebdd4c3d45a3be423e3728f33b955be550",
+      "archiveBytes": 47893,
+      "comparedFiles": 19,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/crc32fast/crc32fast-1.5.1.crate"
+    },
+    {
+      "name": "crossbeam-channel",
+      "version": "0.5.16",
+      "archiveSha256": "d85363c37faeca707aef026efa9f3b34d077bce547e48f770770625c6013679e",
+      "archiveBytes": 93189,
+      "comparedFiles": 43,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/crossbeam-channel/crossbeam-channel-0.5.16.crate"
+    },
+    {
+      "name": "crossbeam-utils",
+      "version": "0.8.22",
+      "archiveSha256": "61803da095bee82a81bb1a452ecc25d3b2f1416d1897eb86430c6159ef717c17",
+      "archiveBytes": 46874,
+      "comparedFiles": 32,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/crossbeam-utils/crossbeam-utils-0.8.22.crate"
+    },
+    {
+      "name": "crypto-common",
+      "version": "0.1.7",
+      "archiveSha256": "78c8292055d1c1df0cce5d180393dc8cce0abec0a7102adb6c7b1eef6016d60a",
+      "archiveBytes": 9619,
+      "comparedFiles": 9,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/crypto-common/crypto-common-0.1.7.crate"
+    },
+    {
+      "name": "ctor",
+      "version": "0.8.0",
+      "archiveSha256": "352d39c2f7bef1d6ad73db6f5160efcaed66d94ef8c6c573a8410c00bf909a98",
+      "archiveBytes": 15646,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/ctor/ctor-0.8.0.crate"
+    },
+    {
+      "name": "deranged",
+      "version": "0.5.8",
+      "archiveSha256": "7cd812cc2bc1d69d4764bd80df88b4317eaef9e773c75226407d9bc0876b211c",
+      "archiveBytes": 26885,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/deranged/deranged-0.5.8.crate"
+    },
+    {
+      "name": "digest",
+      "version": "0.10.7",
+      "archiveSha256": "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292",
+      "archiveBytes": 19557,
+      "comparedFiles": 21,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/digest/digest-0.10.7.crate"
+    },
+    {
+      "name": "dirs-sys",
+      "version": "0.5.0",
+      "archiveSha256": "e01a3366d27ee9890022452ee61b2b63a67e6f13f58900b651ff5665f0bb1fab",
+      "archiveBytes": 10157,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/dirs-sys/dirs-sys-0.5.0.crate"
+    },
+    {
+      "name": "dirs",
+      "version": "6.0.0",
+      "archiveSha256": "c3e8aa94d75141228480295a7d0e7feb620b1a5ad9f12bc40be62411e38cce4e",
+      "archiveBytes": 14190,
+      "comparedFiles": 14,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/dirs/dirs-6.0.0.crate"
+    },
+    {
+      "name": "dpi",
+      "version": "0.1.2",
+      "archiveSha256": "d8b14ccef22fc6f5a8f4d7d768562a182c04ce9a3b3157b91390b52ddfdf1a76",
+      "archiveBytes": 14812,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/dpi/dpi-0.1.2.crate"
+    },
+    {
+      "name": "dunce",
+      "version": "1.0.5",
+      "archiveSha256": "92773504d58c093f6de2459af4af33faa518c13451eb8f2b5698ed3d36e7c813",
+      "archiveBytes": 8244,
+      "comparedFiles": 9,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/dunce/dunce-1.0.5.crate"
+    },
+    {
+      "name": "equivalent",
+      "version": "1.0.2",
+      "archiveSha256": "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f",
+      "archiveBytes": 7419,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/equivalent/equivalent-1.0.2.crate"
+    },
+    {
+      "name": "erased-serde",
+      "version": "0.4.10",
+      "archiveSha256": "d2add8a07dd6a8d93ff627029c51de145e12686fbc36ecb298ac22e74cf02dec",
+      "archiveBytes": 31339,
+      "comparedFiles": 27,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/erased-serde/erased-serde-0.4.10.crate"
+    },
+    {
+      "name": "fallible-iterator",
+      "version": "0.3.0",
+      "archiveSha256": "2acce4a10f12dc2fb14a218589d4f1f62ef011b2d0cc4b3cb1bba8e94da14649",
+      "archiveBytes": 19639,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/fallible-iterator/fallible-iterator-0.3.0.crate"
+    },
+    {
+      "name": "fallible-streaming-iterator",
+      "version": "0.1.9",
+      "archiveSha256": "7360491ce676a36bf9bb3c56c1aa791658183a54d2744120f27285738d90465a",
+      "archiveBytes": 9249,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/fallible-streaming-iterator/fallible-streaming-iterator-0.1.9.crate"
+    },
+    {
+      "name": "fdeflate",
+      "version": "0.3.7",
+      "archiveSha256": "1e6853b52649d4ac5c0bd02320cddc5ba956bdb407c4b75a2c6b75bf51500f8c",
+      "archiveBytes": 27188,
+      "comparedFiles": 16,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/fdeflate/fdeflate-0.3.7.crate"
+    },
+    {
+      "name": "file-id",
+      "version": "0.2.3",
+      "archiveSha256": "e1fc6a637b6dc58414714eddd9170ff187ecb0933d4c7024d1abbd23a3cc26e9",
+      "archiveBytes": 10148,
+      "comparedFiles": 9,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/file-id/file-id-0.2.3.crate"
+    },
+    {
+      "name": "flate2",
+      "version": "1.1.10",
+      "archiveSha256": "6e634e2e0ebac1ee034020da1ca582e17ffe4e0f5e985823721e168928136dcb",
+      "archiveBytes": 80244,
+      "comparedFiles": 63,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/flate2/flate2-1.1.10.crate"
+    },
+    {
+      "name": "fnv",
+      "version": "1.0.7",
+      "archiveSha256": "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1",
+      "archiveBytes": 11266,
+      "comparedFiles": 9,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/fnv/fnv-1.0.7.crate"
+    },
+    {
+      "name": "foldhash",
+      "version": "0.2.0",
+      "archiveSha256": "77ce24cb58228fbb8aa041425bb1050850ac19177686ea6e0f41a70416f56fdb",
+      "archiveBytes": 23329,
+      "comparedFiles": 12,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/foldhash/foldhash-0.2.0.crate"
+    },
+    {
+      "name": "form_urlencoded",
+      "version": "1.2.2",
+      "archiveSha256": "cb4cb245038516f5f85277875cdaa4f7d2c9a0fa0468de06ed190163b1581fcf",
+      "archiveBytes": 9347,
+      "comparedFiles": 7,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/form_urlencoded/form_urlencoded-1.2.2.crate"
+    },
+    {
+      "name": "generic-array",
+      "version": "0.14.7",
+      "archiveSha256": "85649ca51fd72272d7821adaf274ad91c288277713d9c18820d8499a7ff69e9a",
+      "archiveBytes": 15950,
+      "comparedFiles": 16,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/generic-array/generic-array-0.14.7.crate"
+    },
+    {
+      "name": "getrandom",
+      "version": "0.3.4",
+      "archiveSha256": "899def5c37c4fd7b2664648c28120ecec138e4d395b459e5ca34f9cce2dd77fd",
+      "archiveBytes": 50932,
+      "comparedFiles": 43,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/getrandom/getrandom-0.3.4.crate"
+    },
+    {
+      "name": "getrandom",
+      "version": "0.4.3",
+      "archiveSha256": "300e883d756b2e4ec94e02791f39b04b522276138852cfc41d9fb7e904106099",
+      "archiveBytes": 52437,
+      "comparedFiles": 48,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/getrandom/getrandom-0.4.3.crate"
+    },
+    {
+      "name": "glob",
+      "version": "0.3.4",
+      "archiveSha256": "e4eba85ea1d0a966a983acd07deee566e67395d2d96b6fb39e62b5a833f1eb0b",
+      "archiveBytes": 23511,
+      "comparedFiles": 15,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/glob/glob-0.3.4.crate"
+    },
+    {
+      "name": "hashbrown",
+      "version": "0.17.1",
+      "archiveSha256": "ed5909b6e89a2db4456e54cd5f673791d7eca6732202bbf2a9cc504fe2f9b84a",
+      "archiveBytes": 155512,
+      "comparedFiles": 50,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/hashbrown/hashbrown-0.17.1.crate"
+    },
+    {
+      "name": "hashlink",
+      "version": "0.12.1",
+      "archiveSha256": "32069d97bb81e38fa67eab65e3393bf804bb85969f2bc06bf13f64aef5aba248",
+      "archiveBytes": 33206,
+      "comparedFiles": 20,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/hashlink/hashlink-0.12.1.crate"
+    },
+    {
+      "name": "heck",
+      "version": "0.5.0",
+      "archiveSha256": "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea",
+      "archiveBytes": 11517,
+      "comparedFiles": 16,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/heck/heck-0.5.0.crate"
+    },
+    {
+      "name": "http",
+      "version": "1.5.0",
+      "archiveSha256": "918d3568bebf352712bc2ef3d46a8bcf1a75b373be6539de198e9105cbbf9ce0",
+      "archiveBytes": 111161,
+      "comparedFiles": 35,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/http/http-1.5.0.crate"
+    },
+    {
+      "name": "icu_collections",
+      "version": "2.3.0",
+      "archiveSha256": "fa68d21081c4a05d5a901a1c62add574c77048b6a1c67be3b50ce0b60d4ca513",
+      "archiveBytes": 87970,
+      "comparedFiles": 75,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/icu_collections/icu_collections-2.3.0.crate"
+    },
+    {
+      "name": "icu_locale_core",
+      "version": "2.3.0",
+      "archiveSha256": "d56e28588da92eee5c3201a6eff33fabdd49b62269c8938d4ff050ce4d900deb",
+      "archiveBytes": 80250,
+      "comparedFiles": 87,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/icu_locale_core/icu_locale_core-2.3.0.crate"
+    },
+    {
+      "name": "icu_normalizer",
+      "version": "2.3.0",
+      "archiveSha256": "12f9cf5f235641ed274641dd81c3f28d870e276763d0797aeeab72317b1c646f",
+      "archiveBytes": 530595,
+      "comparedFiles": 38,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/icu_normalizer/icu_normalizer-2.3.0.crate"
+    },
+    {
+      "name": "icu_normalizer_data",
+      "version": "2.3.0",
+      "archiveSha256": "1563da1ed3e0b3bf3d74c9b85917ac9c56464d2f57242270c09c9e752f8021a0",
+      "archiveBytes": 67215,
+      "comparedFiles": 16,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/icu_normalizer_data/icu_normalizer_data-2.3.0.crate"
+    },
+    {
+      "name": "icu_properties",
+      "version": "2.3.0",
+      "archiveSha256": "7e7ca276ad3145661a65914e6daf131ca5120cd3dcee8f8f3214b8875184a148",
+      "archiveBytes": 102637,
+      "comparedFiles": 23,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/icu_properties/icu_properties-2.3.0.crate"
+    },
+    {
+      "name": "icu_properties_data",
+      "version": "2.3.0",
+      "archiveSha256": "e590f038c1464a96894fd6d10127e90a8be4509f56ff7ecef851b15cee0b7caa",
+      "archiveBytes": 169152,
+      "comparedFiles": 146,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/icu_properties_data/icu_properties_data-2.3.0.crate"
+    },
+    {
+      "name": "icu_provider",
+      "version": "2.3.1",
+      "archiveSha256": "d27bbb9d3abbefac45d55f647c9de1d44aafcd1186eb91879afef17c396c3e73",
+      "archiveBytes": 52447,
+      "comparedFiles": 25,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/icu_provider/icu_provider-2.3.1.crate"
+    },
+    {
+      "name": "idna",
+      "version": "1.1.0",
+      "archiveSha256": "3b0875f23caa03898994f6ddc501886a45c7d3d62d04d2d90788d47be1b1e4de",
+      "archiveBytes": 148747,
+      "comparedFiles": 21,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/idna/idna-1.1.0.crate"
+    },
+    {
+      "name": "idna_adapter",
+      "version": "1.2.2",
+      "archiveSha256": "cb68373c0d6620ef8105e855e7745e18b0d00d3bdb07fb532e434244cdb9a714",
+      "archiveBytes": 10444,
+      "comparedFiles": 9,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/idna_adapter/idna_adapter-1.2.2.crate"
+    },
+    {
+      "name": "image",
+      "version": "0.25.10",
+      "archiveSha256": "85ab80394333c02fe689eaf900ab500fbd0c2213da414687ebf995a65d5a6104",
+      "archiveBytes": 303647,
+      "comparedFiles": 86,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/image/image-0.25.10.crate"
+    },
+    {
+      "name": "indexmap",
+      "version": "2.14.1",
+      "archiveSha256": "07aa2048142242915a31d35844fb311e0e53fcca590c3a0a40dcf1b841fa09eb",
+      "archiveBytes": 102461,
+      "comparedFiles": 43,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/indexmap/indexmap-2.14.1.crate"
+    },
+    {
+      "name": "infer",
+      "version": "0.19.0",
+      "archiveSha256": "a588916bfdfd92e71cacef98a63d9b1f0d74d6599980d11894290e7ddefffcf7",
+      "archiveBytes": 19091,
+      "comparedFiles": 25,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/infer/infer-0.19.0.crate"
+    },
+    {
+      "name": "itoa",
+      "version": "1.0.18",
+      "archiveSha256": "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682",
+      "archiveBytes": 15935,
+      "comparedFiles": 14,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/itoa/itoa-1.0.18.crate"
+    },
+    {
+      "name": "json-patch",
+      "version": "3.0.1",
+      "archiveSha256": "863726d7afb6bc2590eeff7135d923545e5e964f004c2ccf8716c25e70a86f08",
+      "archiveBytes": 22046,
+      "comparedFiles": 26,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/json-patch/json-patch-3.0.1.crate"
+    },
+    {
+      "name": "jsonptr",
+      "version": "0.6.3",
+      "archiveSha256": "5dea2b27dd239b2556ed7a25ba842fe47fd602e7fc7433c2a8d6106d4d9edd70",
+      "archiveBytes": 46086,
+      "comparedFiles": 27,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/jsonptr/jsonptr-0.6.3.crate"
+    },
+    {
+      "name": "keyboard-types",
+      "version": "0.7.0",
+      "archiveSha256": "b750dcadc39a09dbadd74e118f6dd6598df77fa01df0cfcdc52c28dece74528a",
+      "archiveBytes": 37068,
+      "comparedFiles": 16,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/keyboard-types/keyboard-types-0.7.0.crate"
+    },
+    {
+      "name": "lazy_static",
+      "version": "1.5.0",
+      "archiveSha256": "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe",
+      "archiveBytes": 14025,
+      "comparedFiles": 21,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/lazy_static/lazy_static-1.5.0.crate"
+    },
+    {
+      "name": "libc",
+      "version": "0.2.189",
+      "archiveSha256": "3eaf3ede3fee6db1a4c2ee091bf8a8b4dccdc6d17f656fb07896ee72867612f2",
+      "archiveBytes": 851502,
+      "comparedFiles": 404,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/libc/libc-0.2.189.crate"
+    },
+    {
+      "name": "libsqlite3-sys",
+      "version": "0.38.2",
+      "archiveSha256": "f1d20bef17f513b9b3004532233187769cd072d790971f4e4da0e346eb6401e8",
+      "archiveBytes": 5361739,
+      "comparedFiles": 26,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/libsqlite3-sys/libsqlite3-sys-0.38.2.crate"
+    },
+    {
+      "name": "litemap",
+      "version": "0.8.3",
+      "archiveSha256": "47d9d19d1d6efa0109d2f65ff4c85cddd50bd572e5a00127ab10987290bcefae",
+      "archiveBytes": 35045,
+      "comparedFiles": 23,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/litemap/litemap-0.8.3.crate"
+    },
+    {
+      "name": "lock_api",
+      "version": "0.4.14",
+      "archiveSha256": "224399e74b87b5f3557511d98dff8b14089b3dadafcab6bb93eab67d3aace965",
+      "archiveBytes": 29249,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/lock_api/lock_api-0.4.14.crate"
+    },
+    {
+      "name": "log",
+      "version": "0.4.34",
+      "archiveSha256": "f9f8bd3e56ce4dfc153cf470fffbfa98c7620958b312ca5c3a4b8d5181fd13c6",
+      "archiveBytes": 53395,
+      "comparedFiles": 23,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/log/log-0.4.34.crate"
+    },
+    {
+      "name": "matchers",
+      "version": "0.2.0",
+      "archiveSha256": "d1525a2a28c7f4fa0fc98bb91ae755d1e2d1505079e05539e35bc876b5d65ae9",
+      "archiveBytes": 7075,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/matchers/matchers-0.2.0.crate"
+    },
+    {
+      "name": "memchr",
+      "version": "2.8.3",
+      "archiveSha256": "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98",
+      "archiveBytes": 99165,
+      "comparedFiles": 59,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/memchr/memchr-2.8.3.crate"
+    },
+    {
+      "name": "mime",
+      "version": "0.3.17",
+      "archiveSha256": "6877bb514081ee2a7ff5ef9de3281f14a4dd4bceac4c09388074a6b5df8a139a",
+      "archiveBytes": 15712,
+      "comparedFiles": 14,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/mime/mime-0.3.17.crate"
+    },
+    {
+      "name": "miniz_oxide",
+      "version": "0.8.9",
+      "archiveSha256": "1fa76a2c86f704bdb222d66965fb3d63269ce38518b83cb0575fca855ebb6316",
+      "archiveBytes": 67132,
+      "comparedFiles": 23,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/miniz_oxide/miniz_oxide-0.8.9.crate"
+    },
+    {
+      "name": "miniz_oxide",
+      "version": "0.9.1",
+      "archiveSha256": "b63fbc4a50860e98e7b2aa7804ded1db5cbc3aff9193adaff57a6931bf7c4b4c",
+      "archiveBytes": 70519,
+      "comparedFiles": 23,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/miniz_oxide/miniz_oxide-0.9.1.crate"
+    },
+    {
+      "name": "mio",
+      "version": "1.2.3",
+      "archiveSha256": "4b18443e9c262bfe8fa82f51666e2642c53393f7e5c27b3e1aeab922cff5b9d8",
+      "archiveBytes": 110455,
+      "comparedFiles": 71,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/mio/mio-1.2.3.crate"
+    },
+    {
+      "name": "moxcms",
+      "version": "0.8.1",
+      "archiveSha256": "bb85c154ba489f01b25c0d36ae69a87e4a1c73a72631fc6c0eb6dde34a73e44b",
+      "archiveBytes": 188252,
+      "comparedFiles": 127,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/moxcms/moxcms-0.8.1.crate"
+    },
+    {
+      "name": "muda",
+      "version": "0.19.3",
+      "archiveSha256": "1dd04e60bc0b07438a6771710ee1698f98f6ebbc7f89b61264af1563b8aeb878",
+      "archiveBytes": 90395,
+      "comparedFiles": 40,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/muda/muda-0.19.3.crate"
+    },
+    {
+      "name": "notify-debouncer-full",
+      "version": "0.7.0",
+      "archiveSha256": "c02b49179cfebc9932238d04d6079912d26de0379328872846118a0fa0dbb302",
+      "archiveBytes": 28163,
+      "comparedFiles": 53,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/notify-debouncer-full/notify-debouncer-full-0.7.0.crate"
+    },
+    {
+      "name": "notify-rust",
+      "version": "4.18.0",
+      "archiveSha256": "c5b4c1b4f2aa9f25f63a7a49d3dd0ed567b3670da15330a66b29434be899b891",
+      "archiveBytes": 72789,
+      "comparedFiles": 34,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/notify-rust/notify-rust-4.18.0.crate"
+    },
+    {
+      "name": "notify-types",
+      "version": "2.1.0",
+      "archiveSha256": "42b8cfee0e339a0337359f3c88165702ac6e600dc01c0cc9579a92d62b08477a",
+      "archiveBytes": 22796,
+      "comparedFiles": 54,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/notify-types/notify-types-2.1.0.crate"
+    },
+    {
+      "name": "notify",
+      "version": "8.2.0",
+      "archiveSha256": "4d3d07927151ff8575b7087f245456e549fea62edf0ec4e565a5ee50c8402bc3",
+      "archiveBytes": 39067,
+      "comparedFiles": 15,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/notify/notify-8.2.0.crate"
+    },
+    {
+      "name": "nu-ansi-term",
+      "version": "0.50.3",
+      "archiveSha256": "7957b9740744892f114936ab4a57b3f487491bbeafaf8083688b16841a4240e5",
+      "archiveBytes": 29597,
+      "comparedFiles": 28,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/nu-ansi-term/nu-ansi-term-0.50.3.crate"
+    },
+    {
+      "name": "num-conv",
+      "version": "0.2.2",
+      "archiveSha256": "521739c6d2bac4aa25192232afe6841231376b2b26d4d9fae5ecf8ca5772e441",
+      "archiveBytes": 7441,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/num-conv/num-conv-0.2.2.crate"
+    },
+    {
+      "name": "num-traits",
+      "version": "0.2.19",
+      "archiveSha256": "071dfc062690e90b734c0b2273ce72ad0ffa95f0c74596bc250dcfd960262841",
+      "archiveBytes": 51631,
+      "comparedFiles": 29,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/num-traits/num-traits-0.2.19.crate"
+    },
+    {
+      "name": "once_cell",
+      "version": "1.21.4",
+      "archiveSha256": "9f7c3e4beb33f85d45ae3e3a1792185706c8e16d043238c593331cc7cd313b50",
+      "archiveBytes": 35010,
+      "comparedFiles": 29,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/once_cell/once_cell-1.21.4.crate"
+    },
+    {
+      "name": "option-ext",
+      "version": "0.2.0",
+      "archiveSha256": "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d",
+      "archiveBytes": 7345,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/option-ext/option-ext-0.2.0.crate"
+    },
+    {
+      "name": "parking_lot",
+      "version": "0.12.5",
+      "archiveSha256": "93857453250e3077bd71ff98b6a65ea6621a19bb0f559a85248955ac12c45a1a",
+      "archiveBytes": 46735,
+      "comparedFiles": 28,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/parking_lot/parking_lot-0.12.5.crate"
+    },
+    {
+      "name": "parking_lot_core",
+      "version": "0.9.12",
+      "archiveSha256": "2621685985a2ebf1c516881c026032ac7deafcda1a2c9b7850dc81e3dfcb64c1",
+      "archiveBytes": 34110,
+      "comparedFiles": 24,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/parking_lot_core/parking_lot_core-0.9.12.crate"
+    },
+    {
+      "name": "percent-encoding",
+      "version": "2.3.2",
+      "archiveSha256": "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220",
+      "archiveBytes": 11583,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/percent-encoding/percent-encoding-2.3.2.crate"
+    },
+    {
+      "name": "phf",
+      "version": "0.13.1",
+      "archiveSha256": "c1562dc717473dbaa4c1f85a36410e03c047b2e7df7f45ee938fbef64ae7fadf",
+      "archiveBytes": 24786,
+      "comparedFiles": 12,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/phf/phf-0.13.1.crate"
+    },
+    {
+      "name": "phf_shared",
+      "version": "0.13.1",
+      "archiveSha256": "e57fef6bc5981e38c2ce2d63bfa546861309f875b8a75f092d1d54ae2d64f266",
+      "archiveBytes": 16141,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/phf_shared/phf_shared-0.13.1.crate"
+    },
+    {
+      "name": "pin-project-lite",
+      "version": "0.2.17",
+      "archiveSha256": "a89322df9ebe1c1578d689c92318e070967d1042b512afbe49518723f4e6d5cd",
+      "archiveBytes": 31034,
+      "comparedFiles": 81,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/pin-project-lite/pin-project-lite-0.2.17.crate"
+    },
+    {
+      "name": "plist",
+      "version": "1.10.0",
+      "archiveSha256": "7da1d65da6dd5d1e44199ac0f58712d241c0f439f80adea8924d832384087f85",
+      "archiveBytes": 60038,
+      "comparedFiles": 53,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/plist/plist-1.10.0.crate"
+    },
+    {
+      "name": "png",
+      "version": "0.18.1",
+      "archiveSha256": "60769b8b31b2a9f263dae2776c37b1b28ae246943cf719eb6946a1db05128a61",
+      "archiveBytes": 125800,
+      "comparedFiles": 39,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/png/png-0.18.1.crate"
+    },
+    {
+      "name": "potential_utf",
+      "version": "0.1.6",
+      "archiveSha256": "d83eb9bc6d8e5cf568e7a1101d60ee05e81ed50ea106026f3d18deeb046d7661",
+      "archiveBytes": 10420,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/potential_utf/potential_utf-0.1.6.crate"
+    },
+    {
+      "name": "powerfmt",
+      "version": "0.2.0",
+      "archiveSha256": "439ee305def115ba05938db6eb1644ff94165c5ab5e9420d1c1bcedbba909391",
+      "archiveBytes": 15165,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/powerfmt/powerfmt-0.2.0.crate"
+    },
+    {
+      "name": "ppv-lite86",
+      "version": "0.2.21",
+      "archiveSha256": "85eae3c4ed2f50dcfe72643da4befc30deadb458a9b590d720cde2f2b1e97da9",
+      "archiveBytes": 22522,
+      "comparedFiles": 12,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/ppv-lite86/ppv-lite86-0.2.21.crate"
+    },
+    {
+      "name": "pxfm",
+      "version": "0.1.30",
+      "archiveSha256": "d55d956fa96f5ec02be2e13af0e20391a5aa83d6a074e3ad368959d0fab299ea",
+      "archiveBytes": 879463,
+      "comparedFiles": 266,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/pxfm/pxfm-0.1.30.crate"
+    },
+    {
+      "name": "quick-xml",
+      "version": "0.41.0",
+      "archiveSha256": "e660451e55124f798a69a5af3f49ccfbefbd41910eefd25caf2393e1f3473ec1",
+      "archiveBytes": 231661,
+      "comparedFiles": 43,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/quick-xml/quick-xml-0.41.0.crate"
+    },
+    {
+      "name": "rand",
+      "version": "0.9.5",
+      "archiveSha256": "b9ef1d0d795eb7d84685bca4f72f3649f064e6641543d3a8c415898726a57b41",
+      "archiveBytes": 100216,
+      "comparedFiles": 40,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/rand/rand-0.9.5.crate"
+    },
+    {
+      "name": "rand_chacha",
+      "version": "0.9.0",
+      "archiveSha256": "d3022b5f1df60f26e1ffddd6c66e8aa15de382ae63b3a0c1bfc0e4d3e3f325cb",
+      "archiveBytes": 18258,
+      "comparedFiles": 12,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/rand_chacha/rand_chacha-0.9.0.crate"
+    },
+    {
+      "name": "rand_core",
+      "version": "0.9.5",
+      "archiveSha256": "76afc826de14238e6e8c374ddcc1fa19e374fd8dd986b0d2af0d02377261d83c",
+      "archiveBytes": 24129,
+      "comparedFiles": 14,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/rand_core/rand_core-0.9.5.crate"
+    },
+    {
+      "name": "raw-window-handle",
+      "version": "0.6.2",
+      "archiveSha256": "20675572f6f24e9e76ef639bc5552774ed45f1c30e2951e1e99c59888861c539",
+      "archiveBytes": 20234,
+      "comparedFiles": 22,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/raw-window-handle/raw-window-handle-0.6.2.crate"
+    },
+    {
+      "name": "regex-automata",
+      "version": "0.4.18",
+      "archiveSha256": "ad8553b9b26413251cbf30e620595c7a41b3887f03da04579c0e6b0d6a06b4b2",
+      "archiveBytes": 628707,
+      "comparedFiles": 107,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/regex-automata/regex-automata-0.4.18.crate"
+    },
+    {
+      "name": "regex-syntax",
+      "version": "0.8.11",
+      "archiveSha256": "d6f6ff9a378485b298a5286656da665ba74413d36db0979633275d2e708145d4",
+      "archiveBytes": 359055,
+      "comparedFiles": 42,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/regex-syntax/regex-syntax-0.8.11.crate"
+    },
+    {
+      "name": "regex",
+      "version": "1.13.1",
+      "archiveSha256": "f020237b6c8eed93db2e2cb53c00c60a8e1bc73da7d073199a1180401450218d",
+      "archiveBytes": 157118,
+      "comparedFiles": 55,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/regex/regex-1.13.1.crate"
+    },
+    {
+      "name": "rfd",
+      "version": "0.16.0",
+      "archiveSha256": "a15ad77d9e70a92437d8f74c35d99b4e4691128df018833e99f90bcd36152672",
+      "archiveBytes": 57973,
+      "comparedFiles": 57,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/rfd/rfd-0.16.0.crate"
+    },
+    {
+      "name": "rusqlite",
+      "version": "0.40.2",
+      "archiveSha256": "23f2a97da3e3873c73cb2a2e71b35c40ff95e0b1eefa8d72d8499a6928c3b5b3",
+      "archiveBytes": 177215,
+      "comparedFiles": 70,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/rusqlite/rusqlite-0.40.2.crate"
+    },
+    {
+      "name": "rusqlite_migration",
+      "version": "2.6.0",
+      "archiveSha256": "03451d4dc523c0a96d9e412c574670b3f5f184c3988b77a435876be25477bbd3",
+      "archiveBytes": 32724,
+      "comparedFiles": 55,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/rusqlite_migration/rusqlite_migration-2.6.0.crate"
+    },
+    {
+      "name": "ryu",
+      "version": "1.0.23",
+      "archiveSha256": "9774ba4a74de5f7b1c1451ed6cd5285a32eddb5cccb8cc655a4e50009e06477f",
+      "archiveBytes": 52823,
+      "comparedFiles": 38,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/ryu/ryu-1.0.23.crate"
+    },
+    {
+      "name": "same-file",
+      "version": "1.0.6",
+      "archiveSha256": "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0bd1b4d7b6b0b68378900502",
+      "archiveBytes": 10183,
+      "comparedFiles": 16,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/same-file/same-file-1.0.6.crate"
+    },
+    {
+      "name": "scopeguard",
+      "version": "1.2.0",
+      "archiveSha256": "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49",
+      "archiveBytes": 11619,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/scopeguard/scopeguard-1.2.0.crate"
+    },
+    {
+      "name": "semver",
+      "version": "1.0.28",
+      "archiveSha256": "8a7852d02fc848982e0c167ef163aaff9cd91dc640ba85e263cb1ce46fae51cd",
+      "archiveBytes": 33064,
+      "comparedFiles": 25,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/semver/semver-1.0.28.crate"
+    },
+    {
+      "name": "serde-untagged",
+      "version": "0.1.9",
+      "archiveSha256": "f9faf48a4a2d2693be24c6289dbe26552776eb7737074e6722891fadbe6c5058",
+      "archiveBytes": 17718,
+      "comparedFiles": 18,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/serde-untagged/serde-untagged-0.1.9.crate"
+    },
+    {
+      "name": "serde",
+      "version": "1.0.229",
+      "archiveSha256": "4148590afebada386688f18773da617792bf2ef03ffc1e4cbd2b1d45b023e0ba",
+      "archiveBytes": 83669,
+      "comparedFiles": 33,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/serde/serde-1.0.229.crate"
+    },
+    {
+      "name": "serde_core",
+      "version": "1.0.229",
+      "archiveSha256": "67dca2c9c51e58a4791a4b1ed58308b39c64224d349a935ab5039aa360942a48",
+      "archiveBytes": 63100,
+      "comparedFiles": 27,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/serde_core/serde_core-1.0.229.crate"
+    },
+    {
+      "name": "serde_json",
+      "version": "1.0.151",
+      "archiveSha256": "c841b55ecdae098c80dcae9cf767f6f8a0c2cdb3416bbef72181df4d0fe73f14",
+      "archiveBytes": 156556,
+      "comparedFiles": 89,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/serde_json/serde_json-1.0.151.crate"
+    },
+    {
+      "name": "serde_spanned",
+      "version": "1.1.1",
+      "archiveSha256": "6662b5879511e06e8999a8a235d848113e942c9124f211511b16466ee2995f26",
+      "archiveBytes": 11025,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/serde_spanned/serde_spanned-1.1.1.crate"
+    },
+    {
+      "name": "serde_with",
+      "version": "3.22.0",
+      "archiveSha256": "ee78f1fbe43ac4a0e47aadb3dbd357b69eb0d3793e948624cd03dd2750ab1c0a",
+      "archiveBytes": 211486,
+      "comparedFiles": 169,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/serde_with/serde_with-3.22.0.crate"
+    },
+    {
+      "name": "serde_yaml_ng",
+      "version": "0.10.0",
+      "archiveSha256": "7b4db627b98b36d4203a7b458cf3573730f2bb591b28871d916dfa9efabfd41f",
+      "archiveBytes": 63772,
+      "comparedFiles": 35,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/serde_yaml_ng/serde_yaml_ng-0.10.0.crate"
+    },
+    {
+      "name": "serialize-to-javascript",
+      "version": "0.1.2",
+      "archiveSha256": "04f3666a07a197cdb77cdf306c32be9b7f598d7060d50cfd4d5aa04bfd92f6c5",
+      "archiveBytes": 9958,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/serialize-to-javascript/serialize-to-javascript-0.1.2.crate"
+    },
+    {
+      "name": "sha2",
+      "version": "0.10.9",
+      "archiveSha256": "a7507d819769d01a365ab707794a4084392c824f54a7a6a7862f8c3d0892b283",
+      "archiveBytes": 29271,
+      "comparedFiles": 31,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/sha2/sha2-0.10.9.crate"
+    },
+    {
+      "name": "sharded-slab",
+      "version": "0.1.7",
+      "archiveSha256": "f40ca3c46823713e0d4209592e8d6e826aa57e928f09752619fc696c499637f6",
+      "archiveBytes": 58227,
+      "comparedFiles": 37,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/sharded-slab/sharded-slab-0.1.7.crate"
+    },
+    {
+      "name": "simd-adler32",
+      "version": "0.3.10",
+      "archiveSha256": "3a219298ac11a56ea9a6d2120044824d6f01aeb034955e7af7bc16858527deea",
+      "archiveBytes": 18760,
+      "comparedFiles": 22,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/simd-adler32/simd-adler32-0.3.10.crate"
+    },
+    {
+      "name": "siphasher",
+      "version": "1.0.3",
+      "archiveSha256": "8ee5873ec9cce0195efcb7a4e9507a04cd49aec9c83d0389df45b1ef7ba2e649",
+      "archiveBytes": 11643,
+      "comparedFiles": 15,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/siphasher/siphasher-1.0.3.crate"
+    },
+    {
+      "name": "smallvec",
+      "version": "1.16.0",
+      "archiveSha256": "b9be42f50aa861c555654aa3a37f52f4b1074bacf4e48fe0ef7fa584e80f1f0f",
+      "archiveBytes": 32647,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/smallvec/smallvec-1.16.0.crate"
+    },
+    {
+      "name": "socket2",
+      "version": "0.6.5",
+      "archiveSha256": "c3d1e2c7f27f8d4cb10542a02c49005dbd6e93095799d6f3be745fae9f8fedd4",
+      "archiveBytes": 60031,
+      "comparedFiles": 13,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/socket2/socket2-0.6.5.crate"
+    },
+    {
+      "name": "softbuffer",
+      "version": "0.4.8",
+      "archiveSha256": "aac18da81ebbf05109ab275b157c22a653bb3c12cf884450179942f81bcbf6c3",
+      "archiveBytes": 64637,
+      "comparedFiles": 30,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/softbuffer/softbuffer-0.4.8.crate"
+    },
+    {
+      "name": "stable_deref_trait",
+      "version": "1.2.1",
+      "archiveSha256": "6ce2be8dc25455e1f91df71bfa12ad37d7af1092ae736f3a6cd0e37bc7810596",
+      "archiveBytes": 8186,
+      "comparedFiles": 9,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/stable_deref_trait/stable_deref_trait-1.2.1.crate"
+    },
+    {
+      "name": "symlink",
+      "version": "0.1.0",
+      "archiveSha256": "a7973cce6668464ea31f176d85b13c7ab3bba2cb3b77a2ed26abd7801688010a",
+      "archiveBytes": 11943,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/symlink/symlink-0.1.0.crate"
+    },
+    {
+      "name": "tao",
+      "version": "0.35.3",
+      "archiveSha256": "d1c93047acf68669466a34690ac58cca7010bd1b201e1ec86f1fd0a75d3dd4a9",
+      "archiveBytes": 308672,
+      "comparedFiles": 119,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tao/tao-0.35.3.crate"
+    },
+    {
+      "name": "tauri-plugin-autostart",
+      "version": "2.5.1",
+      "archiveSha256": "459383cebc193cdd03d1ba4acc40f2c408a7abce419d64bdcd2d745bc2886f70",
+      "archiveBytes": 86145,
+      "comparedFiles": 24,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-plugin-autostart/tauri-plugin-autostart-2.5.1.crate"
+    },
+    {
+      "name": "tauri-plugin-dialog",
+      "version": "2.7.3",
+      "archiveSha256": "61854a36651aa48381e5e209f69a01273b77f3f9f91f0c430b1b98d33bd47229",
+      "archiveBytes": 67143,
+      "comparedFiles": 42,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-plugin-dialog/tauri-plugin-dialog-2.7.3.crate"
+    },
+    {
+      "name": "tauri-plugin-fs",
+      "version": "2.5.2",
+      "archiveSha256": "de22eef34fd78c0da050e748710edd50bf127e651d02ea1b2bfada1523cc5c51",
+      "archiveBytes": 83261,
+      "comparedFiles": 97,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-plugin-fs/tauri-plugin-fs-2.5.2.crate"
+    },
+    {
+      "name": "tauri-plugin-notification",
+      "version": "2.4.0",
+      "archiveSha256": "ad2fd40946aef810c4be9fd33a2d1b9b397cb79042b2d21c81a0a8f204354fd1",
+      "archiveBytes": 77191,
+      "comparedFiles": 63,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-plugin-notification/tauri-plugin-notification-2.4.0.crate"
+    },
+    {
+      "name": "tauri-plugin-single-instance",
+      "version": "2.4.4",
+      "archiveSha256": "5cd0cb5c412a5071b69bab6a6df1583cbb89460d4a83b6a24769b08d15b6b1e1",
+      "archiveBytes": 45218,
+      "comparedFiles": 15,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-plugin-single-instance/tauri-plugin-single-instance-2.4.4.crate"
+    },
+    {
+      "name": "tauri-plugin-window-state",
+      "version": "2.4.1",
+      "archiveSha256": "73736611e14142408d15353e21e3cca2f12a3cfb523ad0ce85999b6d2ef1a704",
+      "archiveBytes": 95023,
+      "comparedFiles": 25,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-plugin-window-state/tauri-plugin-window-state-2.4.1.crate"
+    },
+    {
+      "name": "tauri-runtime-wry",
+      "version": "2.11.4",
+      "archiveSha256": "4e6fac707727b7a2f48e4ded90976324267371073edbb415ffb73bb0458d203f",
+      "archiveBytes": 71152,
+      "comparedFiles": 22,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-runtime-wry/tauri-runtime-wry-2.11.4.crate"
+    },
+    {
+      "name": "tauri-runtime",
+      "version": "2.11.3",
+      "archiveSha256": "b0b4bc95aed361b0019067d189a1174a603d460d0f6c72606512d59fc9c12ec8",
+      "archiveBytes": 44311,
+      "comparedFiles": 13,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-runtime/tauri-runtime-2.11.3.crate"
+    },
+    {
+      "name": "tauri-utils",
+      "version": "2.9.3",
+      "archiveSha256": "3e176a18e67764923c4f1ce66f25ae4abe5f688384d5eb1a0fa6c77f3d90f887",
+      "archiveBytes": 150044,
+      "comparedFiles": 34,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-utils/tauri-utils-2.9.3.crate"
+    },
+    {
+      "name": "tauri-winrt-notification",
+      "version": "0.7.3",
+      "archiveSha256": "9ed071c670382e85fc2f48ae706492d8c338f4f89bf72520d32f8abfe880aade",
+      "archiveBytes": 47668,
+      "comparedFiles": 34,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri-winrt-notification/tauri-winrt-notification-0.7.3.crate"
+    },
+    {
+      "name": "tauri",
+      "version": "2.11.5",
+      "archiveSha256": "667b20e2726d572dea2de7370da16e188eb06008faf9a92fab7cdc46791190b5",
+      "archiveBytes": 297874,
+      "comparedFiles": 142,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tauri/tauri-2.11.5.crate"
+    },
+    {
+      "name": "thiserror",
+      "version": "1.0.69",
+      "archiveSha256": "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52",
+      "archiveBytes": 22198,
+      "comparedFiles": 91,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/thiserror/thiserror-1.0.69.crate"
+    },
+    {
+      "name": "thiserror",
+      "version": "2.0.20",
+      "archiveSha256": "ec86235f5fcc2a73650310756d2ac5b138a5780bbbdfae3eeccec992c435ba4f",
+      "archiveBytes": 28969,
+      "comparedFiles": 105,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/thiserror/thiserror-2.0.20.crate"
+    },
+    {
+      "name": "thread_local",
+      "version": "1.1.10",
+      "archiveSha256": "1ad99c4c6d32803332c548b1af0540b357b3f5fc0be8f6c6bfe8b2e6ae784070",
+      "archiveBytes": 16361,
+      "comparedFiles": 14,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/thread_local/thread_local-1.1.10.crate"
+    },
+    {
+      "name": "time-core",
+      "version": "0.1.9",
+      "archiveSha256": "9e1c906769ad99c88eaa54e728060edef082f8e358ff32030cb7c7d315e81109",
+      "archiveBytes": 10320,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/time-core/time-core-0.1.9.crate"
+    },
+    {
+      "name": "time",
+      "version": "0.3.55",
+      "archiveSha256": "cdb87b95ec50ddfa440816d227a17b2ccbdda963a316a727fda0fc4334f7d134",
+      "archiveBytes": 279955,
+      "comparedFiles": 178,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/time/time-0.3.55.crate"
+    },
+    {
+      "name": "tinystr",
+      "version": "0.8.4",
+      "archiveSha256": "b1e27c91459209c2986af3dcf603a5a74a4368754ce37414f59acc971167f643",
+      "archiveBytes": 25003,
+      "comparedFiles": 22,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tinystr/tinystr-0.8.4.crate"
+    },
+    {
+      "name": "tokio",
+      "version": "1.53.1",
+      "archiveSha256": "202caea871b69668250d242070849eb495be178ed697a3e98aebce5bc81a0bed",
+      "archiveBytes": 920101,
+      "comparedFiles": 563,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tokio/tokio-1.53.1.crate"
+    },
+    {
+      "name": "toml",
+      "version": "0.9.12+spec-1.1.0",
+      "archiveSha256": "cf92845e79fc2e2def6a5d828f0801e29a2f8acc037becc5ab08595c7d5e9863",
+      "archiveBytes": 56485,
+      "comparedFiles": 46,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/toml/toml-0.9.12+spec-1.1.0.crate"
+    },
+    {
+      "name": "toml",
+      "version": "1.1.5+spec-1.1.0",
+      "archiveSha256": "12c0ba9680044b4ce98d391a62094047eada0d64860b80166c39f4a6b5640785",
+      "archiveBytes": 55950,
+      "comparedFiles": 46,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/toml/toml-1.1.5+spec-1.1.0.crate"
+    },
+    {
+      "name": "toml_datetime",
+      "version": "0.7.5+spec-1.1.0",
+      "archiveSha256": "92e1cfed4a3038bc5a127e35a2d360f145e1f4b971b551a2ba5fd7aedf7e1347",
+      "archiveBytes": 17975,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/toml_datetime/toml_datetime-0.7.5+spec-1.1.0.crate"
+    },
+    {
+      "name": "toml_datetime",
+      "version": "1.1.1+spec-1.1.0",
+      "archiveSha256": "3165f65f62e28e0115a00b2ebdd37eb6f3b641855f9d636d3cd4103767159ad7",
+      "archiveBytes": 17982,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/toml_datetime/toml_datetime-1.1.1+spec-1.1.0.crate"
+    },
+    {
+      "name": "toml_parser",
+      "version": "1.1.3+spec-1.1.0",
+      "archiveSha256": "1d38ac1cf9b95face32296c0a3ede1fdc270627c9d9c02a7274dd6d960dc4d56",
+      "archiveBytes": 35888,
+      "comparedFiles": 22,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/toml_parser/toml_parser-1.1.3+spec-1.1.0.crate"
+    },
+    {
+      "name": "toml_writer",
+      "version": "1.1.2+spec-1.1.0",
+      "archiveSha256": "7d56353a2a665ad0f41a421187180aab746c8c325620617ad883a99a1cbe66d2",
+      "archiveBytes": 18968,
+      "comparedFiles": 13,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/toml_writer/toml_writer-1.1.2+spec-1.1.0.crate"
+    },
+    {
+      "name": "tracing-appender",
+      "version": "0.2.5",
+      "archiveSha256": "050686193eb999b4bb3bc2acfa891a13da00f79734704c4b8b4ef1a10b368a3c",
+      "archiveBytes": 30794,
+      "comparedFiles": 14,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tracing-appender/tracing-appender-0.2.5.crate"
+    },
+    {
+      "name": "tracing-core",
+      "version": "0.1.36",
+      "archiveSha256": "db97caf9d906fbde555dd62fa95ddba9eecfd14cb388e4f491a66d74cd5fb79a",
+      "archiveBytes": 63967,
+      "comparedFiles": 28,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tracing-core/tracing-core-0.1.36.crate"
+    },
+    {
+      "name": "tracing-log",
+      "version": "0.2.0",
+      "archiveSha256": "ee855f1f400bd0e5c02d150ae5de3840039a3f54b025156404e34c23c03f47c3",
+      "archiveBytes": 17561,
+      "comparedFiles": 12,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tracing-log/tracing-log-0.2.0.crate"
+    },
+    {
+      "name": "tracing-subscriber",
+      "version": "0.3.23",
+      "archiveSha256": "cb7f578e5945fb242538965c2d0b04418d38ec25c79d160cd279bf0731c8d319",
+      "archiveBytes": 213773,
+      "comparedFiles": 87,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tracing-subscriber/tracing-subscriber-0.3.23.crate"
+    },
+    {
+      "name": "tracing",
+      "version": "0.1.44",
+      "archiveSha256": "63e71662fa4b2a2c3a26f570f037eb95bb1f85397f3cd8076caed2f026a6d100",
+      "archiveBytes": 463135,
+      "comparedFiles": 93,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tracing/tracing-0.1.44.crate"
+    },
+    {
+      "name": "tray-icon",
+      "version": "0.24.2",
+      "archiveSha256": "045979e3f037cd18ad1cb2a419dfda133c5c29c9f3453370079f2255d46c257e",
+      "archiveBytes": 56900,
+      "comparedFiles": 21,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/tray-icon/tray-icon-0.24.2.crate"
+    },
+    {
+      "name": "ts-rs",
+      "version": "12.0.1",
+      "archiveSha256": "756050066659291d47a554a9f558125db17428b073c5ffce1daf5dcb0f7231d8",
+      "archiveBytes": 57231,
+      "comparedFiles": 89,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/ts-rs/ts-rs-12.0.1.crate"
+    },
+    {
+      "name": "typeid",
+      "version": "1.0.3",
+      "archiveSha256": "bc7d623258602320d5c55d1bc22793b57daff0ec7efc270ea7d55ce1d5f5471c",
+      "archiveBytes": 9006,
+      "comparedFiles": 13,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/typeid/typeid-1.0.3.crate"
+    },
+    {
+      "name": "typenum",
+      "version": "1.20.1",
+      "archiveSha256": "b6f5e870be6c3b371b77fe0ee0bafb859fa4964b4404c27de1d380043c4dda20",
+      "archiveBytes": 105479,
+      "comparedFiles": 26,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/typenum/typenum-1.20.1.crate"
+    },
+    {
+      "name": "unic-char-property",
+      "version": "0.9.0",
+      "archiveSha256": "a8c57a407d9b6fa02b4795eb81c5b6652060a15a7903ea981f3d723e6c0be221",
+      "archiveBytes": 6809,
+      "comparedFiles": 13,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/unic-char-property/unic-char-property-0.9.0.crate"
+    },
+    {
+      "name": "unic-char-range",
+      "version": "0.9.0",
+      "archiveSha256": "0398022d5f700414f6b899e10b8348231abf9173fa93144cbc1a43b9793c1fbc",
+      "archiveBytes": 7020,
+      "comparedFiles": 15,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/unic-char-range/unic-char-range-0.9.0.crate"
+    },
+    {
+      "name": "unic-common",
+      "version": "0.9.0",
+      "archiveSha256": "80d7ff825a6a654ee85a63e80f92f054f904f21e7d12da4e22f9834a4aaa35bc",
+      "archiveBytes": 2558,
+      "comparedFiles": 7,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/unic-common/unic-common-0.9.0.crate"
+    },
+    {
+      "name": "unic-ucd-ident",
+      "version": "0.9.0",
+      "archiveSha256": "e230a37c0381caa9219d67cf063aa3a375ffed5bf541a452db16e744bdab6987",
+      "archiveBytes": 16128,
+      "comparedFiles": 17,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/unic-ucd-ident/unic-ucd-ident-0.9.0.crate"
+    },
+    {
+      "name": "unic-ucd-version",
+      "version": "0.9.0",
+      "archiveSha256": "96bd2f2237fe450fcd0a1d2f5f4e91711124f7857ba2e964247776ebeeb7b0c4",
+      "archiveBytes": 2246,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/unic-ucd-version/unic-ucd-version-0.9.0.crate"
+    },
+    {
+      "name": "unicode-segmentation",
+      "version": "1.13.3",
+      "archiveSha256": "c6f5d3c3b1bf09027a88a6bc961fc00497d651009560b5463668dc81b0fa87a8",
+      "archiveBytes": 112325,
+      "comparedFiles": 19,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/unicode-segmentation/unicode-segmentation-1.13.3.crate"
+    },
+    {
+      "name": "unsafe-libyaml",
+      "version": "0.2.11",
+      "archiveSha256": "673aac59facbab8a9007c7f6108d11f63b603f7cabff99fabf650fea5c32b861",
+      "archiveBytes": 62101,
+      "comparedFiles": 32,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/unsafe-libyaml/unsafe-libyaml-0.2.11.crate"
+    },
+    {
+      "name": "url",
+      "version": "2.5.8",
+      "archiveSha256": "ff67a8a4397373c3ef660812acab3268222035010ab8680ec4215f38ba3d0eed",
+      "archiveBytes": 86512,
+      "comparedFiles": 19,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/url/url-2.5.8.crate"
+    },
+    {
+      "name": "urlpattern",
+      "version": "0.3.0",
+      "archiveSha256": "70acd30e3aa1450bc2eece896ce2ad0d178e9c079493819301573dae3c37ba6d",
+      "archiveBytes": 28180,
+      "comparedFiles": 19,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/urlpattern/urlpattern-0.3.0.crate"
+    },
+    {
+      "name": "utf8_iter",
+      "version": "1.0.4",
+      "archiveSha256": "b6c140620e7ffbb22c2dee59cafe6084a59b5ffc27a8859a5f0d494b5d52b6be",
+      "archiveBytes": 10437,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/utf8_iter/utf8_iter-1.0.4.crate"
+    },
+    {
+      "name": "uuid",
+      "version": "1.26.0",
+      "archiveSha256": "b5772d71c9be8a8a6ac2117d949c5b224c1b72241bb611d9a3012edcf8af7812",
+      "archiveBytes": 65190,
+      "comparedFiles": 30,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/uuid/uuid-1.26.0.crate"
+    },
+    {
+      "name": "walkdir",
+      "version": "2.5.0",
+      "archiveSha256": "29790946404f91d9c5d06f9874efddea1dc06c5efe94541a7d6863108e3a5e4b",
+      "archiveBytes": 23951,
+      "comparedFiles": 19,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/walkdir/walkdir-2.5.0.crate"
+    },
+    {
+      "name": "webview2-com-sys",
+      "version": "0.38.2",
+      "archiveSha256": "381336cfffd772377d291702245447a5251a2ffa5bad679c99e61bc48bacbf9c",
+      "archiveBytes": 5764987,
+      "comparedFiles": 19,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/webview2-com-sys/webview2-com-sys-0.38.2.crate"
+    },
+    {
+      "name": "webview2-com",
+      "version": "0.38.2",
+      "archiveSha256": "7130243a7a5b33c54a444e54842e6a9e133de08b5ad7b5861cd8ed9a6a5bc96a",
+      "archiveBytes": 19290,
+      "comparedFiles": 11,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/webview2-com/webview2-com-0.38.2.crate"
+    },
+    {
+      "name": "winapi-util",
+      "version": "0.1.11",
+      "archiveSha256": "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22",
+      "archiveBytes": 13368,
+      "comparedFiles": 17,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/winapi-util/winapi-util-0.1.11.crate"
+    },
+    {
+      "name": "winapi",
+      "version": "0.3.9",
+      "archiveSha256": "5c839a674fcd7a98952e593242ea400abe93992746761e38641405d28b00f419",
+      "archiveBytes": 1200382,
+      "comparedFiles": 411,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/winapi/winapi-0.3.9.crate"
+    },
+    {
+      "name": "window-vibrancy",
+      "version": "0.6.0",
+      "archiveSha256": "d9bec5a31f3f9362f2258fd0e9c9dd61a9ca432e7306cc78c444258f0dce9a9c",
+      "archiveBytes": 1407663,
+      "comparedFiles": 32,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/window-vibrancy/window-vibrancy-0.6.0.crate"
+    },
+    {
+      "name": "windows-collections",
+      "version": "0.2.0",
+      "archiveSha256": "3beeceb5e5cfd9eb1d76b381630e82c4241ccd0d27f1a39ed41b2760b255c5e8",
+      "archiveBytes": 13579,
+      "comparedFiles": 12,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-collections/windows-collections-0.2.0.crate"
+    },
+    {
+      "name": "windows-core",
+      "version": "0.61.2",
+      "archiveSha256": "c0fdd3ddb90610c7638aa2b3a3ab2904fb9e5cdbecc643ddb3647212781c4ae3",
+      "archiveBytes": 36771,
+      "comparedFiles": 41,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-core/windows-core-0.61.2.crate"
+    },
+    {
+      "name": "windows-future",
+      "version": "0.2.1",
+      "archiveSha256": "fc6a41e98427b19fe4b73c550f060b59fa592d7d686537eebf9385621bfbad8e",
+      "archiveBytes": 17532,
+      "comparedFiles": 15,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-future/windows-future-0.2.1.crate"
+    },
+    {
+      "name": "windows-link",
+      "version": "0.1.3",
+      "archiveSha256": "5e6ad25900d524eaabdbbb96d20b4311e1e7ae1699af4fb28c17ae66c80d798a",
+      "archiveBytes": 6154,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-link/windows-link-0.1.3.crate"
+    },
+    {
+      "name": "windows-link",
+      "version": "0.2.1",
+      "archiveSha256": "f0805222e57f7521d6a62e36fa9163bc891acd422f971defe97d64e70d0a4fe5",
+      "archiveBytes": 6133,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-link/windows-link-0.2.1.crate"
+    },
+    {
+      "name": "windows-numerics",
+      "version": "0.2.0",
+      "archiveSha256": "9150af68066c4c5c07ddc0ce30421554771e528bde427614c61038bc2c92c2b1",
+      "archiveBytes": 9686,
+      "comparedFiles": 14,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-numerics/windows-numerics-0.2.0.crate"
+    },
+    {
+      "name": "windows-result",
+      "version": "0.3.4",
+      "archiveSha256": "56f42bd332cc6c8eac5af113fc0c1fd6a8fd2aa08a0119358686e5160d0586c6",
+      "archiveBytes": 13418,
+      "comparedFiles": 16,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-result/windows-result-0.3.4.crate"
+    },
+    {
+      "name": "windows-strings",
+      "version": "0.4.2",
+      "archiveSha256": "56e6c93f3a0c3b36176cb1327a4958a0353d5d166c2a35cb268ace15e91d3b57",
+      "archiveBytes": 13983,
+      "comparedFiles": 21,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-strings/windows-strings-0.4.2.crate"
+    },
+    {
+      "name": "windows-sys",
+      "version": "0.59.0",
+      "archiveSha256": "1e38bc4d79ed67fd075bcc251a1c39b32a1776bbe92e5bef1f0bf1f8c531853b",
+      "archiveBytes": 2387323,
+      "comparedFiles": 252,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-sys/windows-sys-0.59.0.crate"
+    },
+    {
+      "name": "windows-sys",
+      "version": "0.60.2",
+      "archiveSha256": "f2f500e4d28234f72040990ec9d39e3a6b950f9f22d3dba18416c35882612bcb",
+      "archiveBytes": 2518479,
+      "comparedFiles": 257,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-sys/windows-sys-0.60.2.crate"
+    },
+    {
+      "name": "windows-sys",
+      "version": "0.61.2",
+      "archiveSha256": "ae137229bcbd6cdf0f7b80a31df61766145077ddf49416a728b02cb3921ff3fc",
+      "archiveBytes": 2517186,
+      "comparedFiles": 257,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-sys/windows-sys-0.61.2.crate"
+    },
+    {
+      "name": "windows-targets",
+      "version": "0.52.6",
+      "archiveSha256": "9b724f72796e036ab90c1021d4780d4d3d648aca59e491e6b98e725b84e99973",
+      "archiveBytes": 6403,
+      "comparedFiles": 7,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-targets/windows-targets-0.52.6.crate"
+    },
+    {
+      "name": "windows-targets",
+      "version": "0.53.5",
+      "archiveSha256": "4945f9f551b88e0d65f3db0bc25c33b8acea4d9e41163edf90dcd0b19f9069f3",
+      "archiveBytes": 7126,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-targets/windows-targets-0.53.5.crate"
+    },
+    {
+      "name": "windows-threading",
+      "version": "0.1.0",
+      "archiveSha256": "b66463ad2e0ea3bbf808b7f1d371311c80e115c0b71d60efc142cafbcfb057a6",
+      "archiveBytes": 9085,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-threading/windows-threading-0.1.0.crate"
+    },
+    {
+      "name": "windows-version",
+      "version": "0.1.7",
+      "archiveSha256": "e4060a1da109b9d0326b7262c8e12c84df67cc0dbc9e33cf49e01ccc2eb63631",
+      "archiveBytes": 7739,
+      "comparedFiles": 9,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows-version/windows-version-0.1.7.crate"
+    },
+    {
+      "name": "windows",
+      "version": "0.61.3",
+      "archiveSha256": "9babd3a767a4c1aef6900409f85f5d53ce2544ccdfaa86dad48c91782c6d6893",
+      "archiveBytes": 9372520,
+      "comparedFiles": 721,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows/windows-0.61.3.crate"
+    },
+    {
+      "name": "windows_x86_64_msvc",
+      "version": "0.52.6",
+      "archiveSha256": "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec",
+      "archiveBytes": 832564,
+      "comparedFiles": 8,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.52.6.crate"
+    },
+    {
+      "name": "windows_x86_64_msvc",
+      "version": "0.53.1",
+      "archiveSha256": "d6bbff5f0aada427a1e5a6da5f1f98158182f26556f345ac9e04d36d0ebed650",
+      "archiveBytes": 837950,
+      "comparedFiles": 10,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.53.1.crate"
+    },
+    {
+      "name": "winnow",
+      "version": "0.7.15",
+      "archiveSha256": "df79d97927682d2fd8adb29682d1140b343be4ac0f08fd68b7765d9c059d3945",
+      "archiveBytes": 187092,
+      "comparedFiles": 105,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/winnow/winnow-0.7.15.crate"
+    },
+    {
+      "name": "winnow",
+      "version": "1.0.4",
+      "archiveSha256": "23b97319f7b8343df12cc98938e5c3eb436064524c8d2b4e30a1d3a36eecdf81",
+      "archiveBytes": 188513,
+      "comparedFiles": 107,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/winnow/winnow-1.0.4.crate"
+    },
+    {
+      "name": "winreg",
+      "version": "0.10.1",
+      "archiveSha256": "80d0f4e272c85def139476380b12f9ac60926689dd2e01d4923222f40580869d",
+      "archiveBytes": 25725,
+      "comparedFiles": 28,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/winreg/winreg-0.10.1.crate"
+    },
+    {
+      "name": "writeable",
+      "version": "0.6.4",
+      "archiveSha256": "3ad82d2a33cdc9674dc7465672f271e096168fcdbe0f799d9e6db8c5892679dc",
+      "archiveBytes": 31222,
+      "comparedFiles": 21,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/writeable/writeable-0.6.4.crate"
+    },
+    {
+      "name": "wry",
+      "version": "0.55.1",
+      "archiveSha256": "186f9871daa55fd9c016578b810d149de58367113db7fb72b462d2323ce19514",
+      "archiveBytes": 205128,
+      "comparedFiles": 81,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/wry/wry-0.55.1.crate"
+    },
+    {
+      "name": "yoke",
+      "version": "0.8.3",
+      "archiveSha256": "709fe23a0424b6a435d82152b1bd3fdfb0833487d5fa90d05d42762a9891fef5",
+      "archiveBytes": 33132,
+      "comparedFiles": 18,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/yoke/yoke-0.8.3.crate"
+    },
+    {
+      "name": "zerocopy",
+      "version": "0.8.56",
+      "archiveSha256": "556764e583adb45a9f8d413c2a147fa7e8d821e48e12b14fd560b607998b75eb",
+      "archiveBytes": 284907,
+      "comparedFiles": 315,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/zerocopy/zerocopy-0.8.56.crate"
+    },
+    {
+      "name": "zerofrom",
+      "version": "0.1.8",
+      "archiveSha256": "0ec05a11813ea801ff6d75110ad09cd0824ddba17dfe17128ea0d5f68e6c5272",
+      "archiveBytes": 6156,
+      "comparedFiles": 9,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/zerofrom/zerofrom-0.1.8.crate"
+    },
+    {
+      "name": "zeroize",
+      "version": "1.9.0",
+      "archiveSha256": "e13c156562582aa81c60cb29407084cdb54c4164760106ab78e6c5b0858cf64e",
+      "archiveBytes": 24480,
+      "comparedFiles": 16,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/zeroize/zeroize-1.9.0.crate"
+    },
+    {
+      "name": "zerotrie",
+      "version": "0.2.5",
+      "archiveSha256": "4ea269c3bd32f0a32c321907a2ae912ba6f4649bb0fc764a15627e99a7095a3f",
+      "archiveBytes": 84204,
+      "comparedFiles": 39,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/zerotrie/zerotrie-0.2.5.crate"
+    },
+    {
+      "name": "zerovec",
+      "version": "0.11.8",
+      "archiveSha256": "bb0464e17806c1d976d5cba29399c7f08e516e279e2ba493f63123b5fca67dd8",
+      "archiveBytes": 130820,
+      "comparedFiles": 67,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/zerovec/zerovec-0.11.8.crate"
+    },
+    {
+      "name": "zmij",
+      "version": "1.0.23",
+      "archiveSha256": "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b",
+      "archiveBytes": 28612,
+      "comparedFiles": 17,
+      "differentFiles": [],
+      "sourceUrl": "https://static.crates.io/crates/zmij/zmij-1.0.23.crate"
+    }
+  ]
+}

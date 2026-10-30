@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
 use crate::domain::RetentionPolicy;
+use crate::owner_workspace::OwnerStoreState;
 
 /// One event-category count shown by the privacy screen.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
@@ -28,6 +29,11 @@ pub struct PrivacySummaryDto {
     pub data_path: String,
     pub database_path: String,
     pub retention: RetentionPolicy,
+    /// The separate owner-workspace store is included without exposing its
+    /// filesystem path. A failed owner store must not make healthy history
+    /// look empty or vice versa.
+    pub owner_store: OwnerStoreState,
+    pub owner_workspace_bytes: Option<u64>,
 }
 
 /// Result of a destructive operation. Counts are useful feedback, but no row

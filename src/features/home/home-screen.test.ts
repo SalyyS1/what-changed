@@ -1,10 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/svelte';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { empty, ready } from '../../lib/types/async-state';
 import { deriveGlobalHealth, type HomeSnapshot } from '../../lib/stores/home.svelte';
 import { investigation } from '../../lib/stores/investigation.svelte';
 import type { CollectorStatusDto } from '../../lib/tauri/bindings';
 import HomeScreen from './HomeScreen.svelte';
+import { router } from '../../lib/stores/router.svelte';
 import ProblemInput from './ProblemInput.svelte';
 
 const snapshot: HomeSnapshot = {
@@ -28,6 +29,20 @@ const snapshot: HomeSnapshot = {
 };
 
 describe('HomeScreen', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    globalThis.location.hash = '#/';
+  });
+
+  it('makes the owner workspace discoverable for AI-built apps', async () => {
+    const navigate = vi.spyOn(router, 'navigate').mockImplementation(() => {});
+    render(HomeScreen, { data: empty<HomeSnapshot>('What Changed started recording at 1:20 AM.') });
+
+    await fireEvent.click(screen.getByRole('button', { name: 'Open My apps' }));
+
+    expect(navigate).toHaveBeenCalledWith(expect.objectContaining({ id: 'owner-apps' }));
+  });
+
   it('renders the recording empty copy without adding generic filler', () => {
     render(HomeScreen, { data: empty<HomeSnapshot>('What Changed started recording at 1:20 AM.') });
 

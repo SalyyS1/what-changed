@@ -22,7 +22,7 @@ advanced one. Stack is fixed: Tauri 2 + Rust + Svelte 5 (runes) + TypeScript + V
 (dev only) + Tailwind 4 + Three.js + SQLite. No Electron, no Go, no second process, no
 account, no cloud, no telemetry, fully offline.
 
-Repo root (`$ROOT`) = `<repository-root>` — the folder name is misspelled upstream and
+Repo root (`$ROOT`) = `D:\Project\.WhatChage` — the folder name is misspelled upstream and
 **nothing in code or config may depend on it**; product = `What Changed`, binary =
 `WhatChanged.exe`, package = `what-changed`. Phases 01–03 are committed on `main`: the toolchain
 and scaffold, the design system and app shell, and the redaction chokepoint.
@@ -82,6 +82,25 @@ never worked around with elevation.
 | 25 | [Public v1 Readiness & Launch](./phase-25-public-v1-readiness-and-launch.md) | pending |
 
 ### Delivery checkpoint — 2026-10-27
+
+Latest bounded continuation: rebuilt workspace-repair installer silently
+reinstalled and its payload verified; native checkpoint/compare, diagnostics,
+category purge and map fallback were observed. Original data/startup metadata
+restoration completed and monitoring resumed. Source follow-up fixes System Map
+keyboard focus/scroll/Escape; that follow-up needs a new installed candidate.
+Canonical 10k query-plan shapes and actual page/complete checkpoint captures
+pass; full service parity remains open. P23's hosted-projection criterion is now
+verified; **317/369 phase checkboxes checked, 52 open**. No phase is newly
+completed. [Repaired candidate report](../reports/qa-261027-0619-repaired-installed-candidate.md)
+and [hosted wiki evidence](../reports/qa-261027-hosted-wiki-verification.md).
+
+Installed QA verified onboarding, the native watched-folder picker, baseline
+capture, file collection and bounded navigation. It exposed a workspace evidence
+selection defect; the source repair passes focused Rust integration tests and
+the ordinary frontend suite. The original profile and startup metadata were
+restored and monitoring resumed. The frozen installer predates this repair;
+rebuild and native retest continue. See
+[continuation evidence](../reports/qa-261027-0434-mvp-continuation.md).
 
 The owner approved the exact third-party source notice packet. Normal notices
 generation/check and a current-source NSIS build now pass after correcting Tauri

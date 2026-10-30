@@ -12,6 +12,7 @@ use std::sync::{Arc, Mutex};
 
 use serde::{Deserialize, Serialize};
 
+use super::data_lifecycle::{self, DataLifecycle};
 use super::event_bus::EventBus;
 use super::monitoring::Monitoring;
 use super::paths::AppPaths;
@@ -22,6 +23,7 @@ use crate::collectors::runtime::CollectorSupervisor;
 use crate::collectors::schedule::QueryBusy;
 use crate::dto::{AppStatusDto, SettingsDto, SettingsUpdateDto};
 use crate::error::{AppError, AppResult};
+use crate::owner_workspace::OwnerStore;
 use crate::storage::{settings_repository, Db, MaintenanceHandle};
 
 /// Unclean starts in a row that trigger safe mode.
@@ -112,6 +114,14 @@ pub trait TrayReflector: Send + Sync {
 pub struct AppState {
     /// Where the files are.
     pub paths: AppPaths,
+    /// Cross-store lifecycle barrier and durable purge journal.
+    pub data_lifecycle: Arc<DataLifecycle>,
+    /// Independent owner-workspace store. Its failure is surfaced in its own
+    /// status and never prevents legacy history from opening.
+    pub owner_store: Arc<OwnerStore>,
+    pub owner_portability: crate::owner_workspace::portability::cache::PortabilityReviewCache,
+    pub preview_runner: crate::preview_runner::PreviewRunner,
+    pub(crate) preview_retention: Mutex<Option<crate::preview_runner::CaptureRetention>>,
     /// The database, in whatever state it opened in.
     pub db: Arc<Db>,
     /// What the crash-loop guard found at startup.
@@ -127,6 +137,10 @@ pub struct AppState {
     /// Known-good checkpoint orchestration over the live collector workers.
     pub checkpoints: CheckpointService,
     checkpoint_automation: Mutex<Option<AutomaticCheckpointManager>>,
+    /// Keep the application sink when automation is paused for a purge.
+    checkpoint_sink: Mutex<Option<Arc<dyn crate::checkpoint::auto::CheckpointSavedSink>>>,
+    /// A failed purge can be retried without forgetting a detached watcher.
+    resume_after_purge: AtomicBool,
     /// Serializes settings persistence with the matching runtime transition.
     collector_config: Mutex<()>,
     /// The cap on the frontend's own error reporting.
@@ -140,7 +154,7 @@ pub struct AppState {
     /// The coalescing thread. Held so it runs for the life of the app.
     bus: Mutex<Option<EventBus>>,
     /// The retention schedule. Held so it runs for the life of the app.
-    _maintenance: MaintenanceHandle,
+    maintenance: Mutex<Option<MaintenanceHandle>>,
 }
 
 impl AppState {
@@ -158,13 +172,38 @@ impl AppState {
     /// catalog. Platform startup code injects activated factories here while
     /// tests can remain deterministic on every host.
     pub fn open_with_registry(paths: AppPaths, registry: CollectorRegistry) -> AppResult<AppState> {
+        // Recover a pending purge before either SQLite store is opened or
+        // migrated. This is intentionally the first storage action at boot.
+        let data_lifecycle = Arc::new(DataLifecycle::prepare(&paths)?);
+        let owner_store = Arc::new(OwnerStore::open(&paths.owner_workspace())?);
         let startup = StartupGuard::arm(&paths.startup_marker)?;
         let db = Arc::new(Db::open(&paths.db)?);
+        data_lifecycle.finish_startup(&db, &owner_store)?;
+        // The same exclusive guard is held during browser execution. A second
+        // app process cannot clean a live session owned by the first instance.
+        match DataLifecycle::runner_profile_guard(&paths.data) {
+            Ok(_guard) => {
+                for result in [
+                    DataLifecycle::recover_runner_profiles(&paths.data),
+                    owner_store.reconcile_browser_runs(),
+                    crate::preview_runner::captures::expire(&paths.data),
+                ] {
+                    if let Err(error) = result {
+                        tracing::warn!(%error,"preview recovery remains incomplete");
+                    }
+                }
+            }
+            Err(error) => tracing::debug!(%error,"preview recovery is owned by another process"),
+        }
         let state = db.state();
         if !state.is_ready() {
             tracing::error!(?state, "the database did not open cleanly");
         }
         let maintenance = MaintenanceHandle::spawn(Arc::clone(&db));
+        let preview_retention = crate::preview_runner::CaptureRetention::start(
+            paths.data.clone(),
+            Arc::clone(&data_lifecycle),
+        )?;
         let (mut enabled, monitoring_profile, onboarding_completed) = match db
             .read(crate::storage::settings_repository::load)
         {
@@ -202,6 +241,11 @@ impl AppState {
         let checkpoints = CheckpointService::new(Arc::clone(&db), collectors.capture_handle());
         Ok(AppState {
             paths,
+            data_lifecycle,
+            owner_store,
+            owner_portability: Default::default(),
+            preview_runner: Default::default(),
+            preview_retention: Mutex::new(Some(preview_retention)),
             db,
             startup,
             monitoring,
@@ -210,12 +254,14 @@ impl AppState {
             collectors,
             checkpoints,
             checkpoint_automation: Mutex::new(None),
+            checkpoint_sink: Mutex::new(None),
+            resume_after_purge: AtomicBool::new(false),
             collector_config: Mutex::new(()),
             ui_errors: RateLimiter::default(),
             tray: Mutex::new(None),
             shutdown_recorded: AtomicBool::new(false),
             bus: Mutex::new(None),
-            _maintenance: maintenance,
+            maintenance: Mutex::new(Some(maintenance)),
         })
     }
 
@@ -240,6 +286,7 @@ impl AppState {
         &self,
         saved_sink: Arc<dyn crate::checkpoint::auto::CheckpointSavedSink>,
     ) -> AppResult<()> {
+        *lock(&self.checkpoint_sink) = Some(Arc::clone(&saved_sink));
         let mut slot = lock(&self.checkpoint_automation);
         if slot.is_some() {
             return Ok(());
@@ -257,6 +304,44 @@ impl AppState {
 
     pub fn stop_checkpoint_automation(&self) {
         drop(lock(&self.checkpoint_automation).take());
+    }
+
+    /// Drop joins the maintenance worker before either store can be replaced.
+    pub(crate) fn stop_maintenance(&self) {
+        drop(lock(&self.maintenance).take());
+    }
+
+    pub(crate) fn stop_resume_monitor(&self) -> bool {
+        let monitor = lock(&self.resume_monitor).take();
+        let existed = monitor.is_some();
+        drop(monitor);
+        existed
+    }
+
+    fn resume_after_successful_purge(&self) -> AppResult<()> {
+        self.checkpoints.resume_admission()?;
+        let saved_sink = lock(&self.checkpoint_sink).clone();
+        if let Some(saved_sink) = saved_sink {
+            if let Err(error) = self.start_checkpoint_automation(saved_sink) {
+                // Scheduling and the platform watcher are best-effort at normal
+                // startup as well. Manual checkpoints remain usable on failure.
+                tracing::warn!(%error, "automatic checkpoints could not restart after deletion");
+            }
+        }
+        let mut maintenance = lock(&self.maintenance);
+        if maintenance.is_none() {
+            *maintenance = Some(MaintenanceHandle::spawn(Arc::clone(&self.db)));
+        }
+        drop(maintenance);
+        if self.resume_after_purge.swap(false, Ordering::AcqRel) {
+            match crate::platform::start_resume_monitor(self.collectors.resume_wake_handle()) {
+                Ok(monitor) => self.attach_resume_monitor(monitor),
+                Err(error) => {
+                    tracing::warn!(%error, "resume watcher could not restart after deletion")
+                }
+            }
+        }
+        self.data_lifecycle.reopen_global()
     }
 
     /// Whether a tray icon exists to reach the window from.
@@ -359,6 +444,46 @@ impl AppState {
     pub fn shutdown_cleanly(&self) {
         super::lifecycle::shutdown(self);
     }
+
+    /// Purge both application stores under one durable journal. The caller has
+    /// already captured the legacy counts and appearance preferences so this
+    /// method does not expose legacy DTOs from the lifecycle layer.
+    pub fn purge_all_stores(
+        &self,
+        preserved_theme: &str,
+        preserved_visualization: &str,
+    ) -> AppResult<()> {
+        self.preview_runner.stop_all();
+        let _operation = self.data_lifecycle.lock_operation();
+        data_lifecycle::purge_stores(
+            &self.data_lifecycle,
+            &self.paths,
+            &self.db,
+            &self.owner_store,
+            || {
+                self.checkpoints.pause_admission();
+                self.stop_maintenance();
+                if self.stop_resume_monitor() {
+                    self.resume_after_purge.store(true, Ordering::Release);
+                }
+                self.stop_checkpoint_automation();
+                // Command workers may have persisted settings immediately
+                // before the write fence closed. Drain their runtime updates
+                // before disabling collectors, so none can re-enable an old
+                // in-memory instance behind the reset.
+                self.data_lifecycle.wait_for_idle()?;
+                self.owner_portability.clear();
+                self.reset_collectors_after_history_purge()?;
+                self.checkpoints.wait_for_idle();
+                Ok(())
+            },
+            preserved_theme,
+            preserved_visualization,
+        )?;
+        // Collector worker threads survive. Fresh onboarding can enable them;
+        // terminal stop_all is reserved for actual application shutdown.
+        self.resume_after_successful_purge()
+    }
 }
 
 /// Lock, recovering the value if a holder panicked. A poisoned tray handle is
@@ -416,6 +541,105 @@ mod tests {
             serde_json::from_str(&fs::read_to_string(&state.paths.startup_marker).unwrap())
                 .unwrap();
         assert_eq!(marker.unclean_starts, 0);
+    }
+
+    #[test]
+    fn full_purge_restarts_maintenance_and_checkpoint_admission_for_fresh_onboarding() {
+        struct SavedSink;
+        impl crate::checkpoint::auto::CheckpointSavedSink for SavedSink {
+            fn checkpoint_saved(&self, _: i64) {}
+        }
+        let dir = crate::testing::temp_dir("app-state-purge-resume");
+        let state = AppState::open(AppPaths::under(&dir)).unwrap();
+        state
+            .update_collector_settings(SettingsUpdateDto {
+                theme: Some(crate::domain::Theme::Dark),
+                visualization: Some(crate::domain::VisualizationMode::TwoD),
+                onboarding_completed: Some(true),
+                ..Default::default()
+            })
+            .unwrap();
+        state.collectors.set_enabled("process", true).unwrap();
+        state
+            .checkpoints
+            .create(
+                Some("Before purge".into()),
+                crate::domain::CheckpointKind::Manual,
+                None,
+                |_| {},
+            )
+            .unwrap();
+        state
+            .start_checkpoint_automation(Arc::new(SavedSink))
+            .unwrap();
+
+        state.purge_all_stores("\"dark\"", "\"2d\"").unwrap();
+        assert!(!state.data_lifecycle.is_closed());
+        assert!(lock(&state.maintenance).is_some());
+        assert!(lock(&state.checkpoint_automation).is_some());
+        assert!(lock(&state.checkpoint_sink).is_some());
+        assert!(state
+            .collectors
+            .list_collector_status()
+            .iter()
+            .all(|row| !row.enabled));
+        let settings = state.settings().unwrap();
+        assert!(!settings.onboarding_completed);
+        assert_eq!(settings.theme, crate::domain::Theme::Dark);
+        assert_eq!(
+            settings.visualization,
+            crate::domain::VisualizationMode::TwoD
+        );
+        state.stop_checkpoint_automation();
+        state
+            .checkpoints
+            .create(
+                Some("After purge".into()),
+                crate::domain::CheckpointKind::Manual,
+                None,
+                |_| {},
+            )
+            .unwrap();
+        state
+            .update_collector_settings(SettingsUpdateDto {
+                onboarding_completed: Some(true),
+                collectors: Some(std::collections::BTreeMap::from([(
+                    "process".to_owned(),
+                    true,
+                )])),
+                ..Default::default()
+            })
+            .unwrap();
+        assert!(
+            state
+                .collectors
+                .list_collector_status()
+                .iter()
+                .find(|row| row.id == "process")
+                .unwrap()
+                .enabled
+        );
+        state.shutdown_cleanly();
+    }
+
+    #[test]
+    fn shutdown_joins_owned_background_handles_without_creating_purge_intent() {
+        struct ResumeWatcher(Arc<AtomicBool>);
+        impl Drop for ResumeWatcher {
+            fn drop(&mut self) {
+                self.0.store(true, Ordering::Release);
+            }
+        }
+        let dir = crate::testing::temp_dir("app-state-worker-shutdown");
+        let state = AppState::open(AppPaths::under(&dir)).unwrap();
+        let dropped = Arc::new(AtomicBool::new(false));
+        state.attach_resume_monitor(Box::new(ResumeWatcher(Arc::clone(&dropped))));
+        state.shutdown_cleanly();
+        assert!(dropped.load(Ordering::Acquire));
+        assert!(lock(&state.maintenance).is_none());
+        assert!(lock(&state.resume_monitor).is_none());
+        assert!(state.data_lifecycle.is_closed());
+        assert!(!state.paths.purge_journal().exists());
     }
 
     #[test]

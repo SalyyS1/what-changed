@@ -3,21 +3,21 @@
 //! This is intentionally ignored: it opens a seeded database and inspects the
 //! actual SQLite plan, rather than pretending a unit test can predict a plan
 //! after an index or SQLite upgrade.
-//! It covers representative access paths, not full §61 parity: this test still
-//! uses the legacy 10k profile, and most private SQL is copied from production
-//! (with narrower projections), so corpus and SQL drift remain possible.
+//! It uses the canonical streamed 10k corpus and its owned cleanup guard.
+//! Most private SQL is still copied from production (with narrower projections),
+//! so this remains representative access-path evidence, not full §61 SQL parity.
 
 #![cfg(feature = "devtools")]
 #![allow(clippy::expect_used, clippy::panic, clippy::unwrap_used)]
 
 use rusqlite::ToSql;
-use serde_json::json;
-use what_changed_lib::checkpoint::prepare_capture;
-use what_changed_lib::domain::{CheckpointItem, CheckpointKind, EventQuery};
-use what_changed_lib::privacy::Sanitizer;
+use what_changed_lib::domain::EventQuery;
 use what_changed_lib::storage::search_index::match_expression;
-use what_changed_lib::storage::{checkpoint_repository, event_repository, Db};
-use what_changed_lib::testing::{synthetic, temp_dir};
+use what_changed_lib::storage::{event_repository, Db};
+
+#[path = "support/perf_fixture.rs"]
+mod perf_fixture;
+use perf_fixture::PerfFixture;
 
 // These are the private production predicates/orderings, copied from the
 // repository modules. `explain_page_plan` below uses production SQL directly.
@@ -199,58 +199,25 @@ fn indexed_events(db: &Db, label: &str, sql: &str, params: &[&dyn ToSql]) {
     assert_no_bare_events_scan(label, &details);
 }
 
-fn checkpoint_pair(db: &Db, to: i64) -> (i64, i64) {
-    let persist = |name: &str, at: i64| {
-        let items = (0..3_000)
-            .map(|index| CheckpointItem {
-                collector_id: "services".to_owned(),
-                entity_kind: "service".to_owned(),
-                entity_external_id: format!("service-{index}"),
-                entity_name: Some(format!("Service {index}")),
-                state: json!({ "state": "running", "process_id": index }),
-            })
-            .collect();
-        let (capture, _) = prepare_capture(
-            Some(name.to_owned()),
-            CheckpointKind::Manual,
-            None,
-            at,
-            1,
-            vec!["services".to_owned()],
-            Vec::new(),
-            items,
-            &Sanitizer::new(),
-        );
-        db.write(move |conn| checkpoint_repository::create(conn, &capture))
-            .expect("persist plan checkpoint")
-            .id
-    };
-    (persist("Before", to - 5 * 60_000), persist("After", to))
-}
-
 #[test]
 #[ignore = "Phase 20 query-plan gate; run explicitly with --include-ignored"]
 fn all_eight_service_paths_have_inspectable_index_plans() {
-    let db = Db::open_in(&temp_dir("phase20-query-plan")).expect("open plan database");
-    let events = synthetic::profile(
-        synthetic::SyntheticProfile::TenThousand,
-        42,
-        1_800_000_000_000,
-    );
-    let from = events.first().expect("non-empty corpus").get().timestamp;
-    let to = events.last().expect("non-empty corpus").get().timestamp;
-    let investigation_from = events[events.len() - 5_000].get().timestamp;
-    let selected = events.last().expect("non-empty corpus").get();
+    let (fixture, corpus) = PerfFixture::new_seeded_db(10_000);
+    let db = fixture.db();
+    assert_eq!(corpus.payload_profile, "canonical");
+    let from = corpus.from;
+    let to = corpus.to;
+    let investigation_from = corpus.investigation_from;
+    let details_id = corpus.details_id;
+    let [left_checkpoint, right_checkpoint] = corpus.checkpoint_ids;
+    let selected = db
+        .read(|conn| event_repository::by_id(conn, details_id))
+        .expect("read canonical detail event")
+        .expect("canonical detail event exists")
+        .event;
     let entity_id = selected.entity_id.clone();
     let category = selected.category.as_str().to_owned();
     let event_type = selected.event_type.as_str().to_owned();
-    let mut last_batch_ids = Vec::new();
-    for batch in events.chunks(1_000) {
-        last_batch_ids = db.insert_events(batch.to_vec()).expect("insert plan batch");
-    }
-    db.flush().expect("flush plan database");
-    let details_id = *last_batch_ids.last().expect("persisted event id");
-    let (left_checkpoint, right_checkpoint) = checkpoint_pair(&db, to);
 
     // 1–2. Both pages use the production repository's SQL builder, including
     // the real ninth-page keyset cursor rather than a guessed OFFSET query.
@@ -288,17 +255,17 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     let from_day = from.div_euclid(day_ms) * day_ms;
     let to_day = to.div_euclid(day_ms) * day_ms;
     indexed_events(
-        &db,
+        db,
         "summary_left_edge",
         SUMMARY_EDGE_SQL,
         &[&from, &(from_day + day_ms)],
     );
-    indexed_events(&db, "summary_right_edge", SUMMARY_EDGE_SQL, &[&to_day, &to]);
-    let daily = explain(&db, SUMMARY_DAILY_SQL, &[&from_day, &to_day]);
+    indexed_events(db, "summary_right_edge", SUMMARY_EDGE_SQL, &[&to_day, &to]);
+    let daily = explain(db, SUMMARY_DAILY_SQL, &[&from_day, &to_day]);
     print_plan("summary_daily_aggregate", &daily);
     assert_searches("summary_daily_aggregate", &daily, "event_importance_daily");
     indexed_events(
-        &db,
+        db,
         "summary_top_important",
         "SELECT id FROM events WHERE timestamp >= ?1 AND timestamp <= ?2 \
          AND importance IN ('important', 'critical') \
@@ -308,7 +275,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     print_plan(
         "summary_latest_checkpoint_small_table",
         &explain(
-            &db,
+            db,
             "SELECT id, name, created_at FROM checkpoints \
              ORDER BY created_at DESC, id DESC LIMIT 1",
             &[],
@@ -324,7 +291,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     let limit = 50_i64;
     let rank = 3_i64;
     let search = explain(
-        &db,
+        db,
         BROAD_SEARCH_SQL,
         &[&bucket_expression, &numeric_port, &limit, &rank],
     );
@@ -338,7 +305,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     );
     assert_searches("search_events_fts_bucket", &search, "event_search_order");
     indexed_events(
-        &db,
+        db,
         "search_events_id_hydration",
         "SELECT id FROM events WHERE id IN (?1, ?2)",
         &[&details_id, &(details_id - 1)],
@@ -346,7 +313,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     print_plan(
         "search_checkpoint_labels_contains_like",
         &explain(
-            &db,
+            db,
             "SELECT id, name, created_at FROM checkpoints \
              WHERE name LIKE ?1 ESCAPE '\\' \
              ORDER BY created_at DESC, id DESC LIMIT ?2",
@@ -356,13 +323,13 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
 
     // 5. Details: rowid lookup, nearby entity match, and recurrence count.
     indexed_events(
-        &db,
+        db,
         "get_event_details_by_id",
         "SELECT * FROM events WHERE id = ?1",
         &[&details_id],
     );
     indexed_events(
-        &db,
+        db,
         "get_event_details_related",
         "SELECT id FROM events WHERE id != ?1 \
          AND timestamp >= ?2 AND timestamp <= ?3 AND entity_id IN (?4) \
@@ -376,7 +343,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
         ],
     );
     indexed_events(
-        &db,
+        db,
         "get_event_details_prior",
         "SELECT COUNT(*) FROM events WHERE entity_id = ?1 \
          AND timestamp >= ?2 AND timestamp < ?3 \
@@ -387,13 +354,13 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     // 6. Investigation: the inclusive count, 5k ranked window, boundary
     // probe and batched scalar recurrence count all start from indexed event ranges.
     indexed_events(
-        &db,
+        db,
         "start_investigation_window_count",
         "SELECT COUNT(*) FROM events WHERE timestamp >= ?1 AND timestamp <= ?2",
         &[&investigation_from, &to],
     );
     let ranked = explain(
-        &db,
+        db,
         INVESTIGATION_RANKED_SQL,
         &[&investigation_from, &to, &5_000_i64],
     );
@@ -408,14 +375,14 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
         assert_relationship_probe("start_investigation_ranked_5k", &ranked, index, column);
     }
     indexed_events(
-        &db,
+        db,
         "start_investigation_boundary",
         "SELECT * FROM events WHERE timestamp < ?1 \
          ORDER BY timestamp DESC, id DESC LIMIT ?2",
         &[&investigation_from, &200_i64],
     );
     indexed_events(
-        &db,
+        db,
         "start_investigation_boundary_context",
         "SELECT \
          (SELECT MIN(timestamp) FROM events), \
@@ -426,14 +393,33 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
          (SELECT id FROM events WHERE timestamp > ?2 ORDER BY timestamp, id LIMIT 1)",
         &[&investigation_from, &to],
     );
-    let samples = last_batch_ids
+    let recurrence_events = db
+        .read(|conn| {
+            let page = event_repository::page(
+                conn,
+                &EventQuery {
+                    from,
+                    to,
+                    limit: RECURRENCE_BATCH_SIZE as u16,
+                    ..EventQuery::default()
+                },
+            )?;
+            Ok(page
+                .items
+                .into_iter()
+                .map(|summary| {
+                    event_repository::by_id(conn, summary.id)
+                        .expect("read canonical recurrence event")
+                        .expect("canonical recurrence event exists")
+                })
+                .collect::<Vec<_>>())
+        })
+        .expect("load canonical recurrence sample through the repository");
+    let samples = recurrence_events
         .iter()
-        .rev()
-        .zip(events.iter().rev())
-        .take(RECURRENCE_BATCH_SIZE)
-        .map(|(id, event)| (*id, event.get()))
+        .map(|event| (event.id, &event.event))
         .collect::<Vec<_>>();
-    let recurrence = recurrence_batch_plan(&db, &samples);
+    let recurrence = recurrence_batch_plan(db, &samples);
     print_plan("start_investigation_recurrence_150", &recurrence);
     assert_no_bare_events_scan("start_investigation_recurrence_150", &recurrence);
     assert!(
@@ -461,7 +447,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     let sample_event_type = sample_event.event_type.as_str();
     let sample_since = sample_event.timestamp - 90 * 86_400_000_i64;
     let sorted_recurrence = explain(
-        &db,
+        db,
         "SELECT COUNT(*) FROM events WHERE entity_id = ?1 \
          AND category = ?2 AND event_type = ?3 \
          AND timestamp >= ?4 AND timestamp < ?5",
@@ -501,14 +487,14 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     print_plan(
         "start_investigation_entity_name_contains_like",
         &explain(
-            &db,
+            db,
             "SELECT id FROM entities WHERE LOWER(display_name) LIKE ?1 ESCAPE '\\' \
              ORDER BY last_seen DESC, id LIMIT ?2",
             &[&"%synthetic%", &100_i64],
         ),
     );
     let relationship_lookup = explain(
-        &db,
+        db,
         "WITH requested(id) AS (VALUES (?2)) \
          SELECT source_id, target_id, kind, event_id, recorded_at \
          FROM entity_relationships WHERE recorded_at <= ?1 \
@@ -547,7 +533,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     // when requested ids cover most known entities. It must use the temporal
     // index rather than a bare relationship scan or a temporary sort.
     let dense_relationship_lookup = explain(
-        &db,
+        db,
         "SELECT source_id, target_id, kind, event_id, recorded_at \
          FROM entity_relationships WHERE recorded_at <= ?1 \
          ORDER BY recorded_at, source_id, target_id",
@@ -580,7 +566,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     // reads plus an indexed, bounded event-id window. The 6k-item structural
     // diff is in-memory and has no SQLite plan to inspect.
     let checkpoint_lookup = explain(
-        &db,
+        db,
         "SELECT id FROM checkpoints WHERE id = ?1",
         &[&left_checkpoint],
     );
@@ -592,7 +578,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     );
     for id in [left_checkpoint, right_checkpoint] {
         let items = explain(
-            &db,
+            db,
             "SELECT collector_id, entity_kind, entity_external_id, entity_name, state_json \
              FROM snapshots WHERE checkpoint_id = ?1 \
              ORDER BY collector_id, entity_kind, entity_external_id",
@@ -602,7 +588,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
         assert_searches("compare_checkpoint_3k_items", &items, "snapshots");
     }
     indexed_events(
-        &db,
+        db,
         "compare_checkpoint_event_window",
         "SELECT id FROM events WHERE timestamp >= ?1 AND timestamp <= ?2 \
          ORDER BY timestamp, id LIMIT ?3",
@@ -612,7 +598,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     // 8. Privacy reads the compact, transactionally maintained category
     // projection. The screen must not rescan the growing events table.
     let privacy_categories = explain(
-        &db,
+        db,
         "SELECT category, event_count FROM event_category_counts ORDER BY category",
         &[],
     );
@@ -635,13 +621,13 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
         "privacy category projection scans events: {privacy_categories:?}"
     );
     indexed_events(
-        &db,
+        db,
         "get_privacy_summary_oldest",
         "SELECT MIN(timestamp) FROM events",
         &[],
     );
     let checkpoint_items = explain(
-        &db,
+        db,
         "SELECT COUNT(*) FROM snapshots WHERE checkpoint_id IS NOT NULL",
         &[],
     );
@@ -659,7 +645,7 @@ fn all_eight_service_paths_have_inspectable_index_plans() {
     ] {
         print_plan(
             &format!("get_privacy_summary_count_{table}"),
-            &explain(&db, &format!("SELECT COUNT(*) FROM {table}"), &[]),
+            &explain(db, &format!("SELECT COUNT(*) FROM {table}"), &[]),
         );
     }
 }

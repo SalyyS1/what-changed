@@ -5,8 +5,9 @@ import { navRoutes } from './routes';
 import { theme, THEME_STORAGE_KEY } from '../lib/design/theme.svelte';
 import { collectors } from '../lib/stores/collectors.svelte';
 import { monitoring } from '../lib/stores/monitoring.svelte';
-import { ready } from '../lib/types/async-state';
+import { failed, ready } from '../lib/types/async-state';
 import type { CollectorStatusDto } from '../lib/tauri/bindings';
+import { ownerWorkspace } from '../lib/stores/owner-workspace.svelte';
 
 /**
  * The shell's behavioural claims: every destination is reachable from the
@@ -59,11 +60,12 @@ describe('App shell', () => {
     expect(getByTestId('main').textContent?.trim()).not.toBe('');
   });
 
-  it('lists all seven destinations with the home route current', async () => {
+  it('lists My apps alongside the legacy destinations with Home current', async () => {
     const { getByTestId } = render(App);
     await settle();
     const links = within(getByTestId('sidebar')).getAllByRole('link');
-    expect(links).toHaveLength(7);
+    expect(links).toHaveLength(8);
+    expect(within(getByTestId('sidebar')).getByRole('link', { name: 'My apps' }).getAttribute('href')).toBe('#/apps');
     const current = links.filter((l) => l.getAttribute('aria-current') === 'page');
     expect(current).toHaveLength(1);
     expect(current[0]?.getAttribute('href')).toBe('#/');
@@ -82,6 +84,23 @@ describe('App shell', () => {
     expect(within(getByTestId('main')).getByRole('heading', { level: 1 }).textContent).toBe(
       'Settings',
     );
+  });
+
+  it('shows the owner database failure while legacy monitoring remains unresolved', async () => {
+    monitoring.resolved = false;
+    vi.spyOn(monitoring, 'attach').mockResolvedValue(() => {});
+    vi.spyOn(ownerWorkspace, 'loadApps').mockImplementation(async () => {
+      ownerWorkspace.apps = failed('The owner workspace database is unavailable.', () => {});
+    });
+    window.location.hash = '#/apps';
+    const { getByTestId } = render(App);
+    await settle();
+    const main = within(getByTestId('main'));
+    expect(main.getByRole('heading', { name: 'My apps', level: 1 })).toBeTruthy();
+    expect(main.getByText('The owner workspace database is unavailable.')).toBeTruthy();
+    expect(main.queryByText('Checking local history…')).toBeNull();
+    expect(monitoring.resolved).toBe(false);
+    monitoring.resolved = true;
   });
 
   it('jumps to a destination on Ctrl+N', async () => {

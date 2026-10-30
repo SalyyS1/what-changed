@@ -170,6 +170,19 @@ pub(crate) fn replace_database(
     // before swapping the live database; failure leaves the original DB in
     // place and the caller can retry safely.
     if paths.backups.exists() {
+        let backup_metadata = fs::symlink_metadata(&paths.backups).map_err(|source| {
+            crate::error::AppError::File {
+                operation: "inspect privacy purge backup directory",
+                path: paths.backups.clone(),
+                source,
+            }
+        })?;
+        if is_redirect(&backup_metadata) || !backup_metadata.is_dir() {
+            return Err(crate::error::AppError::Platform {
+                operation: "remove privacy purge backups",
+                reason: "the owned backup directory is redirected or not a directory".to_owned(),
+            });
+        }
         for entry in
             fs::read_dir(&paths.backups).map_err(|source| crate::error::AppError::Directory {
                 path: paths.backups.clone(),
@@ -182,7 +195,26 @@ pub(crate) fn replace_database(
                     source,
                 })?
                 .path();
-            if path.is_file() {
+            let owned = path
+                .file_name()
+                .and_then(|name| name.to_str())
+                .is_some_and(is_migration_backup);
+            if owned {
+                // Unknown files are not ours to remove, even when somebody
+                // placed them in the app's backup directory. Refuse redirects
+                // and unexpected directories instead of following them.
+                let metadata =
+                    fs::symlink_metadata(&path).map_err(|source| crate::error::AppError::File {
+                        operation: "inspect privacy purge backup",
+                        path: path.clone(),
+                        source,
+                    })?;
+                if is_redirect(&metadata) || !metadata.is_file() {
+                    return Err(crate::error::AppError::Platform {
+                        operation: "remove privacy purge backup",
+                        reason: "an owned backup is not a regular non-redirected file".to_owned(),
+                    });
+                }
                 fs::remove_file(&path).map_err(|source| crate::error::AppError::File {
                     operation: "remove privacy purge backup",
                     path,
@@ -197,8 +229,22 @@ pub(crate) fn replace_database(
         path: paths.database.clone(),
         source,
     })?;
-    for companion_path in [paths.wal(), paths.shm()] {
-        let _ = fs::remove_file(companion_path);
+    for companion_path in [
+        paths.wal(),
+        paths.shm(),
+        companion(&paths.database, "-journal"),
+    ] {
+        match fs::remove_file(&companion_path) {
+            Ok(()) => {}
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Err(source) => {
+                return Err(crate::error::AppError::File {
+                    operation: "remove old SQLite companion before privacy replacement",
+                    path: companion_path,
+                    source,
+                })
+            }
+        }
     }
     if let Err(source) = fs::rename(&fresh, &paths.database) {
         let _ = fs::rename(&old, &paths.database);
@@ -226,6 +272,32 @@ pub(crate) fn replace_database(
         source,
     })?;
     Ok(())
+}
+
+fn is_migration_backup(name: &str) -> bool {
+    let base = ["-wal", "-shm", "-journal"]
+        .into_iter()
+        .find_map(|suffix| name.strip_suffix(suffix))
+        .unwrap_or(name);
+    base.strip_prefix("events-pre-v")
+        .and_then(|tail| tail.strip_suffix(".db"))
+        .is_some_and(|version| {
+            !version.is_empty() && version.bytes().all(|byte| byte.is_ascii_digit())
+        })
+}
+
+fn is_redirect(metadata: &fs::Metadata) -> bool {
+    if metadata.file_type().is_symlink() {
+        return true;
+    }
+    #[cfg(windows)]
+    {
+        use std::os::windows::fs::MetadataExt;
+        if metadata.file_attributes() & 0x400 != 0 {
+            return true;
+        }
+    }
+    false
 }
 
 fn companion(database: &Path, suffix: &str) -> PathBuf {
@@ -399,5 +471,28 @@ mod tests {
             Ok(())
         })
         .unwrap();
+    }
+
+    #[test]
+    fn replacement_removes_only_named_migration_backups_and_companions() {
+        let dir = temp_dir("purge-exact-backups");
+        let db = Db::open_in(&dir).unwrap();
+        fs::create_dir_all(&db.paths().backups).unwrap();
+        let unrelated = db.paths().backups.join("user-export.db");
+        let old = db.paths().backups.join("events-pre-v14.db");
+        let old_wal = companion(&old, "-wal");
+        fs::write(&unrelated, b"keep").unwrap();
+        fs::write(&old, b"private").unwrap();
+        fs::write(&old_wal, b"private").unwrap();
+        db.replace_history("\"dark\"", "\"2d\"").unwrap();
+        assert_eq!(fs::read(&unrelated).unwrap(), b"keep");
+        assert!(!old.exists());
+        assert!(!old_wal.exists());
+        assert_eq!(
+            db.read(super::super::settings_repository::load)
+                .unwrap()
+                .theme,
+            crate::domain::Theme::Dark
+        );
     }
 }

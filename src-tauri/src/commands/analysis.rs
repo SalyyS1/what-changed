@@ -20,6 +20,7 @@ pub async fn start_investigation(
     state: State<'_, AppState>,
     request: InvestigationRequestDto,
 ) -> CommandResult<InvestigationDto> {
+    let admission = state.data_lifecycle.admit()?;
     let problem = validate::text("problem", &request.problem, validate::MAX_PROBLEM)?;
     if let Some(window) = &request.window {
         validate_window(window)?;
@@ -31,6 +32,7 @@ pub async fn start_investigation(
     let service = InvestigationService::new(Arc::clone(&state.db));
     let requested_window = request.window;
     let result = tauri::async_runtime::spawn_blocking(move || {
+        let _admission = admission;
         service.start_scoped(problem, requested_window, project_id)
     })
     .await
@@ -70,11 +72,15 @@ pub async fn delete_investigation(
     state: State<'_, AppState>,
     investigation_id: i64,
 ) -> CommandResult<()> {
+    let admission = state.data_lifecycle.admit()?;
     validate::in_range("investigation id", investigation_id, 1, i64::MAX)?;
     let service = InvestigationService::new(Arc::clone(&state.db));
-    tauri::async_runtime::spawn_blocking(move || service.delete(investigation_id))
-        .await
-        .map_err(|_| background_failed())??;
+    tauri::async_runtime::spawn_blocking(move || {
+        let _admission = admission;
+        service.delete(investigation_id)
+    })
+    .await
+    .map_err(|_| background_failed())??;
     Ok(())
 }
 
@@ -83,11 +89,15 @@ pub async fn analyze_window(
     state: State<'_, AppState>,
     window: InvestigationWindow,
 ) -> CommandResult<InvestigationDto> {
+    let admission = state.data_lifecycle.admit()?;
     validate_window(&window)?;
     let service = InvestigationService::new(Arc::clone(&state.db));
-    let result = tauri::async_runtime::spawn_blocking(move || service.analyze_window(window))
-        .await
-        .map_err(|_| background_failed())??;
+    let result = tauri::async_runtime::spawn_blocking(move || {
+        let _admission = admission;
+        service.analyze_window(window)
+    })
+    .await
+    .map_err(|_| background_failed())??;
     Ok(result.into())
 }
 

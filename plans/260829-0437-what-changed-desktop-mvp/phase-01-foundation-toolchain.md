@@ -80,7 +80,7 @@ layer — research §4.4). Tailwind 4 is wired via `@tailwindcss/vite`, not Post
 3. **Pin it — done.** `rust-toolchain.toml` pins `channel = "1.98.0"`,
    `targets = ["x86_64-pc-windows-msvc"]`, `components = ["rustfmt", "clippy"]` — the installed
    version, not a guessed one.
-4. **Pin MSVC — done, recorded as D-01.** Two installs found; 14.50.35717 at `<MSVC-install>` chosen,
+4. **Pin MSVC — done, recorded as D-01.** Two installs found; 14.50.35717 at `D:\Work\c++` chosen,
    the 2017-era 14.16 rejected. `PATH` resolves bare `link` to Git Bash / MSYS2 coreutils, but
    `rustc` locates `link.exe` through its own MSVC detection, so the hazard is inert — no absolute
    linker path is committed to `.cargo/config.toml`, because that would hard-code one machine's

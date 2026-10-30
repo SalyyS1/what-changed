@@ -9,8 +9,31 @@ the same literal. The old and new connection strings are not stored anywhere: no
 a diagnostics export, or a digest that could be attacked offline. Non-sensitive evidence such as ports,
 versions and service states can be retained because it is what makes a change explainable.
 
-Your history stays on this PC. There is no account, no sync, no telemetry, no crash reporting, and no
-network call at runtime.
+Your history stays on this PC. There is no product account, sync, telemetry or crash reporting.
+The recorder and offline workspace do not call a network service. An explicitly permitted
+preview session runs a separate browser against the local preview you select.
+
+## Owner workspace data (implementation in progress)
+
+The approved workspace stores app descriptions, confirmed behavior rules, change
+requests, preview configuration and candidate labels locally in a separate SQLite file.
+Recognized secrets in text pass through the existing sanitizer before persistence
+and idempotency hashing. Arbitrary user text is not guaranteed to be free of personal
+information. Review the exact Markdown preview before copying; copied text leaves
+application custody. Clipboard contents are never read automatically.
+
+The development runner retains named test observations and uses temporary browser
+profiles that may contain login/cache data. Screenshots require session opt-in,
+an explicit capture and individual review before seven-day retention; they can be
+listed and deleted. Portable memory exports exclude images and authentication.
+Text redaction does not sanitize pixels or browser databases. Clean-Windows and
+network-boundary acceptance remain open; remote targets are unavailable. See
+[owner architecture](docs/ownvero/architecture.md).
+
+Full deletion must clear both stores and their owned backups/quarantine/artifacts,
+with a durable intent resumed before database startup if interrupted. Category/folder
+deletions retain owner app memory. User-selected external exports and project source
+are outside app-owned deletion. Unencrypted deletion cannot promise secure erase.
 
 ## What is stored
 
@@ -211,9 +234,9 @@ The privacy screen is built to be checked, not believed:
   An explicitly initiated updater check is a separate future opt-in path and is unavailable until
   its signed HTTPS feed and public key are configured.
 
-If you want to confirm the no-network claim independently, open Resource Monitor and watch the application's
-row. The plan's own acceptance walkthrough requires exactly that: zero network bytes for the application over a
-ten-minute session.
+The recorder's acceptance walkthrough requires zero network bytes over a ten-minute session.
+Preview-enabled candidates additionally require separate disabled-runner and authorized-egress
+observations for the complete owned process tree. These observations are still open.
 
 ## The diagnostics export
 
@@ -228,12 +251,10 @@ same, so a user knows what they are sharing.
 ## Install-time network, once
 
 The Windows installer downloads the WebView2 bootstrapper if that runtime is missing. That is an
-**installation** step, disclosed in [README.md](README.md), and it is the only network activity associated with
-the product itself. (Building from source also fetches crates and NSIS packaging tooling — that is a developer
-concern, not something a user's installed copy ever does.) Once installed, the current application makes no
-background network calls, and no HTTP client is linked into its binary to make one with — which a release gate
-verifies mechanically, per [SECURITY.md](SECURITY.md). The opt-in updater scaffold is intentionally not wired
-to a feed yet.
+**installation** step, disclosed in [README.md](README.md). Building from source also fetches dependencies
+and packaging tooling. The Rust core has a dependency gate against HTTP clients, per
+[SECURITY.md](SECURITY.md); that check does not certify a separately authorized browser's network
+boundary. The opt-in updater scaffold is intentionally not wired to a feed yet.
 
 ## Notifications and the lock screen
 

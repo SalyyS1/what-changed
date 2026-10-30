@@ -71,3 +71,9 @@ plans/reports/captures/
 
 # Local QA scratch output (fixtures, exports, probes)
 .qa/
+# Packaged executables and browsers are generated locally; never Git source.
+/runner/bundle/
+/runner/bundle-stage-*/
+/runner/bundle-previous-*/
+# Raw browser-page evidence remains local; reviewed complete text is public.
+/legal/third-party/runner/chrome-151.0.7922.34/CHROME-CREDITS.html

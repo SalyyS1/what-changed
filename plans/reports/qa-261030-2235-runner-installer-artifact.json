@@ -1,0 +1,793 @@
+{
+  "schemaVersion": 1,
+  "inspectedAt": "2026-10-30T17:15:34.742Z",
+  "sourceCommit": "75dcb67c3ba9c6e8c6ad97e2166dd1626c44cb11",
+  "runId": "41091508412",
+  "artifactId": 12995563059,
+  "artifactName": "what-changed-owner-workspace-preview-10",
+  "installer": {
+    "name": "What Changed_0.1.0_x64-setup.exe",
+    "bytes": 175182373,
+    "sha256": "071a11aaa5d97af5378070a117eeb3597c73bac96d018046589f22cb555c83e1"
+  },
+  "productExecutable": {
+    "path": "WhatChanged.exe",
+    "bytes": 18817536,
+    "sha256": "31b703c0a9b65e5a10597ca318ef1a45de6a094eaf60325b1c1ce6f1dc55ed67",
+    "matchedEmbeddedInstallerPayload": true
+  },
+  "extractedFiles": 208,
+  "extractedBytes": 568713142,
+  "runtime": {
+    "bytes": 543580088,
+    "fileCount": 197,
+    "inventorySha256": "31629890ecec49637621c5a4a321085306ac4392cbd95619598a81c699c47299",
+    "nodeVersion": "v24.12.0",
+    "playwrightVersion": "1.62.1",
+    "chromiumRevision": "156.0.8078.47-1.1",
+    "browserExecutable": "browsers/chromium-156.0.8078.47-1.1/chrome.exe",
+    "checksumSource": "https://nodejs.org/dist/v24.12.0/SHASUMS256.txt"
+  },
+  "notices": [
+    {
+      "path": "THIRD_PARTY_NOTICES.txt",
+      "sha256": "78ae0f71406e83125a3e7625e714d393e3719837663f1a9f6410e4babe0686a0"
+    },
+    {
+      "path": "RUNNER_THIRD_PARTY_NOTICES.txt",
+      "sha256": "8ad9c7c28d00641f26af587959a1020e60749fd017a3d60945f4efcb53010d9a"
+    }
+  ],
+  "excludedSdkCompilerAbsent": true,
+  "sourceArchives": {
+    "count": 7,
+    "hashesAndMembersVerifiedBy": "hosted CI",
+    "locallyDownloaded": false,
+    "coDeliveredInOriginalArtifact": true
+  },
+  "installerExecuted": false,
+  "applicationExecuted": false,
+  "installedAcceptance": false,
+  "publicReleaseApproved": false,
+  "status": "PASS_BUILD_AND_NONEXECUTING_INSPECTION",
+  "primarySourceCommit": "d71eaf36e837257f894255a4898576a8e378699b",
+  "artifact": {
+    "id": 12995563059,
+    "name": "what-changed-owner-workspace-preview-10",
+    "bytes": 2227565645,
+    "apiReportedSha256": "1cd05d42d352e7bc40fd809dcb5fed01713abfc2ac9aacc03bae7edbf647178d",
+    "fullZipSha256RecomputedLocally": false,
+    "expiresAt": "2026-11-13T17:09:27Z",
+    "url": "https://github.com/SalyyS1/what-changed/actions/runs/41091508412/artifacts/12995563059"
+  },
+  "ci": {
+    "status": "completed",
+    "conclusion": "success",
+    "headSha": "75dcb67c3ba9c6e8c6ad97e2166dd1626c44cb11",
+    "url": "https://github.com/SalyyS1/what-changed/actions/runs/41091508412",
+    "createdAt": "2026-10-30T16:36:59Z",
+    "completedAt": "2026-10-30T17:09:51Z",
+    "jobs": [
+      {
+        "id": 124186294989,
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:37:03Z",
+            "completedAt": "2026-10-30T16:37:05Z"
+          },
+          {
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:37:05Z",
+            "completedAt": "2026-10-30T16:37:14Z"
+          },
+          {
+            "name": "Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:37:14Z",
+            "completedAt": "2026-10-30T16:37:16Z"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:37:16Z",
+            "completedAt": "2026-10-30T16:37:27Z"
+          },
+          {
+            "name": "Check frozen runner source and reviewed notices before downloads",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:37:27Z",
+            "completedAt": "2026-10-30T16:37:29Z"
+          },
+          {
+            "name": "Verify source archive auditor Python",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:37:29Z",
+            "completedAt": "2026-10-30T16:37:30Z"
+          },
+          {
+            "name": "Install exact Rust toolchain",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:37:30Z",
+            "completedAt": "2026-10-30T16:37:42Z"
+          },
+          {
+            "name": "Install locked frontend dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:37:42Z",
+            "completedAt": "2026-10-30T16:38:02Z"
+          },
+          {
+            "name": "Verify source contracts",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:38:02Z",
+            "completedAt": "2026-10-30T16:39:03Z"
+          },
+          {
+            "name": "Focused frontend integration",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:39:03Z",
+            "completedAt": "2026-10-30T16:39:25Z"
+          },
+          {
+            "name": "Prepare matching browser sources before redistribution",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:39:25Z",
+            "completedAt": "2026-10-30T16:43:26Z"
+          },
+          {
+            "name": "Native authority and generated contract",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:43:26Z",
+            "completedAt": "2026-10-30T16:49:37Z"
+          },
+          {
+            "name": "Prepare exact reviewed runtime bytes",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:49:37Z",
+            "completedAt": "2026-10-30T16:49:46Z"
+          },
+          {
+            "name": "Verify actual packaged inventory through native loader",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:49:46Z",
+            "completedAt": "2026-10-30T16:50:01Z"
+          },
+          {
+            "name": "Prepare reviewed desktop notices",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:50:01Z",
+            "completedAt": "2026-10-30T16:50:10Z"
+          },
+          {
+            "name": "Compile runner-enabled desktop before installer review",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T16:50:10Z",
+            "completedAt": "2026-10-30T17:03:50Z"
+          },
+          {
+            "name": "Require runtime notice approval before redistribution",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T17:03:50Z",
+            "completedAt": "2026-10-30T17:03:51Z"
+          },
+          {
+            "name": "Bundle unsigned runner-enabled installer",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T17:03:51Z",
+            "completedAt": "2026-10-30T17:08:12Z"
+          },
+          {
+            "name": "Verify notices and write artifact evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T17:08:12Z",
+            "completedAt": "2026-10-30T17:09:27Z"
+          },
+          {
+            "name": "Upload review artifact only",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T17:09:27Z",
+            "completedAt": "2026-10-30T17:09:46Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T17:09:46Z",
+            "completedAt": "2026-10-30T17:09:46Z"
+          },
+          {
+            "name": "Post Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T17:09:46Z",
+            "completedAt": "2026-10-30T17:09:46Z"
+          },
+          {
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T17:09:46Z",
+            "completedAt": "2026-10-30T17:09:48Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-10-30T17:09:48Z",
+            "completedAt": "2026-10-30T17:09:48Z"
+          }
+        ]
+      }
+    ]
+  },
+  "approval": {
+    "path": "release/runner-source-delta-approval.json",
+    "sha256": "4aacd57ec5bafe2ac0f5e0dadeceee33a29d3269506411447b64e041b385880d",
+    "inventorySha256": "31629890ecec49637621c5a4a321085306ac4392cbd95619598a81c699c47299",
+    "date": "2026-10-30",
+    "scope": "Exact owned runner policy.mjs source delta (+454 bytes; explicit port 0 rejected) and aggregate inventory approved for an unsigned QA build. All 186 third-party files, reviewed license/source texts, runtime versions and notice payload remain unchanged. This does not close native acceptance, G2, G3 or public-v1 publication.",
+    "publicationApproved": false
+  },
+  "signatures": [
+    {
+      "File": "What Changed_0.1.0_x64-setup.exe",
+      "Bytes": 175182373,
+      "Status": "NotSigned",
+      "FileVersion": "0.1.0",
+      "ProductName": "What Changed"
+    },
+    {
+      "File": "WhatChanged.exe",
+      "Bytes": 18817536,
+      "Status": "NotSigned",
+      "FileVersion": "0.1.0",
+      "ProductName": "What Changed"
+    }
+  ],
+  "transport": {
+    "selectedFiles": 10,
+    "selectedBytes": 181209434,
+    "downloadedFileHashesMatchedRootChecksumManifest": true,
+    "selectedPayloadFilesCoveredByRootChecksumManifest": 9,
+    "rootChecksumManifestIncludedInSelectedFiles": true,
+    "rangeReaderTests": {
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0
+    },
+    "fullZipDownloaded": false,
+    "sourceArchiveBytesDownloaded": false
+  },
+  "extractionPreflight": {
+    "runId": "41091508412",
+    "sourceCommit": "75dcb67c3ba9c6e8c6ad97e2166dd1626c44cb11",
+    "files": 208,
+    "listingEstimatedBytes": 568718778,
+    "unknownSizeMembersVerified": [
+      {
+        "path": "preview-runner\\src\\session-authority.mjs",
+        "bytes": 3091,
+        "sha256": "afcb9b879a4ccdb889275e6d368704148caae2e04f4be10bf4957ef933c42cd7",
+        "streamedFromVerifiedInstaller": true
+      }
+    ],
+    "excludedSdkCompilerAbsent": true,
+    "freeBytesBeforeExtraction": 1009950720,
+    "minimumRemainingBytes": 262144000,
+    "safetyReserveBytes": 33554432,
+    "fullExtractionAllowed": true,
+    "listingLimitation": "7-Zip NSIS listing may report BadCmd=13 and omit the final solid member size; listing is not installer-script execution evidence."
+  },
+  "measuredVsEstimatedExtractionDifference": 5636,
+  "remainingDiskBytesAfterInspection": 440377344,
+  "hostedSourceVerification": {
+    "schemaVersion": 1,
+    "descriptorSha256": "ecf9f37480515d689d2bebc7154b30f4d3743ba9099dee8c5bf19741eb24b6da",
+    "sourceMaterials": [
+      {
+        "name": "chromium-156.0.8078.47-lite.tar.xz",
+        "url": "https://storage.googleapis.com/chromium-browser-official/chromium-156.0.8078.47-lite.tar.xz?generation=1792539541153162",
+        "bytes": 2009127748,
+        "sha256": "28432028890ef70e1f2e9db880c500907ad1b04f5ae6b655a3f394b9f2eaa705",
+        "archiveEntryCount": 675530,
+        "matchedMembers": [
+          "chromium-156.0.8078.47/LICENSE",
+          "chromium-156.0.8078.47/DEPS",
+          "chromium-156.0.8078.47/BUILD.gn",
+          "chromium-156.0.8078.47/chrome/VERSION",
+          "chromium-156.0.8078.47/build/config/BUILDCONFIG.gn",
+          "chromium-156.0.8078.47/third_party/ffmpeg/BUILD.gn",
+          "chromium-156.0.8078.47/third_party/ffmpeg/ffmpeg_options.gni",
+          "chromium-156.0.8078.47/third_party/ffmpeg/COPYING.LGPLv2.1",
+          "chromium-156.0.8078.47/third_party/ffmpeg/CREDITS.chromium",
+          "chromium-156.0.8078.47/third_party/ffmpeg/libavcodec/avcodec.h",
+          "chromium-156.0.8078.47/third_party/ffmpeg/libavutil/avutil.h",
+          "chromium-156.0.8078.47/third_party/ffmpeg/chromium/config/Chrome/win/x64/config.h"
+        ]
+      },
+      {
+        "name": "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af.tar.gz",
+        "url": "https://codeload.github.com/ungoogled-software/ungoogled-chromium-windows/tar.gz/258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af",
+        "bytes": 415624,
+        "sha256": "1cdfcea2b5d914ef567302cb814927759b47b10d1893d2432313797591d93ddc",
+        "archiveEntryCount": 66,
+        "matchedMembers": [
+          "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/build.py",
+          "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/package.py",
+          "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/flags.windows.gn",
+          "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/downloads.ini",
+          "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/patches/series",
+          "ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af/LICENSE"
+        ]
+      },
+      {
+        "name": "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246.tar.gz",
+        "url": "https://codeload.github.com/ungoogled-software/ungoogled-chromium/tar.gz/0673f8701c94e5688c33ef8ce5e36602d311d246",
+        "bytes": 679725,
+        "sha256": "dd554b3d95abd7a2c55f9d78a37f3d2e9b59692d50ed016cb959d2ff148ce945",
+        "archiveEntryCount": 226,
+        "matchedMembers": [
+          "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/flags.gn",
+          "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/downloads.ini",
+          "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/utils/patches.py",
+          "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/patches/series",
+          "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/pruning.list",
+          "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/domain_regex.list",
+          "ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246/LICENSE"
+        ]
+      },
+      {
+        "name": "directx-headers-07b94cba474be6cdfd934febdbd0b21ca0524187.zip",
+        "url": "https://github.com/microsoft/DirectX-Headers/archive/07b94cba474be6cdfd934febdbd0b21ca0524187.zip",
+        "bytes": 551235,
+        "sha256": "0545f43a34ac447770cc988d8631de41e6987fc02cc3d2ae82d7fba979f5398d",
+        "archiveEntryCount": 96,
+        "matchedMembers": [
+          "DirectX-Headers-07b94cba474be6cdfd934febdbd0b21ca0524187/LICENSE",
+          "DirectX-Headers-07b94cba474be6cdfd934febdbd0b21ca0524187/include/directx/d3d12.h"
+        ]
+      },
+      {
+        "name": "webauthn-ef82c157125a0490e05f6ea82a7adb1b8e1bad08.zip",
+        "url": "https://github.com/microsoft/webauthn/archive/ef82c157125a0490e05f6ea82a7adb1b8e1bad08.zip",
+        "bytes": 22947,
+        "sha256": "f7a9c3c4fa7e6f557e8182d68db67cd9dad87d9f42fdb5adc39d0f2968e903ec",
+        "archiveEntryCount": 9,
+        "matchedMembers": [
+          "webauthn-ef82c157125a0490e05f6ea82a7adb1b8e1bad08/LICENSE",
+          "webauthn-ef82c157125a0490e05f6ea82a7adb1b8e1bad08/webauthn.h"
+        ]
+      },
+      {
+        "name": "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109.zip",
+        "url": "https://github.com/microsoft/multimedia-redirection/archive/8b1d8893d126547309f1bab8d8232418aa7c7109.zip",
+        "bytes": 39178,
+        "sha256": "d0451ade64f4a24ffbc0128683015f3e3bf40f02c90a4c4acef664e26088980f",
+        "archiveEntryCount": 19,
+        "matchedMembers": [
+          "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109/LICENSE",
+          "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109/api/Mmr.idl",
+          "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109/api/Mmr_h.h",
+          "multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109/api/Mmr_i.c"
+        ]
+      },
+      {
+        "name": "rust-windows-create-0.52.0.zip",
+        "url": "https://github.com/microsoft/windows-rs/archive/refs/tags/0.52.0.zip",
+        "bytes": 35516630,
+        "sha256": "96379ad8ab18901040f007a0fe27431edd7b16db5e3853d90f0f4ee9be5aa926",
+        "archiveEntryCount": 3482,
+        "matchedMembers": [
+          "windows-rs-0.52.0/Cargo.toml",
+          "windows-rs-0.52.0/crates/libs/windows/Cargo.toml",
+          "windows-rs-0.52.0/crates/libs/windows/src/lib.rs",
+          "windows-rs-0.52.0/crates/libs/windows/license-apache-2.0",
+          "windows-rs-0.52.0/crates/libs/windows/license-mit"
+        ]
+      }
+    ]
+  },
+  "sourceArchiveZipEntries": [
+    {
+      "name": "runtime-sources/chromium-156.0.8078.47-lite.tar.xz",
+      "flags": 8,
+      "method": 0,
+      "compressedBytes": 2009127748,
+      "bytes": 2009127748,
+      "localOffset": 5558037
+    },
+    {
+      "name": "runtime-sources/directx-headers-07b94cba474be6cdfd934febdbd0b21ca0524187.zip",
+      "flags": 8,
+      "method": 0,
+      "compressedBytes": 551235,
+      "bytes": 551235,
+      "localOffset": 2014685881
+    },
+    {
+      "name": "runtime-sources/multimedia-redirection-8b1d8893d126547309f1bab8d8232418aa7c7109.zip",
+      "flags": 8,
+      "method": 0,
+      "compressedBytes": 39178,
+      "bytes": 39178,
+      "localOffset": 2015237238
+    },
+    {
+      "name": "runtime-sources/rust-windows-create-0.52.0.zip",
+      "flags": 8,
+      "method": 0,
+      "compressedBytes": 35516630,
+      "bytes": 35516630,
+      "localOffset": 2015283506
+    },
+    {
+      "name": "runtime-sources/ungoogled-chromium-0673f8701c94e5688c33ef8ce5e36602d311d246.tar.gz",
+      "flags": 8,
+      "method": 0,
+      "compressedBytes": 679725,
+      "bytes": 679725,
+      "localOffset": 2050807047
+    },
+    {
+      "name": "runtime-sources/ungoogled-chromium-windows-258d663c6ee6dd3d4cfe2e05eb8e863627e3a5af.tar.gz",
+      "flags": 8,
+      "method": 0,
+      "compressedBytes": 415624,
+      "bytes": 415624,
+      "localOffset": 2051486900
+    },
+    {
+      "name": "runtime-sources/webauthn-ef82c157125a0490e05f6ea82a7adb1b8e1bad08.zip",
+      "flags": 8,
+      "method": 0,
+      "compressedBytes": 22947,
+      "bytes": 22947,
+      "localOffset": 2051902660
+    }
+  ],
+  "previousAttempts": [
+    {
+      "schemaVersion": 1,
+      "status": "FAIL",
+      "inspectedAt": "2026-10-30T16:25:20.414Z",
+      "sourceCommit": "f9ac3005e7428b51af0f2ca9907015b90576af26",
+      "primarySourceCommit": "112f95bc295bca62fbbfd619d21be7f31672d2ad",
+      "runId": "41086258362",
+      "ci": {
+        "status": "completed",
+        "conclusion": "failure",
+        "createdAt": "2026-10-30T16:02:40Z",
+        "updatedAt": "2026-10-30T16:16:47Z",
+        "url": "https://github.com/SalyyS1/what-changed/actions/runs/41086258362",
+        "jobs": [
+          {
+            "id": 124168095092,
+            "startedAt": "2026-10-30T16:02:45Z",
+            "completedAt": "2026-10-30T16:16:47Z",
+            "conclusion": "failure",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:02:46Z",
+                "completedAt": "2026-10-30T16:02:49Z"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:02:49Z",
+                "completedAt": "2026-10-30T16:03:13Z"
+              },
+              {
+                "name": "Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:03:13Z",
+                "completedAt": "2026-10-30T16:03:16Z"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:03:16Z",
+                "completedAt": "2026-10-30T16:03:27Z"
+              },
+              {
+                "name": "Check frozen runner source before downloads",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:03:27Z",
+                "completedAt": "2026-10-30T16:03:28Z"
+              },
+              {
+                "name": "Verify source archive auditor Python",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:03:28Z",
+                "completedAt": "2026-10-30T16:03:29Z"
+              },
+              {
+                "name": "Install exact Rust toolchain",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:03:29Z",
+                "completedAt": "2026-10-30T16:03:44Z"
+              },
+              {
+                "name": "Install locked frontend dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:03:44Z",
+                "completedAt": "2026-10-30T16:04:10Z"
+              },
+              {
+                "name": "Verify source contracts",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:04:10Z",
+                "completedAt": "2026-10-30T16:05:14Z"
+              },
+              {
+                "name": "Focused frontend integration",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:05:14Z",
+                "completedAt": "2026-10-30T16:05:34Z"
+              },
+              {
+                "name": "Prepare matching browser sources before redistribution",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:05:34Z",
+                "completedAt": "2026-10-30T16:09:47Z"
+              },
+              {
+                "name": "Native authority and generated contract",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:09:47Z",
+                "completedAt": "2026-10-30T16:16:07Z"
+              },
+              {
+                "name": "Prepare exact reviewed runtime bytes",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:16:07Z",
+                "completedAt": "2026-10-30T16:16:17Z"
+              },
+              {
+                "name": "Verify actual packaged inventory through native loader",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:16:17Z",
+                "completedAt": "2026-10-30T16:16:33Z"
+              },
+              {
+                "name": "Prepare reviewed desktop notices",
+                "status": "completed",
+                "conclusion": "failure",
+                "startedAt": "2026-10-30T16:16:33Z",
+                "completedAt": "2026-10-30T16:16:43Z"
+              },
+              {
+                "name": "Compile runner-enabled desktop before installer review",
+                "status": "completed",
+                "conclusion": "skipped",
+                "startedAt": "2026-10-30T16:16:43Z",
+                "completedAt": "2026-10-30T16:16:43Z"
+              },
+              {
+                "name": "Require runtime notice approval before redistribution",
+                "status": "completed",
+                "conclusion": "skipped",
+                "startedAt": "2026-10-30T16:16:43Z",
+                "completedAt": "2026-10-30T16:16:43Z"
+              },
+              {
+                "name": "Bundle unsigned runner-enabled installer",
+                "status": "completed",
+                "conclusion": "skipped",
+                "startedAt": "2026-10-30T16:16:43Z",
+                "completedAt": "2026-10-30T16:16:43Z"
+              },
+              {
+                "name": "Verify notices and write artifact evidence",
+                "status": "completed",
+                "conclusion": "skipped",
+                "startedAt": "2026-10-30T16:16:43Z",
+                "completedAt": "2026-10-30T16:16:43Z"
+              },
+              {
+                "name": "Upload review artifact only",
+                "status": "completed",
+                "conclusion": "skipped",
+                "startedAt": "2026-10-30T16:16:43Z",
+                "completedAt": "2026-10-30T16:16:43Z"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "skipped",
+                "startedAt": "2026-10-30T16:16:43Z",
+                "completedAt": "2026-10-30T16:16:43Z"
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6",
+                "status": "completed",
+                "conclusion": "skipped",
+                "startedAt": "2026-10-30T16:16:43Z",
+                "completedAt": "2026-10-30T16:16:43Z"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:16:43Z",
+                "completedAt": "2026-10-30T16:16:45Z"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "startedAt": "2026-10-30T16:16:45Z",
+                "completedAt": "2026-10-30T16:16:45Z"
+              }
+            ]
+          }
+        ]
+      },
+      "artifactCount": 0,
+      "artifact": null,
+      "installer": null,
+      "productExecutable": null,
+      "runtimeApproval": {
+        "path": "release/runner-source-delta-approval.json",
+        "inventorySha256": "31629890ecec49637621c5a4a321085306ac4392cbd95619598a81c699c47299",
+        "publicationApproved": false
+      },
+      "failure": {
+        "step": "Prepare reviewed desktop notices",
+        "message": "third-party notices blocked: license text hash does not match reviewed bytes: cargo:generic-array@0.14.7",
+        "licenseByteDiagnostic": {
+          "publicSource": "f9ac3005e7428b51af0f2ca9907015b90576af26",
+          "checkedEntries": 232,
+          "mismatches": [
+            {
+              "package": "cargo:generic-array@0.14.7",
+              "path": "legal/third-party/cargo/generic-array/0.14.7/LICENSE",
+              "expectedPublicSha256": "c09aae9d3c77b531f56351a9947bc7446511d6b025b3255312d3e3442a9a7583",
+              "publicActualSha256": "ad4fcfaf8d5b12b97409c137a03d4a4e4b21024c65c54f976cc3b609c1bd5b0f",
+              "publicBytes": 1087,
+              "lfNormalizedSha256": "ad4fcfaf8d5b12b97409c137a03d4a4e4b21024c65c54f976cc3b609c1bd5b0f",
+              "matchesReviewedAfterOnlyCrLfRemoval": false,
+              "primarySha256": "ad4fcfaf8d5b12b97409c137a03d4a4e4b21024c65c54f976cc3b609c1bd5b0f",
+              "primaryExpectedSha256": "c09aae9d3c77b531f56351a9947bc7446511d6b025b3255312d3e3442a9a7583",
+              "primaryBytes": 1087,
+              "crlfCount": 0,
+              "approvedPublicBaselineSha256": "c09aae9d3c77b531f56351a9947bc7446511d6b025b3255312d3e3442a9a7583",
+              "approvedPublicBaselineBytes": 1107,
+              "approvedPublicBaselineCrlfCount": 20,
+              "approvedPublicBaselineMatchesManifest": true,
+              "differenceOnlyCrlfRemoved": true
+            },
+            {
+              "package": "cargo:nu-ansi-term@0.50.3",
+              "path": "legal/third-party/cargo/nu-ansi-term/0.50.3/LICENSE",
+              "expectedPublicSha256": "284465860407420254e39be4e1bdcaaf2e7f2d18e06f9bab75bc75341a5d8501",
+              "publicActualSha256": "cfdb7491dfa8800a1d561957d6a072ad63a6305ffa48386d04eae8eac8d65e8a",
+              "publicBytes": 1135,
+              "lfNormalizedSha256": "cfdb7491dfa8800a1d561957d6a072ad63a6305ffa48386d04eae8eac8d65e8a",
+              "matchesReviewedAfterOnlyCrLfRemoval": false,
+              "primarySha256": "cfdb7491dfa8800a1d561957d6a072ad63a6305ffa48386d04eae8eac8d65e8a",
+              "primaryExpectedSha256": "284465860407420254e39be4e1bdcaaf2e7f2d18e06f9bab75bc75341a5d8501",
+              "primaryBytes": 1135,
+              "crlfCount": 0,
+              "approvedPublicBaselineSha256": "284465860407420254e39be4e1bdcaaf2e7f2d18e06f9bab75bc75341a5d8501",
+              "approvedPublicBaselineBytes": 1157,
+              "approvedPublicBaselineCrlfCount": 22,
+              "approvedPublicBaselineMatchesManifest": true,
+              "differenceOnlyCrlfRemoved": true
+            },
+            {
+              "package": "cargo:quick-xml@0.41.0",
+              "path": "legal/third-party/cargo/quick-xml/0.41.0/LICENSE-MIT.md",
+              "expectedPublicSha256": "5b2c207dcf571267ebe0bbdd5bf321f561ddc22ff597e7b363e96f4539507a29",
+              "publicActualSha256": "f0cf9b1c62bbe3bd3a69f5f79c7158f513f612b4940a0a812d1db39d605318bc",
+              "publicBytes": 1082,
+              "lfNormalizedSha256": "f0cf9b1c62bbe3bd3a69f5f79c7158f513f612b4940a0a812d1db39d605318bc",
+              "matchesReviewedAfterOnlyCrLfRemoval": false,
+              "primarySha256": "f0cf9b1c62bbe3bd3a69f5f79c7158f513f612b4940a0a812d1db39d605318bc",
+              "primaryExpectedSha256": "5b2c207dcf571267ebe0bbdd5bf321f561ddc22ff597e7b363e96f4539507a29",
+              "primaryBytes": 1082,
+              "crlfCount": 0,
+              "approvedPublicBaselineSha256": "5b2c207dcf571267ebe0bbdd5bf321f561ddc22ff597e7b363e96f4539507a29",
+              "approvedPublicBaselineBytes": 1105,
+              "approvedPublicBaselineCrlfCount": 23,
+              "approvedPublicBaselineMatchesManifest": true,
+              "differenceOnlyCrlfRemoved": true
+            }
+          ]
+        }
+      },
+      "transportPreparation": {
+        "rangeReaderTests": {
+          "pass": 5,
+          "fail": 0,
+          "skipped": 0
+        },
+        "artifactDownloaded": false,
+        "downloadedBytes": 0,
+        "freeDiskBytesBeforeInspection": 1197551616,
+        "privateHelpers": "New helpers only under .qa/qa-runtime-20261030; syntax checks passed; original helpers unchanged."
+      },
+      "installerExecuted": false,
+      "applicationExecuted": false,
+      "installedAcceptance": false,
+      "publicReleaseApproved": false,
+      "limits": [
+        "No installer or artifact was produced; artifact hashes and unsigned PE metadata do not exist for this attempt.",
+        "All seven corresponding-source archives were verified during the successful hosted preparation step but not uploaded because the later notice gate failed.",
+        "No source archive, installer download, extraction, native user-profile access or existing QA/backups alteration occurred."
+      ],
+      "remainingGates": [
+        "native_install_upgrade",
+        "privacy_purge_restore",
+        "runner_packaged_clean_windows",
+        "runner_disabled_no_outbound",
+        "runner_authorized_egress",
+        "runner_cancel_parent_crash",
+        "maps_accessibility_fallback",
+        "four_hour_soak",
+        "real_owner_repeat_use",
+        "G2",
+        "G3"
+      ]
+    }
+  ],
+  "limits": [
+    "Installer and application were not executed; extraction and PE metadata are nonexecuting evidence.",
+    "Complete ZIP digest is GitHub-reported; full ZIP was not downloaded or rehashed locally.",
+    "Seven source archives were validated by hosted CI; local checks verified co-delivery directory/size/checksum metadata and matching receipt/descriptor, not whole archive bytes.",
+    "NSIS listing reported BadCmd=13 and an unknown final solid-member size; that source member was streamed with an approved size/hash bound. Listing estimate is 5636 bytes above measured extraction.",
+    "Native clean Windows/install/upgrade/network/lifecycle/accessibility, four-hour soak, real-owner repeat use and G2/G3 remain open."
+  ],
+  "remainingGates": [
+    "native_install_upgrade",
+    "privacy_purge_restore",
+    "runner_packaged_clean_windows",
+    "runner_disabled_no_outbound",
+    "runner_authorized_egress",
+    "runner_cancel_parent_crash",
+    "maps_accessibility_fallback",
+    "four_hour_soak",
+    "real_owner_repeat_use",
+    "G2",
+    "G3"
+  ]
+}

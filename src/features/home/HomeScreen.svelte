@@ -4,6 +4,7 @@
   import StateShell from '../../components/state/StateShell.svelte';
   import Card from '../../components/ui/Card.svelte';
   import Chip from '../../components/ui/Chip.svelte';
+  import Button from '../../components/ui/Button.svelte';
   import { home, type HomeSnapshot } from '../../lib/stores/home.svelte';
   import { backendAvailable } from '../../lib/tauri/client';
   import type { AsyncState } from '../../lib/types/async-state';
@@ -16,6 +17,8 @@
   import WorkspacePicker from '../workspace/WorkspacePicker.svelte';
   import { projects } from '../../lib/stores/projects.svelte';
   import { investigation } from '../../lib/stores/investigation.svelte';
+  import { router } from '../../lib/stores/router.svelte';
+  import { routeById } from '../../app/routes';
 
   interface Props { data?: AsyncState<HomeSnapshot>; }
   let { data }: Props = $props();
@@ -47,6 +50,21 @@
   <RecoverySurface />
 {:else}
   <ScreenFrame title="Home">
+    <Card level={1} class="mb-4 border-accent/25 bg-accent/5">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="min-w-0">
+          <p class="text-caps text-accent">Building with AI?</p>
+          <h2 class="mt-1 text-base font-medium text-text-primary">Keep the intent with the app</h2>
+          <p class="mt-1 max-w-2xl text-sm leading-relaxed text-text-secondary">
+            Save what your app should do, the rules it must preserve, and the next change you want to make.
+            Your workspace stays local and can become a reviewed Markdown brief for your coding AI.
+          </p>
+        </div>
+        <Button variant="secondary" onclick={() => router.navigate(routeById('owner-apps')!)}>
+          Open My apps
+        </Button>
+      </div>
+    </Card>
     <Card level={1} class="mb-4">
       <ProblemInput />
       <div class="mt-3 flex flex-wrap items-center gap-2">

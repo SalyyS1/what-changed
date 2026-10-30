@@ -228,6 +228,24 @@ impl CheckpointService {
         self.activity.begin_shutdown();
     }
 
+    /// Reject new captures while a privacy generation is being replaced.
+    /// Unlike shutdown, this fence can reopen after deletion has completed.
+    pub fn pause_admission(&self) {
+        lock(&self.activity.state).paused = true;
+    }
+
+    pub fn resume_admission(&self) -> AppResult<()> {
+        let mut state = lock(&self.activity.state);
+        if state.closing {
+            return Err(AppError::InvalidInput {
+                what: "checkpoint creation",
+                reason: "the application is shutting down".to_owned(),
+            });
+        }
+        state.paused = false;
+        Ok(())
+    }
+
     /// Wait until all checkpoint creation callers (leaders and followers)
     /// have returned. New creation is rejected after `begin_shutdown`.
     pub fn wait_for_idle(&self) {
@@ -389,16 +407,18 @@ struct ServiceActivity {
 #[derive(Default)]
 struct ActivityState {
     closing: bool,
+    paused: bool,
     active: usize,
 }
 
 impl ServiceActivity {
     fn enter(self: &Arc<Self>) -> AppResult<ActivityGuard> {
         let mut state = lock(&self.state);
-        if state.closing {
+        if state.closing || state.paused {
             return Err(AppError::InvalidInput {
                 what: "checkpoint creation",
-                reason: "the application is shutting down".to_owned(),
+                reason: "checkpoint admission is paused or the application is shutting down"
+                    .to_owned(),
             });
         }
         state.active = state.active.saturating_add(1);
@@ -577,6 +597,35 @@ mod tests {
         drop(guard);
         waiter.join().expect("waiter exits");
         assert!(waited.load(std::sync::atomic::Ordering::Acquire));
+    }
+
+    #[test]
+    fn privacy_pause_is_reversible_but_shutdown_is_terminal() {
+        let db =
+            Arc::new(Db::open_in(&crate::testing::temp_dir("checkpoint-pause-admission")).unwrap());
+        let supervisor = crate::collectors::runtime::CollectorSupervisor::new(
+            crate::collectors::registry::CollectorRegistry::new(Vec::new()),
+            Arc::clone(&db),
+            Arc::new(crate::app::Monitoring::running()),
+            crate::collectors::schedule::QueryBusy::default(),
+            &std::collections::BTreeMap::new(),
+            crate::domain::MonitoringProfile::Balanced,
+        );
+        let service = CheckpointService::new(db, supervisor.capture_handle());
+        service.pause_admission();
+        assert!(service
+            .create(None, CheckpointKind::Manual, None, |_| {})
+            .is_err());
+        service.resume_admission().unwrap();
+        service
+            .create(None, CheckpointKind::Manual, None, |_| {})
+            .unwrap();
+        service.begin_shutdown();
+        assert!(service.resume_admission().is_err());
+        assert!(service
+            .create(None, CheckpointKind::Manual, None, |_| {})
+            .is_err());
+        supervisor.stop_all();
     }
 
     #[test]

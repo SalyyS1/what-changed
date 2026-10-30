@@ -1,6 +1,6 @@
 # Deployment guide
 
-**Evidence state: available reproducible procedure; installed release verification is a known limitation until the RC walk.**
+**Evidence state: available procedure; partial installed-candidate evidence does not close release verification.**
 
 This guide describes the reproducible local release path for What Changed. The
 repository is the source of truth; a hosted download is a projection of the
@@ -33,8 +33,9 @@ request elevation. The raw Tauri artifact is named
 `What Changed_<version>_x64-setup.exe`; the release script copies it to
 `dist-installer/WhatChanged-Setup-x64.exe` and writes SHA-256 values beside it.
 
-The app data directory is resolved through Tauri's `app_data_dir` and normally
-appears as `%APPDATA%\\dev.whatchanged.app\\`. Upgrading leaves that directory
+The app data directory owner is [`AppPaths::resolve`](../src-tauri/src/app/paths.rs),
+which uses `dirs::data_dir()` and normally resolves to `%APPDATA%\\dev.whatchanged.app\\`.
+Upgrading leaves that directory
 in place; migrations run on the next launch. Uninstall keeps it by default.
 The first release has no automatic or background update check. Settings contains an explicit opt-in
 scaffold, but the current build has no signed HTTPS feed or public key, so it reports that updates are
@@ -66,3 +67,84 @@ Use [release-audit.md](release-audit.md) for requirement evidence,
 and [public-v1-go-no-go.md](public-v1-go-no-go.md) for the final publication
 packet. Manual Windows checks must include the version, commit, viewport and
 whether the fixture data was synthetic.
+
+The [installed-candidate continuation](../plans/reports/qa-261027-0434-mvp-continuation.md)
+records the verified NSIS payload, bounded native UI checks, failed workspace
+investigation and completed profile/startup restoration. The candidate predates
+the subsequent source repair and requires a rebuild and native retest.
+
+## Public source-preview wiki
+
+The user authorized the public source preview at
+[What Changed wiki](https://salyys1.github.io/what-changed/). It projects the
+canonical source docs and does not authorize binary downloads or a public-v1 launch.
+
+For documentation publication checks, select the public
+[`SalyyS1/what-changed`](https://github.com/SalyyS1/what-changed) repository explicitly.
+GitHub repository visibility and Pages settings own the route; read-only lookup is
+`gh repo view SalyyS1/what-changed --json nameWithOwner,visibility,url` and
+`gh api repos/SalyyS1/what-changed/pages`. Pages uses a workflow deployment.
+Use an identity with repository/Pages read access; publishing changes requires
+the existing source-publication authorization. This route grants no binary
+publication permission. Keep private `.qa` data out of the public projection.
+Confirm the repository identity and Pages `html_url` before using the route;
+if either changes or access fails, consult the repository owner rather than
+selecting another destination. The [continuation evidence](../plans/reports/qa-261027-0434-mvp-continuation.md)
+records the verified metadata; it is not a live availability monitor.
+
+## Ownvero development candidate
+
+For the hosted runner-enabled development build and its exact notice gate,
+see [development preview packaging](development-preview.md). The workflow creates
+an Actions review artifact only; publication requires a separate decision for its bytes.
+
+The local static site source is [wiki-site](../wiki-site/README.md). Run
+`bun run site:build`, `bun run site:test`, `bun run check:site` and
+`bun run check:download`. Preview with `node wiki-site/serve.mjs` at the documented
+base path on port 5184. Downloads remain unavailable until an exact G2/G3-bound
+manifest exists. The workflow builds a preview artifact and does not deploy.
+
+For a fresh build, `node scripts/hydrate-preview-runtime.mjs` downloads the pinned
+Node executable and hash-verified ungoogled Chromium archive, safely extracts it
+and copies only frozen inventory entries. It requires an absent `runner/bundle`.
+`bun run runner:package` refreshes an already verified `runner/bundle` by default;
+an explicit `-SourceBundle` can select another matching seed. It does not download
+anything. The script validates source
+hashes and writes a fresh byte inventory including current runner code.
+If packaging is interrupted, preserve its printed `runner/bundle-stage-<id>` directory
+and resume with `powershell -File scripts/package-preview-runner.ps1 -ResumeStage bundle-stage-<id>`.
+Resume revalidates runtime bytes and refreshes source without another full runtime copy;
+unexpected files stop promotion. Earlier output is preserved when promoting a replacement.
+`bun run check:runner-bundle` rejects missing/changed/extra/redirected files.
+These resources are generated and ignored by Git. `bun run runner:test` checks
+source recipes/protocol/policy independently of browser packaging.
+`bun run check:runner-notices` requires a fresh exact-bundle license review and
+the packaged `release/RUNNER_THIRD_PARTY_NOTICES.txt` payload. Its review record
+is approved for the exact Chromium QA packet recorded in
+[`runner-notice-approval.json`](../release/runner-notice-approval.json); the older
+desktop notice approval does not cover this delta. This is not public-v1 approval.
+The hosted artifact must also include all matching browser sources and build/relink
+materials. [Source delivery](runner-source-build.md) owns that required layout;
+`node scripts/prepare-runner-source-materials.mjs` verifies and stages it.
+
+To build a local preview-enabled candidate, use
+`powershell -File scripts/release.ps1 -AllowDirty -IncludePreviewRunner` after
+preparing the runtime and reviewing its new license obligations. The Tauri
+`tauri.runner.conf.json` overlay includes the resources; default builds omit them.
+The local runner installer route also prepares all corresponding sources before
+building and writes the combined download packet under `preview-artifacts/`.
+Allow roughly 2 GB additional disk for those sources; use the hosted route when
+local space is insufficient. Distribute that complete packet together. A previous
+`preview-artifacts/runtime-sources` packet must be preserved or moved before a
+fresh run; preparation rejects existing output. The core installer retains its
+25 MiB budget; the browser-enabled QA route uses the runtime's 1536 MiB ceiling.
+The core graph gate is also named `bun run core:no-network`; the legacy alias
+remains. It proves neither disabled browser behavior nor authorized confinement.
+
+`node scripts/check-owner-release.mjs --candidate release/candidate-evidence.json`
+reports exact missing candidate evidence. `--publish` additionally requires all
+evidence and G0–G3 approval bound to that packet and the download manifest. Build
+checks, native install/upgrade, clean Windows, disabled-mode outbound absence,
+authorized egress, crash/cancel, screenshots/deletion, map accessibility, four-hour
+soak, license delta and repeated owner use remain separate requirements. Do not
+upload a candidate or enable a CTA based only on source tests.

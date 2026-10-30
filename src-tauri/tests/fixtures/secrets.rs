@@ -26,8 +26,8 @@ pub const SECRETS: &[Secret] = &[
     Secret {
         what: "OpenAI-style vendor API key",
         key: "OPENAI_API_KEY",
-        value: "sk-syntheticFIXTUREvalue00notreal01",
-        must_vanish: "sk-syntheticFIXTUREvalue00notreal01",
+        value: concat!("sk-", "syntheticFIXTUREvalue00notreal01"),
+        must_vanish: concat!("sk-", "syntheticFIXTUREvalue00notreal01"),
         kind: "api_key",
     },
     Secret {
@@ -49,8 +49,8 @@ pub const SECRETS: &[Secret] = &[
     Secret {
         what: "AWS long-term access key id",
         key: "AWS_ACCESS_KEY_ID",
-        value: "AKIAFIXTURE0NOTREAL0",
-        must_vanish: "AKIAFIXTURE0NOTREAL0",
+        value: concat!("AKIA", "FIXTURE0NOTREAL0"),
+        must_vanish: concat!("AKIA", "FIXTURE0NOTREAL0"),
         kind: "aws_access_key",
     },
     // `ASIA` marks a short-lived STS credential, and the dotted key is how a
@@ -67,29 +67,31 @@ pub const SECRETS: &[Secret] = &[
     Secret {
         what: "PEM private key header",
         key: "SSH_PRIVATE_KEY",
-        value: "-----BEGIN RSA PRIVATE KEY-----",
-        must_vanish: "-----BEGIN RSA PRIVATE KEY-----",
+        value: concat!("-----BEGIN RSA ", "PRIVATE KEY-----"),
+        must_vanish: concat!("-----BEGIN RSA ", "PRIVATE KEY-----"),
         kind: "private_key",
     },
     Secret {
         what: "GitHub personal access token",
         key: "GITHUB_TOKEN",
-        value: concat!("gh", "p_FIXTUREnotarealtoken0000000000000000"),
-        must_vanish: concat!("gh", "p_FIXTUREnotarealtoken0000000000000000"),
+        value: concat!("ghp_", "FIXTUREnotarealtoken0000000000000000"),
+        must_vanish: concat!("ghp_", "FIXTUREnotarealtoken0000000000000000"),
         kind: "host_token",
     },
     Secret {
         what: "GitHub refresh token",
         key: "GH_REFRESH_TOKEN",
-        value: concat!("gh", "r_FIXTUREnotarealrefresh00000000000000"),
-        must_vanish: concat!("gh", "r_FIXTUREnotarealrefresh00000000000000"),
+        value: concat!("ghr_", "FIXTUREnotarealrefresh00000000000000"),
+        must_vanish: concat!("ghr_", "FIXTUREnotarealrefresh00000000000000"),
         kind: "host_token",
     },
     Secret {
         what: "Slack bot token",
         key: "SLACK_BOT_TOKEN",
-        value: concat!("xo", "xb-1111111111-2222222222-FIXTUREnotarealsecret"),
-        must_vanish: concat!("xo", "xb-1111111111-2222222222-FIXTUREnotarealsecret"),
+        // Assemble the synthetic shape so repository secret scanners do not
+        // mistake this redaction fixture for a credential.
+        value: concat!("xoxb-", "1111111111", "-", "2222222222", "-", "FIXTUREnotarealsecret"),
+        must_vanish: concat!("xoxb-", "1111111111", "-", "2222222222", "-", "FIXTUREnotarealsecret"),
         kind: "chat_token",
     },
     // Host, port and database name are evidence worth keeping, so only the

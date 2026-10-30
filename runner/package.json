@@ -1,0 +1,8 @@
+{
+  "name": "ownvero-preview-runner",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": { "test": "node --test tests/*.test.mjs" },
+  "engines": { "node": ">=24.12.0 <25" }
+}

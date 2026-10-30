@@ -16,6 +16,10 @@ pub mod bindings;
 pub mod checkpoint_dto;
 pub mod error_dto;
 pub mod event_dto;
+pub mod owner_evidence_dto;
+pub mod owner_memory_dto;
+pub mod owner_portability_dto;
+pub mod owner_workspace_dto;
 pub mod settings_dto;
 pub mod status_dto;
 pub mod trust_dto;
@@ -46,3 +50,5 @@ pub use status_dto::{
 pub use trust_dto::{
     OnboardingStateDto, PrivacyCategoryCountDto, PrivacySummaryDto, PurgeReportDto,
 };
+
+pub use owner_workspace_dto::*;

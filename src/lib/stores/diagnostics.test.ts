@@ -17,6 +17,8 @@ const snapshot: DiagnosticsDto = {
   current_working_set_bytes: 0,
   peak_working_set_bytes: 0,
   log_bytes: 0,
+  owner_store: { status: 'ready' },
+  owner_workspace_bytes: 0,
 };
 
 describe('DiagnosticsStore', () => {

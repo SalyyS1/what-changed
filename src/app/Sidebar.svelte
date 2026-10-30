@@ -59,6 +59,7 @@
       <li>
         <a
           href={hrefFor(route)}
+          onclick={(event) => { event.preventDefault(); router.navigate(route); }}
           aria-current={active ? 'page' : undefined}
           title={route.shortcut ? `${route.label} (Ctrl+${route.shortcut})` : route.label}
           class="wc-nav-item flex items-center gap-3 rounded-md px-2.5 text-base motion-fast transition-colors {active

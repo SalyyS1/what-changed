@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "plan": "261027-0817-ownvero-owner-workspace-web-wiki",
+  "gates": [
+    {
+      "id": "G0",
+      "scope": "desktop-primary architecture",
+      "status": "approved",
+      "evidence": "plans/261027-0817-ownvero-owner-workspace-web-wiki/reports/approval-g0-g1.json",
+      "scopeDigest": "19ba00166569dcbad30696ef0957d84cf46cd9418c27fb6890100b50ee465223",
+      "scopeFiles": [
+        "plans/261027-0817-ownvero-owner-workspace-web-wiki/decision-contract.md",
+        "plans/261027-0817-ownvero-owner-workspace-web-wiki/domain-evidence-contract.md",
+        "plans/261027-0817-ownvero-owner-workspace-web-wiki/runner-safety-contract.md",
+        "plans/261027-0817-ownvero-owner-workspace-web-wiki/supported-preview-contract.md"
+      ],
+      "evidenceSha256": "a3950fbb621d13aba952ac4ea91ce29efdccf41573782879bcb2527a76499947"
+    },
+    {
+      "id": "G1",
+      "scope": "opt-in network runner and revised privacy/process contract",
+      "status": "approved",
+      "evidence": "plans/261027-0817-ownvero-owner-workspace-web-wiki/reports/approval-g0-g1.json",
+      "scopeDigest": "19ba00166569dcbad30696ef0957d84cf46cd9418c27fb6890100b50ee465223",
+      "scopeFiles": [
+        "plans/261027-0817-ownvero-owner-workspace-web-wiki/decision-contract.md",
+        "plans/261027-0817-ownvero-owner-workspace-web-wiki/domain-evidence-contract.md",
+        "plans/261027-0817-ownvero-owner-workspace-web-wiki/runner-safety-contract.md",
+        "plans/261027-0817-ownvero-owner-workspace-web-wiki/supported-preview-contract.md"
+      ],
+      "evidenceSha256": "a3950fbb621d13aba952ac4ea91ce29efdccf41573782879bcb2527a76499947"
+    },
+    {
+      "id": "G2",
+      "scope": "public Ownvero name and production identity",
+      "status": "pending",
+      "evidence": null,
+      "scopeDigest": null
+    },
+    {
+      "id": "G3",
+      "scope": "exact frozen binary, notices, release manifest and site publication",
+      "status": "pending",
+      "evidence": null,
+      "scopeDigest": null
+    }
+  ]
+}
