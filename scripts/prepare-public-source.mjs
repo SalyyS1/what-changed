@@ -3,6 +3,7 @@ import { dirname, join, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { checkReviewedNoticeInputs } from './check-reviewed-notice-inputs.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const roots = ['.github', 'src', 'src-tauri', 'scripts', 'assets', 'public', 'legal', 'docs', 'wiki-site', 'runner', 'release', 'plans'];
@@ -64,6 +65,7 @@ export function preparePublicSource(destination) {
     files.push({ path: relative(output, target).replaceAll('\\', '/'), bytes: stat.size });
   }
   for (const name of [...rootFiles, ...roots]) if (existsSync(join(root, name))) copy(name);
+  checkReviewedNoticeInputs(output);
   return { copiedFiles: files.length, destination: output, privateInputsIncluded: false };
 }
 

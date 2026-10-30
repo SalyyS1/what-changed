@@ -224,6 +224,39 @@ workflow for these changed release/script inputs; avoid a duplicate manual
 dispatch. It uploads a review artifact only. Complete source co-delivery, native
 acceptance and exact public-release approval are still separate requirements.
 
+## Hosted build continuation
+
+The approved source projection `f9ac3005e7428b51af0f2ca9907015b90576af26`
+started [run 41086258362](https://github.com/SalyyS1/what-changed/actions/runs/41086258362).
+Frozen runner preflight, source contracts, focused frontend integration, all seven
+source archives, native authority/generated contracts, runtime hydration and the
+native packaged-inventory loader passed. The production frontend built, then
+desktop notice generation stopped on `generic-array` license hash mismatch.
+The failed run uploaded no artifact and produced no verified installer.
+
+Exactly three desktop license files had LF in the primary source while the
+existing reviewed hashes and successful public baseline bind CRLF: generic-array,
+nu-ansi-term and quick-xml. All other reviewed desktop entries match. Restoring
+the exact reviewed blobs from public `50b32fc88abbcbf80acc4d13965ef151c2e7ed71`
+repairs the bytes; no terms, license choice or human approval changes. The
+existing `legal/third-party/** -text` attribute preserves them thereafter.
+
+## Public runner packet contract gap
+
+The current approved QA distribution keeps installer plus seven source archives
+in one downloadable Actions artifact. That complete prior packet is
+2,227,488,699 bytes. The website manifest accepts only an exact `.exe`, with a
+2 GiB ceiling; owner-release assessment binds its hash/size to the installer.
+Those contracts cannot represent the complete runner packet.
+
+GitHub documents a per-Release-asset limit under 2 GiB, so the existing full ZIP
+also cannot be copied unchanged to one Release asset. See
+[GitHub release limits](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
+This is a measured format/hosting mismatch, separate from native acceptance.
+Keep downloads unavailable; a public distribution format requires an explicit
+scope decision and matching manifest/schema/evidence binding before G3. Do not
+silently omit sources or replace the approved source duties with a written offer.
+
 ## Unresolved questions
 
 - Which clean Windows test machine and consenting pilot owners will supply the

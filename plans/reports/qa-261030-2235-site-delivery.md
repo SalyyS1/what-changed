@@ -40,6 +40,23 @@ wrapping, ledger contrast and the download migration touch target; all repaired.
 Total: 22/24. Remaining visual trade-offs are stated above; no phone hardware FPS
 or native accessibility measurement is claimed.
 
+## Bounded mobile performance sample
+
+Live Vietnamese page, Edge 156.0.4314.50 headless, Intel i5-1235U / 31.7 GiB,
+375×812 at DPR 1, HTTP cache disabled, 4× CPU slowdown, 150 ms latency,
+200,000 B/s down and 93,750 B/s up. Three separate browser contexts:
+
+| Sample | LCP | CLS | Resource transfer |
+|---|---:|---:|---:|
+| 1 | 2,404 ms | 0.0000521 | 160,152 B |
+| 2 | 1,828 ms | 0.0000521 | 160,152 B |
+| 3 | 2,016 ms | 0.0000521 | 160,152 B |
+
+Median LCP 2.016 s; all three remain below the plan's 2.5 s / 0.1 lab budgets.
+The 3D canvas rendered in every sample. Receipt/script remain under ignored
+`.qa/website-overhaul-performance.*`. This bounded CDP simulation is not field
+data, Lighthouse scoring, real-phone performance or desktop/native soak evidence.
+
 ## Review repairs and limits
 
 All three independent findings were repaired: pending-import page restoration,
@@ -56,9 +73,24 @@ on the product pages.
 
 ## Publication
 
-Pending hosted deployment and current QA build receipt. Public binary release
-remains gated by native acceptance and exact approval, as recorded in the release
-readiness report.
+- Primary website source: `112f95b`; Pages cherry-pick: `d3efe701787b99bcd8348597caf916bf40aa6355`.
+- [Successful Pages deployment](https://github.com/SalyyS1/what-changed/actions/runs/41086278589).
+- Live [English](https://salyys1.github.io/what-changed/) and
+  [Vietnamese](https://salyys1.github.io/what-changed/vi/) opening models rendered
+  in Edge. Demo, getting-started and download returned HTTP 200. Enhanced demo
+  rendered on request; zero page errors or failed assets; no download CTA.
+- Live Vietnamese render checker: zero errors/warnings at all three sizes.
+- Local screenshot: `.qa/website-overhaul-live-vi.png`; machine smoke receipt:
+  `.qa/website-overhaul-live-results.json`. These private review artifacts are not
+  copied to the public site.
+- QA public projection: `f9ac3005e7428b51af0f2ca9907015b90576af26`, from primary
+  `112f95b`. [Build](https://github.com/SalyyS1/what-changed/actions/runs/41086258362)
+  started; final artifact inspection is tracked separately. Exact approval-bound
+  blob hashes survived both primary staging and public projection.
+
+Public binary release remains gated by native acceptance and exact approval, as
+recorded in the release readiness report. No Release/tag/production updater was
+created. Controller-owned local servers and browser test processes exited.
 
 ## Unresolved questions
 

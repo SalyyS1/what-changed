@@ -25,6 +25,11 @@ first-party runner source against the frozen inventory before expensive download
 or builds. A changed source file requires exact delta review; this early check
 does not replace runtime notices or publication approval.
 
+The [reviewed notice input preflight](../scripts/check-reviewed-notice-inputs.mjs)
+checks desktop license and NOTICE bytes before downloads and at the end of public
+source projection. Preserve the reviewed line endings: the legal-file Git
+attributes protect exact hashes, and changing a checksum is not a repair.
+
 The browser replacement is pinned ungoogled Chromium with its complete embedded
 credits. Matching browser/library sources and patch/build scripts must accompany
 the installer in the same downloadable artifact; source preparation is another
