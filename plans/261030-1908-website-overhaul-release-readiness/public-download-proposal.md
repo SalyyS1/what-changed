@@ -65,7 +65,7 @@ source ZIP format. This authorizes the contract and validator implementation onl
 it does not approve a public release, create a tag, or enable the unavailable
 manifest. Native acceptance and G2/G3 exact-artifact approval remain required.
 
-## Unresolved decision
+## Remaining publication gates
 
 No alternate hosting decision is needed while the approved two-asset format is
 used. This format decision does not itself approve public v1, new license
