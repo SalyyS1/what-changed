@@ -24,3 +24,18 @@ export const booking = Object.freeze({
     stale: { label: 'Changed candidate', before: 'failed', after: 'stale', explanation: 'The result belongs to booking-demo-b, but booking-demo-c is now selected. Review the changed candidate and run again.' },
   },
 });
+
+const vietnameseNodes = {
+  intent: ['Tính năng', 'Đổi lịch hẹn'],
+  rule: ['Quy tắc đã xác nhận · r2', 'Chỉ nhân viên được đổi lịch'],
+  create: ['Kịch bản · s3', 'Nhân viên đổi lịch hẹn'],
+  deny: ['Kịch bản · s2', 'Yêu cầu khách bị từ chối'],
+  readback: ['Kết quả quan sát', 'Đọc lại lịch hẹn'],
+  denial: ['Kết quả quan sát', 'Phản hồi phân quyền'],
+};
+
+/** Translate presentation only; graph identifiers and evidence stay identical. */
+export function bookingNodeCopy(node, language = 'en') {
+  const copy = language === 'vi' ? vietnameseNodes[node.id] : undefined;
+  return copy ? { kind: copy[0], label: copy[1] } : node;
+}

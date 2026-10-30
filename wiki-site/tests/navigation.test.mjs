@@ -4,6 +4,8 @@ import { spawn } from 'node:child_process';
 import { createConnection } from 'node:net';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
+import { booking } from '../src/demo-data.mjs';
+import { verifyWorkflowLifecycle } from './workflow-lifecycle.mjs';
 
 const base = 'http://127.0.0.1:5184/what-changed/';
 const artifacts = '.qa/ownvero-site';
@@ -26,8 +28,21 @@ test('rendered static navigation, search, demo, base path, no-JS and responsive 
     await mkdir(artifacts, { recursive: true });
     for (const [width, height] of [[360, 800], [768, 1024], [1440, 900]]) {
       await page.setViewportSize({ width, height }); await page.goto(base); await page.locator('h1').waitFor();
+      await page.waitForFunction(() => document.querySelector('[data-model-toggle]').textContent !== '…');
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `landing overflow at ${width}`);
       await page.screenshot({ path: `${artifacts}/landing-${width}.png`, fullPage: true });
+    }
+    const landing3d = await page.locator('[data-model-canvas] canvas').count() === 1;
+    if (landing3d) {
+      assert.equal(await page.locator('[data-model-canvas] .three-label').count(), booking.nodes.length);
+      assert.equal(await page.locator('[data-model-canvas]').evaluate((node) => node.getBoundingClientRect().bottom < innerHeight), true, 'the opening model must be visible above the fold');
+      await page.locator('[data-tour-step="4"]').click();
+      assert.ok((await page.locator('[data-tour-detail]').textContent()).includes('no owner decision yet'));
+      await page.locator('[data-model-rotate]').click();
+      await page.locator('[data-model-toggle]').click();
+      assert.equal(await page.locator('[data-model-canvas] canvas').count(), 0, 'switching to 2D releases the renderer');
+      await page.locator('[data-model-toggle]').click();
+      await page.locator('[data-model-canvas] canvas').waitFor();
     }
     for (const route of ['how-it-works/', 'docs/privacy/', 'vi/', 'vi/quickstart/', 'vi/glossary/', 'changelog/', 'support/', 'download/']) {
       const response = await page.goto(`${base}${route}`); assert.equal(response.status(), 200); assert.ok(await page.locator('h1').textContent());
@@ -69,8 +84,22 @@ test('rendered static navigation, search, demo, base path, no-JS and responsive 
     assert.ok((await staticPage.locator('main').textContent()).includes('Stale')); await staticPage.locator('.mobile-toc summary').click(); await staticPage.locator('.mobile-toc a[href="#read-the-state"]').click();
     await staticPage.goto(`${base}demo/`); await staticPage.locator('[data-node="rule"] summary').click();
     assert.ok(await staticPage.locator('[data-node="rule"]').getAttribute('open') !== null);
+    await staticPage.goto(base);
+    assert.equal(await staticPage.locator('.evidence-poster').count(), 1);
+    assert.equal(await staticPage.locator('.tour-static li').count(), 5);
+    assert.equal(await staticPage.locator('[data-tour-step]:visible').count(), 0, 'no inert interactive step controls without JavaScript');
     await staticPage.screenshot({ path: `${artifacts}/demo-no-js.png`, fullPage: true });
-    await writeFile(`${artifacts}/browser-results.json`, JSON.stringify({ webglRendered, runtimeErrors: errors, outboundRequests: outbound, testedWidths: [360, 768, 1440], noJavaScript: true, reducedMotion: true, initial3dLazy: true }, null, 2));
+    const denied = await browser.newContext();
+    await denied.addInitScript(() => { const original = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function(type, ...args) { return /webgl/i.test(type) ? null : original.call(this, type, ...args); }; });
+    const fallbackPage = await denied.newPage();
+    await fallbackPage.goto(base);
+    await fallbackPage.getByText('3D is unavailable here.', { exact: false }).waitFor();
+    assert.equal(await fallbackPage.locator('[data-model-poster]').isVisible(), true);
+    await fallbackPage.locator('[data-tour-step="3"]').click();
+    assert.ok((await fallbackPage.locator('[data-tour-detail]').textContent()).includes('Staff can move'));
+    await denied.close();
+    await verifyWorkflowLifecycle(browser, base);
+    await writeFile(`${artifacts}/browser-results.json`, JSON.stringify({ landing3d, webglRendered, runtimeErrors: errors, outboundRequests: outbound, testedWidths: [360, 768, 1440], noJavaScript: true, deniedWebGL: true, reducedMotion: true, initial3dLazy: true }, null, 2));
     await nojs.close(); await context.close();
   } finally {
     await browser?.close(); server.kill();

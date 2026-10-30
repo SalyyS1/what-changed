@@ -1,6 +1,8 @@
 import { attachDemo } from './demo.mjs';
+import { attachWorkflow } from './workflow-tour.mjs';
 
 document.querySelectorAll('[data-demo]').forEach(attachDemo);
+document.querySelectorAll('[data-workflow]').forEach(attachWorkflow);
 const base = document.documentElement.dataset.base;
 const legacy = { overview: '', 'first-investigation': 'docs/legacy/', timeline: 'docs/legacy/#timeline', workspace: 'docs/migration-guide/', privacy: 'docs/privacy/', build: 'docs/legacy/#build', status: 'download/' };
 if (location.pathname === base && Object.hasOwn(legacy, location.hash.slice(1))) {

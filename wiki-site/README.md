@@ -3,10 +3,11 @@
 Static landing/wiki/demo for public review of the owner-workspace direction.
 Identity remains a G2 draft; binary publication remains G3-gated. The output has
 no desktop IPC and does not expose a download until an exact release is approved.
-The landing page includes a visual Intent → Brief → Evidence → Decision map and
-auto-opens the synthetic 3D evidence workbench after first paint. The full demo
-route keeps the 3D workbench opt-in, and both views retain the accessible card/list
-fallback.
+The opening exhibit follows Intent → Preserve → Brief → Verify → Decide through
+one synthetic booking change. Its lit 3D workbench opens after first paint with
+rotation and a 2D toggle; the static map and complete walkthrough remain available
+without JavaScript or WebGL. The full demo route keeps 3D opt-in. See the shared
+[renderer](src/workbench-3d.mjs) and [walkthrough](src/workflow-exhibit.mjs).
 
 ## Build and review
 

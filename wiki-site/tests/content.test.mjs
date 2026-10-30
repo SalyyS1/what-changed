@@ -28,12 +28,22 @@ test('the list exposes the same exact nodes and explicit edges as the optional r
   }
   assert.ok(html.includes('not yet made')); assert.equal(booking.states.blocked.after, 'blocked'); assert.equal(booking.states.stale.after, 'stale');
 });
-test('the landing page exposes the visual process map and an auto-loaded 3D preview', () => {
+test('both landing languages expose the complete change workflow and static evidence graph', () => {
   const html = landing();
-  for (const stage of ['Intent', 'Brief', 'Evidence', 'Decision']) assert.ok(html.includes(`>${stage}<`));
-  assert.ok(html.includes('class="process-edges"'));
-  assert.ok(html.includes('data-auto-3d="true"'));
-  assert.ok(html.includes('data-three-canvas'));
+  for (const stage of ['Intent', 'Preserve', 'Brief', 'Verify', 'Decide']) assert.ok(html.includes(`</span>${stage}</button>`));
+  for (const vi of [false, true]) {
+    const page = landing(vi);
+    assert.ok(page.includes('data-workflow'));
+    assert.ok(page.includes('data-model-canvas'));
+    for (const node of booking.nodes) assert.ok(page.includes(`data-poster-node="${node.id}"`));
+    assert.ok(page.includes('<noscript>'));
+    assert.ok(page.includes('href="#walkthrough"'));
+    if (vi) {
+      assert.ok(page.includes('Chỉ nhân viên được đổi lịch'));
+      assert.ok(page.includes('Ý định nối với hai kịch bản kiểm tra'));
+      assert.ok(!page.includes('Owner intent connects'));
+    }
+  }
 });
 test('the full demo keeps 3D opt-in and lazy', () => {
   const html = demoTemplate();
