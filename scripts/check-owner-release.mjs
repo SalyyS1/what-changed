@@ -45,6 +45,8 @@ export async function assessOwnerRelease(packet, { root = projectRoot, publish =
     if (release.sourceCommit !== packet.sourceCommit) throw new Error('Site and candidate refer to different source revisions');
     const installer = packet.artifacts.find((artifact) => artifact.kind === 'installer');
     if (!installer || installer.sha256 !== release.sha256 || installer.bytes !== release.bytes) throw new Error('Site and candidate installer bytes differ');
+    const sourceArchive = packet.artifacts.find((artifact) => artifact.kind === 'source-zip');
+    if (!sourceArchive || sourceArchive.sha256 !== release.sourceSha256 || sourceArchive.bytes !== release.sourceBytes) throw new Error('Site and candidate source archive bytes differ');
     if (release.runnerVersion || packet.runnerBundle) {
       const runnerPackage = JSON.parse(await readFile(resolve(root, 'runner/package.json'), 'utf8'));
       if (!packet.runnerBundle || release.runnerVersion !== runnerPackage.version || release.browserRevision !== runnerVersions.chromiumRevision) throw new Error('Site runner versions differ from the candidate');
@@ -54,6 +56,7 @@ export async function assessOwnerRelease(packet, { root = projectRoot, publish =
     }
   }
   if (!packet.artifacts.some((artifact) => artifact.kind === 'installer')) missing.push('frozen_installer');
+  if (!packet.artifacts.some((artifact) => artifact.kind === 'source-zip')) missing.push('frozen_source_archive');
   if (publish) {
     await checkApprovals({ root, required: ['G0', 'G1', 'G2', 'G3'] });
     const ledger = JSON.parse(await readFile(resolve(root, 'plans/261027-0817-ownvero-owner-workspace-web-wiki/approval-ledger.json'), 'utf8'));

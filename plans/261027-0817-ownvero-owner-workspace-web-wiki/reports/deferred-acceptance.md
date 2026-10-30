@@ -19,6 +19,16 @@ No pending item below is claimed complete by source availability or a local fixt
 | Current installer/upgrade | Open | Freeze reviewed source, build/install/upgrade/uninstall and restore original machine settings |
 | Public release/site | G2/G3 pending | Bind approved manifest to exact installer/notices/site bytes; validate hosted artifact only after approval |
 
+## Native candidate smoke follow-through
+
+The extracted runner-enabled candidate passed a bounded current-account smoke on
+2026-10-31: onboarding/home opened, a synthetic workspace app was created,
+relaunch persistence was observed, the candidate exited with code 0, and the
+original profile was restored byte-for-byte before the original app resumed.
+See [native candidate smoke](../../reports/qa-261031-native-candidate-smoke.md).
+This result does not close any of the open native, clean-machine, soak, pilot or
+G2/G3 rows above.
+
 Local implementation records:
 [runner](../../reports/implementation-261028-preview-runner.md),
 [visual workbench](../../reports/implementation-261028-owner-visuals.md),

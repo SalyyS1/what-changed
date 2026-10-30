@@ -141,10 +141,14 @@ translation gap is explicit, not a broken locale switch or machine mistranslatio
 
 ## Download publication contract
 
-Build-time release manifest proposed:
-schemaVersion, product, version, channel, sourceCommit, builtAt, approvedAt,
-platform, architecture, assetUrl, bytes, sha256, signingStatus, notesUrl,
-noticesUrl, docsVersion, minOS, runnerVersion/browserRevision when included.
+Build-time release manifest approved for implementation (publication remains
+G3-gated): schemaVersion, product, version, channel, sourceCommit, builtAt,
+approvedAt, platform, architecture, installer `assetUrl`/`bytes`/`sha256`,
+corresponding source ZIP `sourceAssetUrl`/`sourceBytes`/`sourceSha256`,
+signingStatus, notesUrl, noticesUrl, docsVersion, minOS,
+runnerVersion/browserRevision when included. The installer and source URL must
+share the exact GitHub Release tag and source commit; either missing or mismatched
+asset keeps the download unavailable.
 
 Only approved immutable GitHub Release asset URLs on an allowlisted repo. Do not
 turn an unreviewed local path, arbitrary URL, “latest” redirect or dev build into CTA.

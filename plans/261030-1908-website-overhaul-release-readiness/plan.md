@@ -67,18 +67,30 @@ clean-Windows, human pilot, soak or exact approval is never reported as complete
   pass for source `75dcb67c`: installer, both notices and all 197 packaged runtime
   files match the recorded checksums and approved inventory. Seven source
   archives remain co-delivered in complete artifact `12995563059`.
+- [Native candidate smoke](../reports/qa-261031-native-candidate-smoke.md) passed
+  launch, workspace creation, relaunch persistence, clean exit and exact profile
+  restoration on the current account. It does not close installer, clean-Windows,
+  network, accessibility, soak, pilot or G2/G3 gates.
 
 ## Remaining release acceptance
 
 The QA build is not public release acceptance. Clean Windows, native install/
 upgrade/privacy/egress/accessibility, four-hour soak and consenting owner repeat
-use remain open. The complete runner packet also needs a public distribution
-format decision: the current single-EXE manifest cannot represent its full source
-packet, which exceeds GitHub's per-asset size limit. See the release readiness
-and independent review reports above. Do not drop source delivery or enable a CTA.
-The [public download proposal](public-download-proposal.md) prepares a concrete
-same-Release installer/source format for a separate decision; no format change
-or public publication is approved by completing this website/QA work.
+use remain open. The complete runner packet needed a public distribution format
+decision: the current single-EXE manifest could not represent its full source
+packet, which exceeds GitHub's per-asset size limit. The two-asset decision is
+now recorded below; it does not create a Release or enable a CTA. See the release
+readiness and independent review reports above. Do not drop source delivery.
+The [public download proposal](public-download-proposal.md) records the concrete
+same-Release installer/source format that was later approved by the user. That
+format decision does not approve public publication or bypass the remaining
+acceptance gates.
+
+The user subsequently approved the proposed two-asset format. The schema,
+validator, candidate assessment and download view now bind an installer and a
+corresponding source archive to the same version/tag. `wiki-site/release-manifest.json`
+remains the explicit unavailable state until exact G2/G3 approval and a frozen
+Release exist.
 
 ## Ownership
 

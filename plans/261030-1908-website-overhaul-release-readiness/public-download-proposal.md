@@ -1,6 +1,6 @@
 # Public download format proposal
 
-Status: proposed; no approval, schema change, Release or download activation.
+Status: format approved by user; no Release, tag, G3 approval or download activation.
 
 ## Measured problem
 
@@ -58,8 +58,15 @@ actual size, then change the manifest to bind that ZIP and its inner installer/
 source identities. This preserves a single downloadable packet but adds hosting,
 retention and large-download operations. No such host has been supplied.
 
+## Decision record
+
+The user approved the recommended same-Release installer plus corresponding
+source ZIP format. This authorizes the contract and validator implementation only;
+it does not approve a public release, create a tag, or enable the unavailable
+manifest. Native acceptance and G2/G3 exact-artifact approval remain required.
+
 ## Unresolved decision
 
-Approve the recommended same-Release two-asset format, or supply an approved host
-for one complete packet. This format decision does not itself approve public v1,
-new license choices, production brand assets or unperformed acceptance checks.
+No alternate hosting decision is needed while the approved two-asset format is
+used. This format decision does not itself approve public v1, new license
+choices, production brand assets or unperformed acceptance checks.

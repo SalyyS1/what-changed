@@ -18,7 +18,7 @@ async function fixture(fn) {
 test('a valid incomplete local packet remains NO-GO with exact missing checks', () => fixture(async (root) => {
   const result = await assessOwnerRelease({ schemaVersion: 1, sourceCommit: commit, artifacts: [], verification: [] }, { root });
   assert.equal(result.status, 'NO-GO'); assert.equal(result.publicationApproved, false);
-  assert.deepEqual(result.missing, ['frozen_clean_source', ...requiredOwnerEvidence, 'approved_download_manifest', 'frozen_installer']);
+  assert.deepEqual(result.missing, ['frozen_clean_source', ...requiredOwnerEvidence, 'approved_download_manifest', 'frozen_installer', 'frozen_source_archive']);
 }));
 test('changed evidence bytes and mismatched source cannot satisfy a candidate gate', () => fixture(async (root) => {
   const source = 'source proof'; const sha256 = createHash('sha256').update(source).digest('hex');

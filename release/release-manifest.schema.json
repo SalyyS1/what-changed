@@ -15,7 +15,7 @@
     {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schemaVersion", "status", "product", "version", "channel", "sourceCommit", "builtAt", "approvedAt", "platform", "architecture", "assetUrl", "bytes", "sha256", "signingStatus", "notesUrl", "noticesUrl", "docsVersion", "minOS"],
+      "required": ["schemaVersion", "status", "product", "version", "channel", "sourceCommit", "builtAt", "approvedAt", "platform", "architecture", "assetUrl", "bytes", "sha256", "sourceAssetUrl", "sourceBytes", "sourceSha256", "signingStatus", "notesUrl", "noticesUrl", "docsVersion", "minOS"],
       "properties": {
         "schemaVersion": { "const": 1 },
         "status": { "const": "approved" },
@@ -30,6 +30,9 @@
         "assetUrl": { "type": "string", "pattern": "^https://github\\.com/SalyyS1/what-changed/releases/download/v[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-zA-Z0-9.-]+)?/[A-Za-z0-9_.-]+\\.exe$" },
         "bytes": { "type": "integer", "minimum": 1, "maximum": 2147483648 },
         "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "sourceAssetUrl": { "type": "string", "pattern": "^https://github\\.com/SalyyS1/what-changed/releases/download/v[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-zA-Z0-9.-]+)?/[A-Za-z0-9_.-]+\\.zip$" },
+        "sourceBytes": { "type": "integer", "minimum": 1, "maximum": 2147483648 },
+        "sourceSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
         "signingStatus": { "enum": ["unsigned", "signed"] },
         "notesUrl": { "type": "string", "format": "uri" },
         "noticesUrl": { "type": "string", "format": "uri" },

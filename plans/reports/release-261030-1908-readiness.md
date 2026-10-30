@@ -292,3 +292,24 @@ decision is pending; no public-format code or publication approval was inferred.
 
 - Which clean Windows test machine and consenting pilot owners will supply the
   remaining acceptance evidence? No participants or clean host were supplied.
+
+## Native candidate smoke follow-through — 2026-10-31
+
+The user-authorized current-account smoke of the extracted runner-enabled
+candidate passed launch, onboarding/home, synthetic `My apps` creation, clean
+exit, relaunch persistence and original-app resume. The original profile was
+restored byte-for-byte (13 files / 1,085,434,822 bytes) before the legacy app
+restarted. See [native candidate smoke](qa-261031-native-candidate-smoke.md).
+
+This is bounded candidate evidence only. It does not prove installer or upgrade,
+clean Windows, non-admin isolation, disabled/authorized egress, accessibility,
+four-hour soak, or real-owner repeat use. G2/G3 remain pending.
+
+## Approved public distribution shape
+
+The user approved the proposed same-Release two-asset shape after the format
+mismatch was measured: one installer plus one corresponding source archive, each
+with its own exact URL, byte count and SHA-256, bound to the same version/tag and
+source commit. The schema, validator, owner assessment and download page now
+support this shape. The checked-in manifest remains `status: unavailable`; no
+Release, tag, download CTA or G3 approval was created by this implementation.

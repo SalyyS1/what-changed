@@ -6,7 +6,7 @@ import { checkApprovals, projectRoot, planDirectory } from './check-ownvero-appr
 const manifestPath = 'wiki-site/release-manifest.json';
 const required = ['schemaVersion', 'status', 'product', 'version', 'channel', 'sourceCommit',
   'builtAt', 'approvedAt', 'platform', 'architecture', 'assetUrl', 'bytes', 'sha256',
-  'signingStatus', 'notesUrl', 'noticesUrl', 'docsVersion', 'minOS'];
+  'sourceAssetUrl', 'sourceBytes', 'sourceSha256', 'signingStatus', 'notesUrl', 'noticesUrl', 'docsVersion', 'minOS'];
 const allowed = [...required, 'runnerVersion', 'browserRevision'];
 const fail = (message) => { throw new Error(`Download unavailable: ${message}`); };
 
@@ -24,7 +24,9 @@ export function validateRelease(value) {
     || !['preview', 'stable'].includes(value.channel) || !['unsigned', 'signed'].includes(value.signingStatus)) fail('unsupported release');
   if (typeof value.version !== 'string' || !/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9.-]+)?$/.test(value.version)
     || !/^[a-f0-9]{40}$/.test(value.sourceCommit) || !/^[a-f0-9]{64}$/.test(value.sha256)
-    || !Number.isSafeInteger(value.bytes) || value.bytes < 1 || value.bytes > 2147483648) fail('invalid artifact identity');
+    || !/^[a-f0-9]{64}$/.test(value.sourceSha256)
+    || !Number.isSafeInteger(value.bytes) || value.bytes < 1 || value.bytes > 2147483648
+    || !Number.isSafeInteger(value.sourceBytes) || value.sourceBytes < 1 || value.sourceBytes > 2147483648) fail('invalid artifact identity');
   for (const key of ['docsVersion', 'minOS', 'runnerVersion', 'browserRevision']) {
     if (key in value && (typeof value[key] !== 'string' || !value[key].trim() || value[key].length > (key === 'minOS' ? 120 : 80))) fail(`invalid ${key}`);
   }
@@ -38,6 +40,10 @@ export function validateRelease(value) {
   if (typeof value.assetUrl !== 'string' || !value.assetUrl.startsWith(prefix)
     || !/^[A-Za-z0-9_.-]+\.exe$/.test(value.assetUrl.slice(prefix.length))
     || value.assetUrl.slice(prefix.length).includes('..')) fail('asset must be an exact allowlisted GitHub release');
+  if (typeof value.sourceAssetUrl !== 'string' || !value.sourceAssetUrl.startsWith(prefix)
+    || !/^[A-Za-z0-9_.-]+\.zip$/.test(value.sourceAssetUrl.slice(prefix.length))
+    || value.sourceAssetUrl.slice(prefix.length).includes('..')
+    || value.sourceAssetUrl === value.assetUrl) fail('source asset must be a distinct exact allowlisted GitHub release');
   const notes = `https://github.com/SalyyS1/what-changed/releases/tag/v${value.version}`;
   if (value.notesUrl !== notes) fail('notes must match the exact release tag');
   const noticesPrefix = `https://github.com/SalyyS1/what-changed/blob/${value.sourceCommit}/`;

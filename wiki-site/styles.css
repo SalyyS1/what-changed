@@ -143,6 +143,9 @@ summary { cursor:pointer; padding:var(--space-4); min-height:2.75rem; }
 .release-details div { display:grid; grid-template-columns:8rem 1fr; gap:var(--space-4); padding-block:var(--space-3); border-bottom:1px solid var(--line); }
 .release-details dt { font-size:var(--small); color:var(--muted); }
 .release-details dd { margin:0; overflow-wrap:anywhere; font-family:var(--mono); font-size:var(--small); }
+.download-assets { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--space-4); margin-block:var(--space-5); }
+.download-assets article { border:1px solid var(--line); border-radius:var(--radius); padding:var(--space-4); background:var(--paper); }
+.download-assets .button { width:100%; margin-block:var(--space-3); }
 .site-footer { border-top:1px solid var(--line); padding:var(--space-8) var(--gutter); display:flex; justify-content:space-between; flex-wrap:wrap; gap:var(--space-7); max-width:calc(var(--container) + 2 * var(--gutter)); margin:auto; }
 .site-footer p { margin-top:var(--space-3); }
 .site-footer nav { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-2) var(--space-6); }
@@ -150,7 +153,7 @@ summary { cursor:pointer; padding:var(--space-4); min-height:2.75rem; }
 @media (max-width:70rem) { .docs-shell { grid-template-columns:12rem minmax(0,1fr); } .on-this-page { display:none; } .mobile-toc { display:block; } .site-header { gap:var(--space-5); } .site-header nav { gap:var(--space-4); } }
 @media (max-width:48rem) {
   .site-header { flex-wrap:wrap; gap:var(--space-3); } .site-header nav { order:3; width:100%; justify-content:space-between; gap:var(--space-2); font-size:var(--small); }
-  .split,.download-panel { grid-template-columns:1fr; gap:var(--space-7); } .section,.page-heading { padding-block:var(--space-8); }
+  .split,.download-panel,.download-assets { grid-template-columns:1fr; gap:var(--space-7); } .section,.page-heading { padding-block:var(--space-8); }
   .evidence-layers { grid-template-columns:1fr; gap:var(--space-5); }
   .evidence-layer+.evidence-layer { border-top:1px dashed var(--line-strong); padding-top:var(--space-5); } .evidence-layer h3 { margin-bottom:var(--space-3); }
   .docs-grid { grid-template-columns:1fr; } .docs-shell { grid-template-columns:1fr; padding-top:var(--space-5); gap:var(--space-6); }

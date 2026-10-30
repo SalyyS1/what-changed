@@ -18,6 +18,12 @@ The installer itself is 175,182,373 bytes; the installed runner inventory is
 and are not installed or fetched at app startup. The complete QA ZIP remains the
 distribution packet; an extracted installer alone is for local inspection.
 
+The extracted candidate also passed a bounded current-account smoke for launch,
+workspace creation, relaunch persistence, clean exit and exact profile restore;
+the [native smoke report](../plans/reports/qa-261031-native-candidate-smoke.md)
+records the limits. Installer, clean-Windows, egress, accessibility, soak, pilot
+and public approval remain open.
+
 ## Packaging boundary
 
 The requested hosted candidate includes pinned Node and browser runtime bytes.

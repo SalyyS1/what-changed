@@ -53,6 +53,10 @@ checks the approval ledger and requires G3 to bind this exact manifest. GitHub
 release tag, artifact filename, source commit, notices, byte count, and SHA-256 are
 explicit. No latest redirect or local QA path is accepted.
 
-Development docs show their content revision and review date. The build manifest
-records source commit and documentation hashes; it is local preview provenance,
-not a signed release or proof of installed-app acceptance.
+Development docs show their content revision and review date. An approved
+manifest binds two separate assets from the same GitHub Release tag: the Windows
+installer (`assetUrl`, `bytes`, `sha256`) and the corresponding source archive
+(`sourceAssetUrl`, `sourceBytes`, `sourceSha256`). The build manifest records
+source commit and documentation hashes; it is local preview provenance, not a
+signed release or proof of installed-app acceptance. The checked-in manifest is
+still intentionally unavailable until G2/G3 approval.
