@@ -16,7 +16,7 @@ export async function checkSite(directory = resolve('wiki-site/dist')) {
   const manifest = JSON.parse(await readFile(join(directory, 'build-manifest.json'), 'utf8'));
   const expectedRoutes = ['', 'how-it-works/', 'demo/', 'download/', 'docs/', 'docs/legacy/', 'changelog/', 'support/',
     'vi/', 'vi/quickstart/', 'vi/glossary/', ...['getting-started', 'owner-workspace', 'verification', 'maps', 'privacy', 'faq', 'migration-guide'].map((name) => `docs/${name}/`)];
-  const required = [...expectedRoutes.map((route) => `${route}index.html`), '404.html', 'styles.css', 'assets/client.js', 'assets/mark.svg', 'search-index.json', 'legacy-aliases.json', '.nojekyll', 'build-manifest.json'];
+  const required = [...expectedRoutes.map((route) => `${route}index.html`), '404.html', 'styles.css', 'product.css', 'assets/client.js', 'assets/mark.svg', 'search-index.json', 'legacy-aliases.json', '.nojekyll', 'build-manifest.json'];
   const paths = await walk(directory), files = paths.map((path) => relative(directory, path).replaceAll('\\', '/'));
   if (manifest.basePath !== site.basePath || manifest.publicationApproved !== false || manifest.mode !== 'local-source-preview') throw new Error('Invalid site publication boundary');
   // Derive the allowable shape independently; the generated manifest cannot authorize arbitrary files.

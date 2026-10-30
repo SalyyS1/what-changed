@@ -175,23 +175,6 @@ impl Bundle {
     }
 }
 
-#[cfg(test)]
-#[allow(clippy::expect_used)]
-mod tests {
-    use super::*;
-    #[test]
-    #[ignore = "requires explicit OWNVERO_TEST_BUNDLE"]
-    fn packaged_inventory_matches_native_loader() {
-        let root = std::env::var_os("OWNVERO_TEST_BUNDLE").expect(
-            "set OWNVERO_TEST_BUNDLE to the packaged test bundle before invoking this opt-in test",
-        );
-        let bundle = Bundle::open_root(PathBuf::from(root)).expect(
-            "the explicitly selected packaged test bundle must pass native loader validation",
-        );
-        assert_eq!(bundle.digest.len(), 64);
-    }
-}
-
 fn verify_tree(
     root: &Path,
     current: &Path,
@@ -227,4 +210,21 @@ fn verify_tree(
         }
     }
     Ok(())
+}
+
+#[cfg(test)]
+#[allow(clippy::expect_used)]
+mod tests {
+    use super::*;
+    #[test]
+    #[ignore = "requires explicit OWNVERO_TEST_BUNDLE"]
+    fn packaged_inventory_matches_native_loader() {
+        let root = std::env::var_os("OWNVERO_TEST_BUNDLE").expect(
+            "set OWNVERO_TEST_BUNDLE to the packaged test bundle before invoking this opt-in test",
+        );
+        let bundle = Bundle::open_root(PathBuf::from(root)).expect(
+            "the explicitly selected packaged test bundle must pass native loader validation",
+        );
+        assert_eq!(bundle.digest.len(), 64);
+    }
 }

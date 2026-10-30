@@ -14,6 +14,11 @@ export function originOf(value) {
   const url=new URL(value);
   if (url.username || url.password || !['https:','http:'].includes(url.protocol)
     || url.hostname.endsWith('.') || url.hash || url.search || url.pathname!=='/') throw new Error('Unsupported origin');
+  // URL accepts port 0, but it is not a connectable application endpoint and
+  // would make a permission grant ambiguous (the OS chooses an ephemeral port
+  // only when binding, never when connecting). Keep every route bound to a
+  // real TCP port and reject malformed/out-of-range values before normalizing.
+  if (url.port && (!/^\d+$/.test(url.port) || Number(url.port) < 1 || Number(url.port) > 65535)) throw new Error('Unsupported origin port');
   const loopback=['127.0.0.1','[::1]'].includes(url.hostname);
   if (url.protocol==='http:' && (!loopback || !url.port)) throw new Error('HTTP requires an explicit loopback port');
   if (!loopback && isIP(url.hostname.replace(/^\[|\]$/g,'')) && !publicAddress(url.hostname.replace(/^\[|\]$/g,''))) throw new Error('Private target');

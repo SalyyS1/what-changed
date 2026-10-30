@@ -37,9 +37,9 @@
 </script>
 
 <Card level={1}>
-  <div class="flex flex-wrap items-center gap-2"><h2 class="font-medium text-text-primary">Safe preview setup</h2><Badge tone="warning">Runner unavailable</Badge></div>
+  <div class="flex flex-wrap items-center gap-2"><h2 class="font-medium text-text-primary">Safe preview setup</h2><Badge tone="neutral">Opt-in runner</Badge></div>
   <p class="mt-2 text-sm text-text-secondary">Saving a URL is offline configuration. It does not contact the preview, approve a run, or establish that any behavior passed.</p>
-  <ul class="mt-3 space-y-1 text-sm text-text-secondary"><li>Test-data separation: not checked.</li><li>Revision marker and build identity: not checked.</li><li>Stable labels, test roles and read-back adapters: not configured here.</li><li>Automated verification is unavailable. You can record manual observations from a saved change request.</li></ul>
+  <ul class="mt-3 space-y-1 text-sm text-text-secondary"><li>Test-data separation: not checked.</li><li>Revision marker and build identity: not checked.</li><li>Stable labels, test roles and read-back adapters: not configured here.</li><li>Automated verification runs only when this app is launched from a packaged candidate with its reviewed runner. A source or core build can still save this setup and record manual observations.</li></ul>
   <details class="mt-3 text-sm"><summary class="cursor-pointer text-text-primary">One-time builder setup brief</summary><p class="selectable mt-2 whitespace-pre-wrap text-text-secondary">{setupBrief}</p></details>
   {#if latest.length}<ul class="mt-4 space-y-2">{#each latest as environment (environment.id)}<li class="flex flex-wrap items-center justify-between gap-2 rounded-md border border-border-subtle p-3"><div class="min-w-0"><p class="text-sm text-text-primary">{environment.label} · revision {environment.revision} · {environment.revoked ? 'Revoked' : environment.kind}</p><p class="selectable break-all text-xs text-text-secondary">{environment.preview_url}</p></div><Button size="sm" variant="ghost" disabled={!active || model.saving} onclick={() => edit(environment)}>Edit preview</Button></li>{/each}</ul>{/if}
   <details class="mt-4" open={previous !== undefined}>

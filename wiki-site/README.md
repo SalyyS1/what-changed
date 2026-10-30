@@ -1,8 +1,13 @@
 # Ownvero local source preview
 
-Local, static landing/wiki/demo for the approved owner-workspace direction.
-Identity remains a G2 draft; binary publication remains G3-gated. Nothing here
-deploys or changes the existing native assets. The output has no desktop IPC.
+Static landing/wiki/demo for public review of the owner-workspace direction.
+Identity remains a G2 draft; binary publication remains G3-gated. The output has
+no desktop IPC and does not expose a download until an exact release is approved.
+The opening exhibit follows Intent → Preserve → Brief → Verify → Decide through
+one synthetic booking change. Its lit 3D workbench opens after first paint with
+rotation and a 2D toggle; the static map and complete walkthrough remain available
+without JavaScript or WebGL. The full demo route keeps 3D opt-in. See the shared
+[renderer](src/workbench-3d.mjs) and [walkthrough](src/workflow-exhibit.mjs).
 
 ## Build and review
 
@@ -34,10 +39,10 @@ legacy-aliases.json maps the seven original hash links; their anchors also remai
 on the landing for no-JavaScript reading. The build never copies plans, QA output,
 desktop bundles, local screenshots, or an entire source directory into the site.
 
-The original remote deploy workflow uploaded raw wiki-site. Its local replacement
-is preview-only: no Pages write permission and no deploy step. Publication requires
-separate identity, release, and exact site-claim review. Do not upload wiki-site
-itself: the explicit generated output is wiki-site/dist.
+The GitHub Actions workflow builds the allowlisted output and deploys this clearly
+labeled review preview to GitHub Pages. It does not publish an installer or enable
+the download route. Do not upload wiki-site itself: the explicit generated output
+is wiki-site/dist.
 
 ## Download authority
 

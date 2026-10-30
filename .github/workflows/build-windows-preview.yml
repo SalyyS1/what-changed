@@ -32,6 +32,13 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '24.12.0'
+      - name: Check frozen runner source before downloads
+        shell: pwsh
+        run: |
+          node --test scripts/check-preview-runtime-inputs.test.mjs
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          node scripts/check-preview-runtime-inputs.mjs
+          exit $LASTEXITCODE
       - name: Verify source archive auditor Python
         shell: pwsh
         run: |

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "actor": "user",
+  "source": "user_message",
+  "date": "2026-10-30",
+  "timezone": "Asia/Saigon",
+  "answer": "Chấp thuận delta, tiếp tục build QA",
+  "bundleInventorySha256": "31629890ecec49637621c5a4a321085306ac4392cbd95619598a81c699c47299",
+  "noticePayloadSha256": "8ad9c7c28d00641f26af587959a1020e60749fd017a3d60945f4efcb53010d9a",
+  "deltaPacket": {
+    "path": "plans/261030-1908-website-overhaul-release-readiness/runtime-delta-review.md",
+    "sha256": "14bdc9a346b0fa7c24087e13a299a6aa3396dd37b5a5617519d3bbdfd1f9ed74"
+  },
+  "deltaInventory": {
+    "path": "plans/261030-1908-website-overhaul-release-readiness/runtime-delta-inventory.json",
+    "sha256": "31629890ecec49637621c5a4a321085306ac4392cbd95619598a81c699c47299"
+  },
+  "scopeDigest": "095020f04c91eabf7e23c7c5e46b26c6e6fbb593f7504a24b8e20927360ba78a",
+  "previousApproval": {
+    "path": "release/runner-notice-approval.json",
+    "sha256": "c91ae47d2377f9540b499ed1a88c97b9ec7c769419b5c1b5c26ddff8ee6235f2"
+  },
+  "previousInventory": {
+    "path": "release/history/runner-runtime-inventory-2026-10-28.json",
+    "sha256": "cc3bb9c020ec053b11df341d925f3f25e26a6dc9f0cfbdb5ab1d1cf3d3ec5554"
+  },
+  "previousReview": {
+    "path": "release/history/runner-notice-review-2026-10-28.json",
+    "sha256": "105103b3164a44f4a99a78395c3ad976a3591d7b9e997eb6b3cf05c6058eb0f7"
+  },
+  "scope": "Exact owned runner policy.mjs source delta (+454 bytes; explicit port 0 rejected) and aggregate inventory approved for an unsigned QA build. All 186 third-party files, reviewed license/source texts, runtime versions and notice payload remain unchanged. This does not close native acceptance, G2, G3 or public-v1 publication.",
+  "publicationApproved": false,
+  "publicV1Approved": false,
+  "sourceDelivery": "All seven verified source archives, build/relink instructions and notices in same downloadable Actions artifact as installer; no written source offer substituted."
+}

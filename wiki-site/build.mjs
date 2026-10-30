@@ -66,18 +66,19 @@ for (const [name, title] of [['quickstart', 'Bắt đầu với một thay đổ
 }
 await page('404.html', 'Page not found', 'Return to the documentation or home page.', `<section class="page-heading wrap"><p class="eyebrow">404</p><h1>This page is not here.</h1><p>Use the <a href="${url('docs/')}">documentation</a> or return to <a href="${url()}">the homepage</a>.</p></section>`);
 await copyFile(resolve(root, 'wiki-site/styles.css'), resolve(output, 'styles.css'));
+await copyFile(resolve(root, 'wiki-site/product.css'), resolve(output, 'product.css'));
 await copyFile(resolve(root, 'assets/brand/ownvero/mark.svg'), resolve(output, 'assets/mark.svg'));
 await writeFile(resolve(output, 'search-index.json'), JSON.stringify(searchIndex));
 await writeFile(resolve(output, 'legacy-aliases.json'), JSON.stringify({ schemaVersion: 1, basePath: site.basePath, aliases }, null, 2));
 await writeFile(resolve(output, '.nojekyll'), '');
-const sourcePaths = ['wiki-site/build.mjs', 'wiki-site/site.config.mjs', 'wiki-site/styles.css',
+const sourcePaths = ['wiki-site/build.mjs', 'wiki-site/site.config.mjs', 'wiki-site/styles.css', 'wiki-site/product.css',
   'wiki-site/release-manifest.json', 'assets/brand/ownvero/mark.svg', 'release/release-manifest.schema.json',
   'scripts/check-site.mjs', 'scripts/check-download-manifest.mjs',
   ...(await readdir(resolve(root, 'wiki-site/src'))).filter((name) => name.endsWith('.mjs')).map((name) => `wiki-site/src/${name}`)];
 for (const path of sourcePaths) inputs.push({ path, sha256: hash(await readFile(resolve(root, path))) });
 inputs.sort((left, right) => left.path.localeCompare(right.path));
 const assets = (await readdir(resolve(output, 'assets'))).map((name) => `assets/${name}`);
-const allowedFiles = [...generated, ...assets, 'styles.css', 'search-index.json', 'legacy-aliases.json', '.nojekyll', 'build-manifest.json'].sort();
+const allowedFiles = [...generated, ...assets, 'styles.css', 'product.css', 'search-index.json', 'legacy-aliases.json', '.nojekyll', 'build-manifest.json'].sort();
 await writeFile(resolve(output, 'build-manifest.json'), JSON.stringify({
   schemaVersion: 1, mode: 'local-source-preview', publicationApproved: false, basePath: site.basePath,
   sourceCommit, docsVersion: site.docsVersion, reviewedAt: site.reviewedAt, inputs,

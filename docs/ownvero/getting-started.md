@@ -6,6 +6,10 @@ Development documentation. The existing unsigned What Changed installer does not
 include or prove this owner workflow. Use the synthetic website example to explore
 the model without supplying your app, credentials, or project files.
 
+In the desktop app, choose **Open My apps** from Home to enter the owner workspace.
+This entry point is designed for AI-built apps; the original Timeline and
+Investigation routes remain available for machine history.
+
 ## Start with one meaningful change
 
 Choose an app you own or have permission to work on. Name what it does in your own

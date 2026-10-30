@@ -8,6 +8,7 @@ import { renderMarkdown } from '../src/markdown.mjs';
 import { checkSite } from '../../scripts/check-site.mjs';
 import { booking } from '../src/demo-data.mjs';
 import { demoTemplate } from '../src/demo-template.mjs';
+import { landing } from '../src/landing.mjs';
 
 test('untrusted Markdown cannot inject HTML, handlers, or dangerous URLs', () => {
   const { html } = renderMarkdown('## Trust\n\n<script>alert(1)</script>\n\n<img src=x onerror=alert(1)>\n\n[x](javascript:evil) [y](//evil.test) [safe](https://example.com)');
@@ -26,6 +27,28 @@ test('the list exposes the same exact nodes and explicit edges as the optional r
     assert.ok(booking.nodes.some((node) => node.id === edge.from)); assert.ok(booking.nodes.some((node) => node.id === edge.to)); assert.ok(html.includes(edge.type));
   }
   assert.ok(html.includes('not yet made')); assert.equal(booking.states.blocked.after, 'blocked'); assert.equal(booking.states.stale.after, 'stale');
+});
+test('both landing languages expose the complete change workflow and static evidence graph', () => {
+  const html = landing();
+  for (const stage of ['Intent', 'Preserve', 'Brief', 'Verify', 'Decide']) assert.ok(html.includes(`</span>${stage}</button>`));
+  for (const vi of [false, true]) {
+    const page = landing(vi);
+    assert.ok(page.includes('data-workflow'));
+    assert.ok(page.includes('data-model-canvas'));
+    for (const node of booking.nodes) assert.ok(page.includes(`data-poster-node="${node.id}"`));
+    assert.ok(page.includes('<noscript>'));
+    assert.ok(page.includes('href="#walkthrough"'));
+    if (vi) {
+      assert.ok(page.includes('Chỉ nhân viên được đổi lịch'));
+      assert.ok(page.includes('Ý định nối với hai kịch bản kiểm tra'));
+      assert.ok(!page.includes('Owner intent connects'));
+    }
+  }
+});
+test('the full demo keeps 3D opt-in and lazy', () => {
+  const html = demoTemplate();
+  assert.ok(html.includes('data-load-3d'));
+  assert.ok(!html.includes('data-auto-3d="true"'));
 });
 test('generated routes, allowlist, private data boundary, and initial JS budget', async () => {
   const result = await checkSite(); assert.equal(result.pages, 19);

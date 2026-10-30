@@ -35,6 +35,11 @@ in evidence terms rather than in cause terms.
 6. A registered project root can act as a recovery workspace: mark it working, scope the next investigation to recorded project evidence, and copy a redacted Markdown handoff to any AI assistant.
 7. Checkpoints let you mark "it worked here" and compare the machine against that marker later.
 
+For people building with AI, Home also offers a direct **Open My apps** path into the
+owner workspace. There you can keep the app's intent, confirmed rules, change requests,
+reviewed brief and evidence together without leaving the local desktop workflow. The
+legacy symptom investigation remains available beside it.
+
 ## Screens
 
 Seven sidebar destinations, reachable with `Ctrl+1` through `Ctrl+7`, collapsing to an icon rail below

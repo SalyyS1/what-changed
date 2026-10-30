@@ -20,6 +20,11 @@ or uploading the installer. Native compilation can finish while review is pendin
 the pre-bundle gate still blocks the installer. It does not use PATH or download
 browsers at app startup.
 
+The [runtime input preflight](../scripts/check-preview-runtime-inputs.mjs) checks
+first-party runner source against the frozen inventory before expensive downloads
+or builds. A changed source file requires exact delta review; this early check
+does not replace runtime notices or publication approval.
+
 The browser replacement is pinned ungoogled Chromium with its complete embedded
 credits. Matching browser/library sources and patch/build scripts must accompany
 the installer in the same downloadable artifact; source preparation is another

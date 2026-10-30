@@ -17,6 +17,7 @@ describe('offline preview origin configuration', () => {
   it('retains an existing API origin when only the preview label is revised', async () => {
     const { store, save } = model(); await store.loadApp('app-a');
     render(PreviewSetup, { environments: [environment], model: store });
+    expect(screen.getByText('Opt-in runner')).toBeTruthy();
     await fireEvent.click(screen.getByRole('button', { name: 'Edit preview' }));
     expect(screen.getByLabelText('Additional exact approved origins')).toHaveProperty('value', 'https://api.example.test:443');
     await fireEvent.input(screen.getByLabelText('Preview name'), { target: { value: 'Renamed preview' } });

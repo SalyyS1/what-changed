@@ -6,7 +6,7 @@
   "chromiumRevision": "156.0.8078.47-1.1",
   "browserExecutable": "browsers/chromium-156.0.8078.47-1.1/chrome.exe",
   "checksumSource": "https://nodejs.org/dist/v24.12.0/SHASUMS256.txt",
-  "bundleInventorySha256": "cc3bb9c020ec053b11df341d925f3f25e26a6dc9f0cfbdb5ab1d1cf3d3ec5554",
+  "bundleInventorySha256": "31629890ecec49637621c5a4a321085306ac4392cbd95619598a81c699c47299",
   "obligationsReviewed": true,
   "reviewedBy": "project-owner",
   "components": [
@@ -191,10 +191,10 @@
       ]
     }
   ],
-  "note": "Owner explicitly approved the exact Chromium runtime packet for installer QA. Hosted source/hash/member preparation and matching source co-delivery remain mandatory; no public-v1/publication approval inferred.",
-  "reviewedAt": "2026-10-28",
+  "note": "Original Chromium runtime terms and corresponding-source delivery duties remain unchanged. On 2026-10-30 the owner approved the exact +454-byte owned policy.mjs delta and current aggregate inventory for a new unsigned QA build. Hosted source/hash/member verification and complete source co-delivery remain mandatory; no public-v1/publication or G2/G3 approval is inferred.",
+  "reviewedAt": "2026-10-30",
   "approvalEvidence": {
-    "path": "release/runner-notice-approval.json",
-    "sha256": "c91ae47d2377f9540b499ed1a88c97b9ec7c769419b5c1b5c26ddff8ee6235f2"
+    "path": "release/runner-source-delta-approval.json",
+    "sha256": "4aacd57ec5bafe2ac0f5e0dadeceee33a29d3269506411447b64e041b385880d"
   }
 }

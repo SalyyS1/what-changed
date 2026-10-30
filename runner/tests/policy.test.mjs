@@ -8,6 +8,7 @@ test('exact origin, method and fixture path are independent grants',()=>{
   assert.equal(policy.checkRequest(origin+'/api/bookings/abc-123','GET'),true);
   for(const [url,method] of [[origin+'/api/bookings/abc?token=x','GET'],[origin+'/api/bookings/a%2fb','GET'],[origin+'/api/bookings/abc','POST'],['http://127.0.0.1:5186/api/bookings/abc','GET']])assert.equal(policy.checkRequest(url,method),false);
   assert.throws(()=>makePolicy(['https://example.com'],[]));assert.throws(()=>originOf('http://localhost:5185'));assert.throws(()=>originOf('https://user:pass@example.com'));
+  assert.throws(()=>originOf('http://127.0.0.1:0'));assert.throws(()=>originOf('http://127.0.0.1:65536'));
 });
 test('DNS answers are rechecked and pinned; private and mapped destinations are denied',async()=>{
   for(const ip of ['127.0.0.1','10.0.0.1','169.254.169.254','::1','::ffff:127.0.0.1','fc00::1'])assert.equal(publicAddress(ip),false);
